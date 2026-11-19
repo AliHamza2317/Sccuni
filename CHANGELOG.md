@@ -17,4 +17,9 @@ All notable changes to Sccuni are documented here. The format follows [Keep a Ch
 - Research evidence logs (`docs/research/`).
 - Progress tracker (`docs/DEVELOPMENT_PROGRESS.md`) and README.
 
+### Added — 2026-11-19 (plain-language plan)
+
+- `docs/Sccuni_Complete_Plan_Simple.docx`: the whole plan in easy English for non-technical readers (21 pages): idea, MVP, architecture, merit calculator, SAFE/TARGET/REACH, data checking, phases, timeline, team, risks, decisions, glossary.
+- Diagrams in `docs/assets/`: system architecture, student journey, data-checking flow, timeline.
+
 No application code yet. Implementation begins after the founder approves the plan.

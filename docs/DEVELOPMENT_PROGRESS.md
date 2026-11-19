@@ -44,6 +44,8 @@ Legend: ✅ done · 🟡 in progress / awaiting approval · ⚪ not started · �
   - Competitor: eduvision.edu.pk navigation, sitemap patterns and calculator pages (live).
 - **Verified a golden test case** for the merit engine from the official UHS worked example: 93.6033 requires component-level rounding; without it the result is 93.6030. Recomputed with exact decimals.
 
+- Produced a **plain-language Word version** of the whole plan for non-technical readers: `docs/Sccuni_Complete_Plan_Simple.docx` (21 pages, 4 diagrams in `docs/assets/`). It was rendered and checked page by page, and it passes the Word file validation.
+
 ### Limitations (stated explicitly)
 
 1. **The Sccuni Project Proposal PDF was not available.** It was not in the repo or the uploads folder. All planning is based on the master instruction.
