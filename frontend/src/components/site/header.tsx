@@ -38,8 +38,9 @@ export function SiteHeader() {
     <header
       className={cn(
         "sticky top-0 z-50 border-b backdrop-blur-xl backdrop-saturate-150 transition-[background,border-color,box-shadow] duration-300",
-        dark ? "border-white/[0.08] bg-ink-900/80" : "border-ink-200/70 bg-paper/85",
-        scrolled && (dark ? "bg-ink-900/92 shadow-[0_10px_30px_rgb(0_15_36/0.35)]" : "bg-white/90 shadow-[0_8px_24px_rgb(0_26_58/0.06)]"),
+        // Dark routes: solid navy, so the light page behind never tints it grey.
+        dark ? "border-white/[0.08] bg-ink-900" : "border-ink-200/70 bg-paper/85",
+        scrolled && (dark ? "shadow-[0_10px_30px_rgb(0_15_36/0.35)]" : "bg-white/90 shadow-[0_8px_24px_rgb(0_26_58/0.06)]"),
       )}
     >
       <div className="mx-auto flex h-[72px] max-w-[1240px] items-center gap-6 px-5 sm:px-7">
