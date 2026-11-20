@@ -2,14 +2,25 @@
 
 **Pakistan's University Admission & Merit Intelligence Platform.** It helps students find programmes they are eligible for, calculate their aggregate under each university's official formula, compare it with verified past closing merits, and never miss a deadline. Every fact is traceable to an official source.
 
-> **Status:** Phase 0 (discovery and planning), awaiting approval. No application code yet.
+> **Status:** Phase 0 (planning) awaiting approval. The **web frontend** is built in [`frontend/`](frontend/README.md) (Next.js + TypeScript + Tailwind) and runs on **fictional sample data**. There is no backend or real data yet.
+
+## Run the frontend
+
+```bash
+cd frontend
+pnpm install
+pnpm dev
+```
+
+Then open http://localhost:3000. See [frontend/README.md](frontend/README.md) for all commands and routes.
 
 ## Documentation
 
 | Document | Purpose |
 |---|---|
 | [**Complete plan — simple version (Word)**](docs/Sccuni_Complete_Plan_Simple.docx) | The whole plan in easy words, with diagrams, for any reader |
-| [**Design system & MVP screens**](docs/DESIGN_SYSTEM.md) | "Ink & Emerald" look, tokens, components, 15 designed screens (live canvas link inside) |
+| [**Frontend (web app)**](frontend/README.md) | How to run it, routes, folder structure |
+| [**Design system & MVP screens**](docs/DESIGN_SYSTEM.md) | Logo-based "Navy & Emerald" look, tokens, components, screens |
 | [Requirements (PRD)](docs/REQUIREMENTS.md) | What we are building and why |
 | [Project plan](docs/PROJECT_PLAN.md) | Phases, milestones, dependencies |
 | [Development progress](docs/DEVELOPMENT_PROGRESS.md) | Live status and phase reports |

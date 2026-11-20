@@ -1,7 +1,7 @@
 # Sccuni — System Architecture
 
 - **Status:** DRAFT v0.1. Proposed in Phase 0, pending founder approval.
-- **Last updated:** 19 Nov 2026.
+- **Last updated:** 20 Nov 2026 (§4.0 added: where the frontend lives today).
 - **Owners:** Architecture (Claude Code) + Founder.
 - **Related:** [REQUIREMENTS.md](./REQUIREMENTS.md) · [DATABASE_DESIGN.md](./DATABASE_DESIGN.md) · [API_DOCUMENTATION.md](./API_DOCUMENTATION.md)
 
@@ -111,6 +111,30 @@ sccuni/
 ├─ infra/           # docker-compose for local dev, Dockerfiles, CI workflows
 └─ .github/workflows/
 ```
+
+### 4.0 Current state (20 Nov 2026)
+
+The first code is the web frontend, built at the founder's request. It lives in a **top-level `frontend/` folder** (a standalone Next.js app), not yet in `apps/web`:
+
+| Item | Version / choice |
+|---|---|
+| Framework | Next.js 16.4.6 (App Router, Turbopack, Cache Components / partial prerendering) |
+| UI | React 19.3, TypeScript 5 (strict), Tailwind CSS 4.3 |
+| Merit maths | decimal.js 10.6 (exact decimal arithmetic) |
+| Icons and fonts | lucide-react; self-hosted Inter and Plus Jakarta Sans |
+| Tests | Vitest 4 (merit engine, including the UHS golden case) |
+
+Mapping to the planned layout:
+
+| Today in `frontend/` | Planned home |
+|---|---|
+| `src/app/(site)`, `(account)` | `apps/web` |
+| `src/app/admin` | `apps/admin` (ADR-011) |
+| `src/lib/merit/engine.ts` | `packages/merit-engine` |
+| `src/components/ui`, `globals.css` tokens | `packages/ui`, `packages/config` |
+| `src/lib/data` (sample data) | API client generated from `packages/contracts` |
+
+`frontend/` will become `apps/web` when the monorepo and API are created. Until then all data is fictional sample data behind one data-access module (`src/lib/data/index.ts`), so swapping in the API changes only that module.
 
 **Why one `api` app with two entrypoints?** The worker shares all domain services and repositories with the HTTP API. Two processes from one codebase avoid duplicated logic, and the worker scales independently.
 

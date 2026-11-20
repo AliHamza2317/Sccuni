@@ -27,4 +27,18 @@ All notable changes to Sccuni are documented here. The format follows [Keep a Ch
 - High-fidelity, clickable MVP design on a Design canvas: 12 desktop screens (home, search, program, calculator, Best Fit, compare, university, calendar, scholarships, sign-in, student dashboard, admin verification queue), a design-system page and 2 mobile screens. Sample data is fictional and labelled.
 - `docs/DESIGN_SYSTEM.md`: direction ("Ink & Emerald"), tokens, components, screen inventory with requirement mapping, accessibility and content rules, open design decisions.
 
-No application code yet. Implementation begins after the founder approves the plan.
+### Added — 2026-11-20 (frontend code + brand)
+
+- **`frontend/`**: the web app in Next.js 16 (App Router), React 19, TypeScript and Tailwind CSS 4, with 12 screens as real routes (home, program search, program detail, university profile, merit calculator, Best Fit, compare, admission calendar, scholarships, sign-in, student dashboard, admin verification queue), plus 404, sitemap, robots, favicon and Open Graph image.
+- **Merit engine** (`frontend/src/lib/merit/engine.ts`): formulas as data, exact decimal arithmetic (decimal.js), component and final rounding, required test score, SAFE/TARGET/REACH grouping. 11 unit tests, including the official UHS 2025-26 golden case.
+- **Brand:** the founder's Sccuni logo (full, white, mark-only variants) and a palette taken from it (navy #001A3A, green #00987C; buttons use #007E67 for contrast).
+- **Premium design upgrades:** aurora hero with a glass live-result card, bento feature grid, gradient hairline borders, shadow scale, scroll-reveal motion (off under reduced motion), self-hosted fonts.
+- Sample data is fictional and labelled on every page.
+
+### Changed — 2026-11-20
+
+- `docs/DESIGN_SYSTEM.md` v0.2: logo-based palette with measured contrast, logo usage rules, handover status.
+- `docs/SYSTEM_ARCHITECTURE.md` §4.0: the frontend currently lives in `frontend/` and maps to `apps/web` later.
+- `docs/DEVELOPMENT_PROGRESS.md`: frontend build report with test results and known limitations.
+
+No backend, database or real data yet. Those begin after the founder approves the plan.

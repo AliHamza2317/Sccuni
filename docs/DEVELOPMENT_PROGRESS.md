@@ -1,8 +1,8 @@
 # Sccuni — Development Progress
 
-- **Last updated:** 19 Nov 2026.
-- **Current phase:** Phase 0 — Discovery and planning ✅ drafted, ⏳ **awaiting founder approval**.
-- **Code status:** no application code exists yet (by design, until the plan is approved).
+- **Last updated:** 20 Nov 2026.
+- **Current phase:** Phase 0 — Discovery and planning ✅ drafted, ⏳ **awaiting founder approval**. Phase 5 (design) and the frontend part of Phase 10 were started early at the founder's request.
+- **Code status:** the web frontend exists in `frontend/` (Next.js), running on **fictional sample data**. No backend, database or real data yet.
 
 ## Phase status
 
@@ -13,8 +13,10 @@
 | 2 | Competitor and market research | 🟡 Partially done | Eduvision live-checked; 3 international portals blocked automation (manual benchmark needed) |
 | 3 | Data model and database architecture | 🟡 Logical design drafted | Physical Prisma schema after approval |
 | 4 | Technical architecture | 🟡 Proposed | Stack recommendation awaiting approval |
-| 5 | UI/UX and design system | 🟡 Prototype ready for review | 15 screens on the design canvas; see DESIGN_SYSTEM.md |
-| 6–19 | — | ⚪ Not started | See PROJECT_PLAN |
+| 5 | UI/UX and design system | 🟡 v0.2 in code, ready for review | Logo-based palette; see DESIGN_SYSTEM.md |
+| 6–9 | — | ⚪ Not started | See PROJECT_PLAN |
+| 10 | University search and frontend | 🟡 Frontend built on sample data | `frontend/`: 12 screens, merit engine + tests. Needs the API (Phases 6–9) for real data |
+| 11–19 | — | ⚪ Not started | See PROJECT_PLAN |
 
 Legend: ✅ done · 🟡 in progress / awaiting approval · ⚪ not started · 🔴 blocked
 
@@ -71,6 +73,31 @@ See the Phase 0 summary in chat and REQUIREMENTS §9.2:
 - Built at the founder's request ahead of plan approval, as a design-only deliverable (no application code).
 - Canvas: https://claude.ai/artifact/WfsSxNW1nMwyKLkPw5xdR1 — 12 desktop pages, design system page, 2 mobile screens; working interactions (calculator, filters, Best Fit tabs, compare, reminders, admin approval checklist).
 - **Not yet visually QA'd** by rendering or screenshots; the founder's review comes first. Responsive behaviour is built in but should be checked on a real phone during review.
+
+### Frontend build (20 Nov 2026)
+
+**Built** in `frontend/` with Next.js 16, React 19, TypeScript and Tailwind CSS 4 (the stack in SYSTEM_ARCHITECTURE):
+- 12 screens as real routes: home, program search, program detail, university profile, merit calculator, Best Fit, compare, admission calendar, scholarships, sign-in, student dashboard, admin verification queue. Plus 404, sitemap, robots, favicon and Open Graph image.
+- The founder's logo in four variants; palette taken from the logo.
+- A real **merit engine** (`src/lib/merit/engine.ts`): formulas are data, exact decimal maths, component and final rounding, "what test score do I need", SAFE/TARGET/REACH grouping.
+
+**Tested (results, not claims):**
+
+| Check | Result |
+|---|---|
+| `pnpm test` | 11 of 11 pass, including the official UHS 2025-26 example (93.6033 with component rounding; 93.6030 without) |
+| `pnpm lint` | No errors or warnings |
+| `pnpm typecheck` | No errors (strict mode) |
+| `pnpm build` | Succeeds; 41 pages generated |
+| Screenshots of every route at 1440 px and 390 px | No browser console errors; no sideways scrolling |
+| Colour contrast of the palette | All text pairs ≥ 4.5:1 (see DESIGN_SYSTEM §2.1) |
+
+**Known limitations:**
+1. **All data is fictional sample data** (6 made-up universities, 15 programs). A banner on every page says so.
+2. Sign-in, saving, reminders, inquiries, compare and admin approval work only in the browser (no backend). Nothing is stored.
+3. Unknown program or university URLs show the 404 page with `noindex`, but the HTTP status is 200, because Cache Components streams the page before `notFound()` runs. To fix with the API phase (for example, with a proxy check or a different rendering mode for those routes).
+4. Not yet tested: keyboard-only and screen-reader passes, Lighthouse budgets, real phones, end-to-end tests. These belong to Phase 18.
+5. SAFE/TARGET/REACH thresholds (+2 / −1.5 / −4) are placeholders until the founder decides them.
 
 ### Next phase
 

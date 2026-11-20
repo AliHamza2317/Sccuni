@@ -1,0 +1,142 @@
+@import "tailwindcss";
+
+/* =====================================================================
+   Sccuni design tokens — "Ink & Emerald", derived from the Sccuni logo
+   (navy #001A3A, green #00987C). See docs/DESIGN_SYSTEM.md.
+   ===================================================================== */
+@theme {
+  --font-sans: "Inter Variable", ui-sans-serif, system-ui, -apple-system, "Segoe UI", Arial, sans-serif;
+  --font-display: "Plus Jakarta Sans Variable", ui-sans-serif, system-ui, -apple-system, "Segoe UI", Arial, sans-serif;
+
+  --color-ink-950: #000f24;
+  --color-ink-900: #001a3a;
+  --color-ink-800: #0b2a52;
+  --color-ink-700: #1f3a63;
+  --color-ink-600: #3a4e70;
+  --color-ink-500: #5a6b86;
+  --color-ink-400: #8a97ad;
+  --color-ink-300: #b8c2d3;
+  --color-ink-200: #dce3ee;
+  --color-ink-100: #edf1f7;
+  --color-ink-50: #f6f8fb;
+
+  --color-paper: #f5f7fa;
+
+  --color-brand-900: #003a30;
+  --color-brand-800: #004f41;
+  --color-brand-700: #006653;
+  --color-brand-600: #007e67;
+  --color-brand-500: #00987c;
+  --color-brand-400: #2dba98;
+  --color-brand-300: #7fd9c2;
+  --color-brand-200: #b4eadc;
+  --color-brand-100: #d9f5ee;
+  --color-brand-50: #eefaf6;
+
+  --color-gold-700: #8a5a0b;
+  --color-gold-500: #e9a23b;
+  --color-gold-100: #fdf0d8;
+  --color-gold-50: #fff8ea;
+
+  --color-safe: #006653;
+  --color-safe-bg: #dcf5ec;
+  --color-target: #2238a8;
+  --color-target-bg: #e6ebfd;
+  --color-reach: #b03a0a;
+  --color-reach-bg: #fdebdf;
+  --color-danger: #b4232f;
+  --color-danger-bg: #fdecee;
+
+  --shadow-xs: 0 1px 2px rgb(0 26 58 / 0.06);
+  --shadow-soft: 0 1px 2px rgb(0 26 58 / 0.04), 0 6px 20px rgb(0 26 58 / 0.06);
+  --shadow-lift: 0 2px 6px rgb(0 26 58 / 0.05), 0 18px 44px rgb(0 26 58 / 0.11);
+  --shadow-float: 0 6px 14px rgb(0 26 58 / 0.08), 0 32px 80px rgb(0 26 58 / 0.22);
+  --shadow-glow: 0 10px 30px rgb(0 152 124 / 0.32);
+
+  --radius-4xl: 2rem;
+
+  --animate-rise: rise 0.9s cubic-bezier(0.2, 0.7, 0.2, 1) both;
+  --animate-float: float 7s ease-in-out infinite;
+  --animate-aurora: aurora 18s ease-in-out infinite alternate;
+
+  @keyframes rise {
+    from { opacity: 0; transform: translateY(18px); }
+    to { opacity: 1; transform: none; }
+  }
+  @keyframes float {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-8px); }
+  }
+  @keyframes aurora {
+    0% { transform: translate3d(0, 0, 0) scale(1); }
+    100% { transform: translate3d(-6%, 4%, 0) scale(1.12); }
+  }
+}
+
+@layer base {
+  html {
+    -webkit-text-size-adjust: 100%;
+    scroll-padding-top: 88px;
+  }
+  body {
+    @apply bg-paper font-sans text-ink-900 antialiased;
+    text-rendering: optimizeLegibility;
+  }
+  h1, h2, h3, h4 {
+    @apply font-display text-balance;
+    letter-spacing: -0.02em;
+  }
+  p {
+    text-wrap: pretty;
+  }
+  :focus-visible {
+    outline: 3px solid rgb(0 152 124 / 0.55);
+    outline-offset: 2px;
+  }
+  ::selection {
+    background: var(--color-brand-200);
+    color: var(--color-ink-900);
+  }
+}
+
+@layer components {
+  /* Dotted grid used on dark brand surfaces */
+  .bg-grid-dark {
+    background-image: radial-gradient(rgb(255 255 255 / 0.09) 1px, transparent 1px);
+    background-size: 26px 26px;
+  }
+  .bg-grid-light {
+    background-image: radial-gradient(rgb(0 26 58 / 0.07) 1px, transparent 1px);
+    background-size: 24px 24px;
+  }
+  .mask-fade-b {
+    mask-image: linear-gradient(180deg, #000 35%, transparent 100%);
+  }
+  /* Thin gradient hairline border for premium cards */
+  .ring-gradient {
+    position: relative;
+  }
+  .ring-gradient::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    padding: 1px;
+    border-radius: inherit;
+    background: linear-gradient(140deg, rgb(255 255 255 / 0.35), rgb(255 255 255 / 0.04) 40%, rgb(45 186 152 / 0.45));
+    -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+    pointer-events: none;
+  }
+  .tabular {
+    font-variant-numeric: tabular-nums;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+  }
+}

@@ -1,19 +1,20 @@
 # Sccuni — Design System and MVP Screens
 
-- **Status:** v0.1 design prototype, for founder review (Phase 5 deliverable).
+- **Status:** v0.2. The design is now **built in code** in [`frontend/`](../frontend/README.md) (Next.js), using the founder's Sccuni logo and a palette taken from it.
 - **Last updated:** 20 Nov 2026.
-- **Live design canvas:** https://claude.ai/artifact/WfsSxNW1nMwyKLkPw5xdR1 — private to the owner until shared from its Share menu.
+- **Source of truth:** the code. Tokens live in `frontend/src/app/globals.css`, components in `frontend/src/components/`.
+- **Earlier design canvas (v0.1, superseded):** https://claude.ai/artifact/WfsSxNW1nMwyKLkPw5xdR1 — it still uses the older "Ink & Emerald" colours and the placeholder logo.
 - **Related:** [REQUIREMENTS.md](./REQUIREMENTS.md) (MVP scope) · [SYSTEM_ARCHITECTURE.md](./SYSTEM_ARCHITECTURE.md) §5.5 (rendering)
 
 > **All universities, fees, merits and dates in the prototype are fictional samples.** Every screen carries a banner saying so. Real data enters only through the verification workflow.
 
 ---
 
-## 1. Direction: "Ink & Emerald"
+## 1. Direction: "Navy & Emerald" (from the Sccuni logo)
 
-A calm, premium, trustworthy look for high-stakes decisions:
+A calm, premium, trustworthy look for high-stakes decisions. The colours come straight from the logo (navy cap, book and wordmark; green accents and dot):
 
-- **Deep ink** for confidence and structure.
+- **Deep navy** for confidence and structure.
 - **Emerald** for actions and progress.
 - **Gold** only for attention.
 - Generous white space, and one primary action per view.
@@ -40,19 +41,34 @@ A calm, premium, trustworthy look for high-stakes decisions:
 
 ### 2.1 Colour
 
+Tailwind names in brackets (for example `bg-brand-600`, `text-ink-500`).
+
 | Token | Hex | Use |
 |---|---|---|
-| ink-950 / 900 / 700 / 500 / 300 / 100 / 50 | #070D1A / #0B1324 / #243049 / #5B6475 / #B9C0CC / #ECEFF4 / #F5F7FA | Text, dark surfaces, borders, muted text (500 is the lightest allowed for body text) |
-| paper / surface | #F6F7F9 / #FFFFFF | Page and card backgrounds |
-| emerald 800 / 700 / 600 / 500 / 400 / 100 / 50 | #06513F / #086450 / #0A7A60 / #139572 / #3DB894 / #D3F1E6 / #ECF8F3 | Primary buttons (600), links (700), accents on dark (400), tints |
-| gold 500 / 700 / 100 | #E9A23B / #8A5A0B / #FDF0D8 | Attention: deadlines soon, warnings |
-| danger | #B4232F (bg #FDECEE) | Errors, rejected, closed |
-| safe | #08664F on #E3F5EE | SAFE group |
+| ink 950 / 900 / 800 / 700 / 500 / 400 / 300 / 200 / 100 / 50 | #000F24 / **#001A3A** / #0B2A52 / #1F3A63 / #5A6B86 / #8A97AD / #B8C2D3 / #DCE3EE / #EDF1F7 / #F6F8FB | Navy from the logo (900). Text, dark surfaces, borders. 500 is the lightest allowed for body text on light backgrounds |
+| paper / surface | #F5F7FA / #FFFFFF | Page and card backgrounds |
+| brand 800 / 700 / 600 / 500 / 400 / 100 / 50 | #004F41 / #006653 / #007E67 / **#00987C** / #2DBA98 / #D9F5EE / #EEFAF6 | Green from the logo (500). Primary buttons (600), links (700), accents on dark (400), tints |
+| gold 700 / 500 / 100 / 50 | #8A5A0B / #E9A23B / #FDF0D8 / #FFF8EA | Attention only: deadlines soon, warnings |
+| danger | #B4232F on #FDECEE | Errors, rejected, closed |
+| safe | #006653 on #DCF5EC | SAFE group |
 | target | #2238A8 on #E6EBFD | TARGET group |
 | reach | #B03A0A on #FDEBDF | REACH group |
 
-- Text contrast targets ≥ 4.5:1. The pairs above were checked when the palette was chosen.
+- **Why buttons use brand-600, not the logo green (500):** white text on #00987C is only about 3.6:1. On #007E67 it is 5.0:1, which passes WCAG AA.
+- Measured contrast (20 Nov 2026): white on brand-600 5.02 · brand-700 on white 6.94 · ink-500 on white 5.41, on paper 5.04 · safe 6.05 · target 8.03 · reach 5.25 · ink-400 on ink-900 5.88 · brand-400 on ink-900 7.10. All are ≥ 4.5:1.
 - SAFE / TARGET / REACH differ in lightness as well as hue (green, blue, orange rather than green/red), and always carry a text label.
+
+### 2.1a Logo
+
+| File (`frontend/public/brand/`) | Use |
+|---|---|
+| `sccuni-logo.png` | Full logo on light backgrounds (header on light pages, sign-in) |
+| `sccuni-logo-white.png` | Full logo on navy backgrounds (dark header, footer, admin). The navy parts become white; the green stays green |
+| `sccuni-mark.png` / `sccuni-mark-white.png` | Icon only (cap + magnifier + book): app sidebar, small spaces |
+
+- The favicon, Apple touch icon and Open Graph image are generated from the logo (`frontend/src/app/icon.png`, `apple-icon.png`, `opengraph-image.png`).
+- Recommended minimum height: 32 px for the full logo (the header uses 40–44 px). Leave empty space around it.
+- Never recolour, stretch, add effects to, or place the logo on busy photos.
 
 ### 2.2 Typography
 
@@ -63,6 +79,7 @@ A calm, premium, trustworthy look for high-stakes decisions:
 | H2 | Plus Jakarta Sans | clamp(26–38 px) / 800 |
 | H3 | Plus Jakarta Sans | 20 px / 700 |
 | Body | Inter | 16 px / 400, line-height 1.55 |
+| Fonts are self-hosted | `@fontsource-variable/inter` and `@fontsource-variable/plus-jakarta-sans` | No request to Google at runtime (faster on mobile data, better privacy) |
 | Small / caption | Inter | 14 px / 12.5 px |
 | Numbers | Tabular figures everywhere | Aggregates in Jakarta 800 |
 
@@ -140,14 +157,25 @@ All desktop screens are fluid pages. Grids collapse to one column, menus stack, 
 
 ## 7. Open design decisions for the founder
 
-1. **Brand:** keep "Ink & Emerald", or adjust the colours or logo? Is there an existing logo to adopt?
+1. ~~**Brand:** is there an existing logo to adopt?~~ **Resolved 20 Nov 2026:** the founder's Sccuni logo is adopted and the palette now comes from it. Still open: the domain name and a vector (SVG) master of the logo, which would give sharper rendering than PNG.
 2. **Hero headline and tone:** the current line is "Know where you'll get admission — before you apply."
 3. **Recommendation thresholds** shown in Best Fit: the prototype uses ±2.00 / −1.50 / −4.00 only as **placeholders** (REQUIREMENTS FIT-03).
 4. **Urdu UI** (Release 2): the layout must support RTL, so mirroring rules will be added when Urdu starts.
 
-## 8. Handover to development (Phase 10+)
+## 8. Design upgrades in the coded version (v0.2)
 
-- Tokens map 1:1 to a Tailwind preset in `packages/config`.
-- Components become `packages/ui` (on Radix primitives).
-- Screens become Next.js routes per SYSTEM_ARCHITECTURE §5.5.
-- The prototype's sample logic (calculator, grouping) is **illustrative only**. Production logic lives in `packages/merit-engine` with golden tests.
+- **Hero:** dark navy with soft moving light ("aurora"), a fine grid, and a glass result card that shows a live Merit Meter, with floating "SAFE" and "deadline" cards.
+- **Depth:** a five-step shadow scale (xs, soft, lift, float, glow) and gradient hairline borders (`.ring-gradient`) on premium cards.
+- **Bento feature grid**, featured programs, fields, cities and "closing soon" sections on the home page.
+- **Gentle motion:** sections rise in as you scroll; cards lift on hover. All motion turns off under `prefers-reduced-motion`.
+- **Merit Meter:** year labels move to a second row when ticks are close, so they never overlap on phones.
+- **Checked on screens:** every route was screenshotted at 1440 px and 390 px wide: no console errors and no sideways scrolling.
+
+## 9. Handover to development
+
+**Done (20 Nov 2026):** the screens are Next.js routes in `frontend/src/app`, the tokens are Tailwind v4 `@theme` variables, and the components are in `frontend/src/components`.
+
+**Still to do:**
+- When the monorepo is set up (ADR-001), move tokens and components to `packages/ui` and the engine to `packages/merit-engine`.
+- Use Radix primitives for the complex widgets (select, dialog, menu) when they are added.
+- The sample logic (grouping thresholds, first-year cost estimate) is **illustrative only**. The merit engine itself is real and tested (`frontend/src/lib/merit/engine.test.ts`, including the official UHS golden case).
