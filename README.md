@@ -9,6 +9,7 @@
 | Document | Purpose |
 |---|---|
 | [**Complete plan — simple version (Word)**](docs/Sccuni_Complete_Plan_Simple.docx) | The whole plan in easy words, with diagrams, for any reader |
+| [**Design system & MVP screens**](docs/DESIGN_SYSTEM.md) | "Ink & Emerald" look, tokens, components, 15 designed screens (live canvas link inside) |
 | [Requirements (PRD)](docs/REQUIREMENTS.md) | What we are building and why |
 | [Project plan](docs/PROJECT_PLAN.md) | Phases, milestones, dependencies |
 | [Development progress](docs/DEVELOPMENT_PROGRESS.md) | Live status and phase reports |

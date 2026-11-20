@@ -22,4 +22,9 @@ All notable changes to Sccuni are documented here. The format follows [Keep a Ch
 - `docs/Sccuni_Complete_Plan_Simple.docx`: the whole plan in easy English for non-technical readers (21 pages): idea, MVP, architecture, merit calculator, SAFE/TARGET/REACH, data checking, phases, timeline, team, risks, decisions, glossary.
 - Diagrams in `docs/assets/`: system architecture, student journey, data-checking flow, timeline.
 
+### Added — 2026-11-20 (Phase 5: UI/UX design prototype)
+
+- High-fidelity, clickable MVP design on a Design canvas: 12 desktop screens (home, search, program, calculator, Best Fit, compare, university, calendar, scholarships, sign-in, student dashboard, admin verification queue), a design-system page and 2 mobile screens. Sample data is fictional and labelled.
+- `docs/DESIGN_SYSTEM.md`: direction ("Ink & Emerald"), tokens, components, screen inventory with requirement mapping, accessibility and content rules, open design decisions.
+
 No application code yet. Implementation begins after the founder approves the plan.

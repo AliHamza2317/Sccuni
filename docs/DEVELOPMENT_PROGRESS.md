@@ -13,7 +13,8 @@
 | 2 | Competitor and market research | 🟡 Partially done | Eduvision live-checked; 3 international portals blocked automation (manual benchmark needed) |
 | 3 | Data model and database architecture | 🟡 Logical design drafted | Physical Prisma schema after approval |
 | 4 | Technical architecture | 🟡 Proposed | Stack recommendation awaiting approval |
-| 5–19 | — | ⚪ Not started | See PROJECT_PLAN |
+| 5 | UI/UX and design system | 🟡 Prototype ready for review | 15 screens on the design canvas; see DESIGN_SYSTEM.md |
+| 6–19 | — | ⚪ Not started | See PROJECT_PLAN |
 
 Legend: ✅ done · 🟡 in progress / awaiting approval · ⚪ not started · 🔴 blocked
 
@@ -64,6 +65,12 @@ See the Phase 0 summary in chat and REQUIREMENTS §9.2:
 - brand/domain;
 - budget;
 - initial SAFE/TARGET/REACH thresholds (needed by Phase 15).
+
+### Phase 5 design prototype (20 Nov 2026)
+
+- Built at the founder's request ahead of plan approval, as a design-only deliverable (no application code).
+- Canvas: https://claude.ai/artifact/WfsSxNW1nMwyKLkPw5xdR1 — 12 desktop pages, design system page, 2 mobile screens; working interactions (calculator, filters, Best Fit tabs, compare, reminders, admin approval checklist).
+- **Not yet visually QA'd** by rendering or screenshots; the founder's review comes first. Responsive behaviour is built in but should be checked on a real phone during review.
 
 ### Next phase
 
