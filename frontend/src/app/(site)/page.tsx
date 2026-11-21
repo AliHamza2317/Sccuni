@@ -59,9 +59,9 @@ export default function HomePage() {
           <div className="mx-auto max-w-[1240px] px-5 pt-[128px] text-center sm:px-7 sm:pt-[152px] lg:pt-[168px]">
             <Link
               href="/admissions-calendar"
-              className="animate-rise group inline-flex h-9 items-center gap-2.5 rounded-full border border-white/15 bg-white/[0.07] pr-3.5 pl-1.5 text-[13.5px] text-white/90 backdrop-blur transition hover:border-white/30 hover:text-white"
+              className="animate-rise group inline-flex h-9 items-center gap-2.5 rounded-full border border-white/15 bg-ink-950/35 pr-3.5 pl-1.5 text-[13.5px] text-white backdrop-blur transition hover:border-white/30"
             >
-              <span className="rounded-full bg-white/[0.12] px-2.5 py-0.5 text-xs font-semibold text-brand-200 ring-1 ring-white/15">2027</span>
+              <span className="rounded-full bg-brand-600 px-2.5 py-0.5 text-xs font-semibold text-white">2027</span>
               Admission season is open
               <ArrowRight className="size-3.5 text-white/70 transition group-hover:translate-x-0.5 group-hover:text-white" aria-hidden />
             </Link>
@@ -72,7 +72,7 @@ export default function HomePage() {
               <span className="text-gradient-emerald">before you apply.</span>
             </h1>
 
-            <p className="animate-rise mx-auto mt-7 max-w-[600px] text-[clamp(1.05rem,1.45vw,1.2rem)] leading-relaxed text-ink-200 [animation-delay:160ms]">
+            <p className="animate-rise mx-auto mt-7 max-w-[600px] text-[clamp(1.05rem,1.45vw,1.2rem)] leading-relaxed text-ink-100 [animation-delay:160ms]">
               Official merit formulas, verified past merits, fees and deadlines for every program — in one calm place.
             </p>
 

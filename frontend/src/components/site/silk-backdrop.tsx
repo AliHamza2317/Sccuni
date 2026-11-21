@@ -1,64 +1,48 @@
 import Image from "next/image";
+import silkPoster from "@/components/home/silk-poster.webp";
 import { cn } from "@/lib/format";
-import silkLight from "./silk-light.webp";
-
-type Corner = "tl" | "tr" | "bl" | "br";
-
-const PLACE: Record<Corner, string> = {
-  tr: "-top-[45%] -right-[14%]",
-  tl: "-top-[45%] -left-[14%]",
-  br: "-bottom-[50%] -right-[14%]",
-  bl: "-bottom-[50%] -left-[14%]",
-};
-
-/** Which part of the silk each corner shows, so the corners don't look identical. */
-const FOCUS: Record<Corner, string> = {
-  tr: "35% 25%",
-  tl: "60% 35%",
-  br: "20% 80%",
-  bl: "70% 70%",
-};
-
-const SIZE = {
-  sm: "h-[110%] w-[42%] min-w-[260px]",
-  md: "h-[150%] w-[58%] min-w-[320px]",
-  lg: "h-[190%] w-[72%] min-w-[380px]",
-};
 
 /**
- * Light silk accents in the corners of a section (white, mist blue and mint — the hero's folds in
- * light tones). The middle stays clean for text. Drifts very slowly; still under reduced motion.
+ * The home hero's silk as a still, slowly drifting background (no WebGL), for page headers and
+ * feature panels. A shade layer keeps white text on top readable.
  */
-export function SilkCorners({
-  corners = ["tr", "bl"],
-  size = "md",
-  drift = true,
+export function SilkBackdrop({
+  position = "50% 40%",
+  shade = "left",
+  sizes = "100vw",
   eager = false,
+  drift = true,
   className,
+  imageClassName,
 }: {
-  corners?: Corner[];
-  size?: keyof typeof SIZE;
-  drift?: boolean;
-  /** Above-the-fold use: load at once. */
+  /** CSS object-position: which part of the silk to show. */
+  position?: string;
+  /** Where the readability shade is strongest. */
+  shade?: "left" | "center" | "bottom";
+  sizes?: string;
+  /** Above-the-fold use: load at once with high priority. */
   eager?: boolean;
+  /** Very slow zoom and pan; off under reduced motion. */
+  drift?: boolean;
   className?: string;
+  imageClassName?: string;
 }) {
   return (
-    <div aria-hidden className={cn("pointer-events-none absolute inset-0 -z-10 overflow-hidden", className)}>
-      {corners.map((c) => (
-        <div key={c} className={cn("absolute [mask-image:radial-gradient(closest-side,#000_25%,transparent_100%)]", PLACE[c], SIZE[size])}>
-          <Image
-            src={silkLight}
-            alt=""
-            fill
-            sizes="(min-width: 1024px) 60vw, 90vw"
-            placeholder="blur"
-            loading={eager ? "eager" : "lazy"}
-            className={cn("object-cover", drift && "animate-drift")}
-            style={{ objectPosition: FOCUS[c] }}
-          />
-        </div>
-      ))}
+    <div aria-hidden className={cn("pointer-events-none absolute inset-0 -z-10 overflow-hidden bg-ink-950", className)}>
+      <Image
+        src={silkPoster}
+        alt=""
+        fill
+        sizes={sizes}
+        placeholder="blur"
+        loading={eager ? "eager" : "lazy"}
+        fetchPriority={eager ? "high" : undefined}
+        className={cn("object-cover", drift && "animate-drift", imageClassName)}
+        style={{ objectPosition: position }}
+      />
+      {shade === "left" && <div className="absolute inset-0 bg-[linear-gradient(90deg,rgb(0_10_26/0.60)_0%,rgb(0_10_26/0.30)_55%,rgb(0_10_26/0.10)_100%)]" />}
+      {shade === "center" && <div className="absolute inset-0 bg-[radial-gradient(70%_80%_at_50%_45%,rgb(0_10_26/0.62),rgb(0_10_26/0.30)_70%,rgb(0_10_26/0.20))]" />}
+      {shade === "bottom" && <div className="absolute inset-0 bg-[linear-gradient(180deg,rgb(0_10_26/0.10)_0%,rgb(0_10_26/0.30)_45%,rgb(0_10_26/0.82)_100%)]" />}
     </div>
   );
 }

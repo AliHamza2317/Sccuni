@@ -42,15 +42,15 @@ export default function BestFitPage() {
   return (
     <>
       <PageHeader
-        corners={["tr", "bl"]}
+        silkPosition="50% 28%"
         eyebrow="Best Fit Finder"
         title={`${cards.length} programs you’re eligible for`}
         description="Grouped by how your aggregate — under each university’s own formula — compares with verified past closing merits."
-        actions={<ButtonLink href="/merit-calculator" variant="light"><Pencil className="size-4" aria-hidden />Edit marks & preferences</ButtonLink>}
+        actions={<ButtonLink href="/merit-calculator" variant="ondark"><Pencil className="size-4" aria-hidden />Edit marks & preferences</ButtonLink>}
       >
         <ul className="flex flex-wrap gap-2">
           {chips.map(([k, v]) => (
-            <li key={k} className="inline-flex h-9 items-center gap-2 rounded-full bg-white/80 px-3.5 text-sm shadow-xs ring-1 ring-ink-200/80 backdrop-blur"><span className="text-ink-500">{k}</span><b className="font-semibold text-ink-900">{v}</b></li>
+            <li key={k} className="inline-flex h-9 items-center gap-2 rounded-full bg-white/[0.04] px-3.5 text-sm ring-1 ring-white/10"><span className="text-ink-400">{k}</span><b className="font-semibold">{v}</b></li>
           ))}
         </ul>
       </PageHeader>

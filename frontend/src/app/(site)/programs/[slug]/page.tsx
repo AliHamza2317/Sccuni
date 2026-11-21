@@ -3,7 +3,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { Suspense } from "react";
-import { SilkCorners } from "@/components/site/silk-backdrop";
+import { SilkBackdrop } from "@/components/site/silk-backdrop";
 import { DetailSkeleton } from "@/components/site/skeletons";
 import { MeritHistory, RemindSwitch, SaveButton, ShareButton } from "@/components/programs/program-islands";
 import { Monogram, SourceChip, StatusDot, Tag, Verified } from "@/components/ui/badges";
@@ -76,36 +76,36 @@ async function ProgramContent({ params }: { params: PageProps<"/programs/[slug]"
     <>
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
 
-      {/* Header: clean and light, with the silk as soft accents in the corners */}
-      <section className="relative isolate overflow-hidden border-b border-ink-200/60 bg-linear-to-b from-white to-paper">
-        <SilkCorners eager corners={["tr", "bl"]} />
+      {/* Header: the home page's silk, with large white type */}
+      <section data-header-theme="dark" className="relative isolate overflow-hidden rounded-b-[28px] bg-ink-950 text-white sm:rounded-b-[40px]">
+        <SilkBackdrop eager position="58% 40%" />
         <div className="mx-auto max-w-[1240px] space-y-9 px-5 pt-[116px] pb-12 sm:px-7 lg:pt-[132px] lg:pb-14">
-          <nav aria-label="Breadcrumb" className="flex flex-wrap items-center gap-2 text-[13px] text-ink-600">
-            <Link href="/" className="hover:text-ink-900">Home</Link><span className="text-ink-300">/</span>
-            <Link href="/programs" className="hover:text-ink-900">Programs</Link><span className="text-ink-300">/</span>
-            <Link href={`/universities/${u.slug}`} className="hover:text-ink-900">{u.shortName}</Link><span className="text-ink-300">/</span>
-            <span aria-current="page" className="font-semibold text-ink-900">{p.title}</span>
+          <nav aria-label="Breadcrumb" className="flex flex-wrap items-center gap-2 text-[13px] text-white/70">
+            <Link href="/" className="hover:text-white">Home</Link><span className="text-white/35">/</span>
+            <Link href="/programs" className="hover:text-white">Programs</Link><span className="text-white/35">/</span>
+            <Link href={`/universities/${u.slug}`} className="hover:text-white">{u.shortName}</Link><span className="text-white/35">/</span>
+            <span aria-current="page" className="font-semibold text-white">{p.title}</span>
           </nav>
           <div className="flex flex-wrap items-end justify-between gap-6">
             <div className="flex min-w-0 flex-[1_1_560px] items-start gap-5">
-              <Monogram text={u.mono} tone={u.tone} size="lg" className="shadow-soft ring-4 ring-white" />
+              <Monogram text={u.mono} tone={u.tone} size="lg" className="shadow-[0_12px_30px_rgb(0_0_0/0.3)] ring-4 ring-white/10" />
               <div className="min-w-0 space-y-3">
-                <h1 className="text-[clamp(2.3rem,4.4vw,3.75rem)] leading-[1.06] font-extrabold tracking-[-0.045em] text-ink-950">{p.title}</h1>
-                <Link href={`/universities/${u.slug}`} className="flex items-start gap-2 text-ink-600 hover:text-ink-900">
+                <h1 className="text-[clamp(2.3rem,4.4vw,3.75rem)] leading-[1.02] font-extrabold tracking-[-0.045em] text-white">{p.title}</h1>
+                <Link href={`/universities/${u.slug}`} className="flex items-start gap-2 text-ink-200 hover:text-white">
                   <Building2 className="mt-1 size-4 shrink-0" aria-hidden />{u.name} · {p.campus}, {p.city} · {p.shift}
                 </Link>
                 <div className="flex flex-wrap items-center gap-2 pt-1">
-                  <Tag>{u.sector}</Tag>
-                  <Tag>Bachelor · {p.durationYears} years</Tag>
-                  {p.highlights.map((h) => <Tag key={h} tone="brand"><BadgeCheck className="size-3.5" aria-hidden />{h}</Tag>)}
-                  <span className="ml-1"><StatusDot status={p.status}>{p.status === "open" ? `Applications open · closes ${formatDate(p.deadline)}` : `Opens ${p.opensOn ? formatDate(p.opensOn) : "soon"}`}</StatusDot></span>
+                  <Tag tone="ondark">{u.sector}</Tag>
+                  <Tag tone="ondark">Bachelor · {p.durationYears} years</Tag>
+                  {p.highlights.map((h) => <Tag key={h} tone="ondark"><BadgeCheck className="size-3.5 text-brand-300" aria-hidden />{h}</Tag>)}
+                  <span className="ml-1"><StatusDot onDark status={p.status}>{p.status === "open" ? `Applications open · closes ${formatDate(p.deadline)}` : `Opens ${p.opensOn ? formatDate(p.opensOn) : "soon"}`}</StatusDot></span>
                 </div>
               </div>
             </div>
             <div className="flex flex-wrap gap-2">
-              <SaveButton />
-              <ButtonLink href="/compare" variant="light"><Columns2 className="size-4" aria-hidden />Compare</ButtonLink>
-              <ShareButton />
+              <SaveButton onDark />
+              <ButtonLink href="/compare" variant="ondark"><Columns2 className="size-4" aria-hidden />Compare</ButtonLink>
+              <ShareButton onDark />
               <ButtonLink href="#apply">Apply on official website <ExternalLink className="size-4" aria-hidden /></ButtonLink>
             </div>
           </div>

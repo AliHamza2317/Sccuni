@@ -26,7 +26,7 @@ export function SourceMarquee() {
               <li
                 key={`${copy}-${label}`}
                 aria-hidden={copy === 1 || undefined}
-                className="flex shrink-0 items-center gap-2.5 pr-12 font-display text-[15px] font-semibold tracking-[-0.01em] whitespace-nowrap text-white/90"
+                className="flex shrink-0 items-center gap-2.5 pr-12 font-display text-[15px] font-semibold tracking-[-0.01em] whitespace-nowrap text-white"
               >
                 <Icon className="size-[18px] text-brand-300" aria-hidden />
                 {label}

@@ -67,7 +67,7 @@ function HeaderView({ pathname }: { pathname: string | null }) {
         className={cn(
           "pointer-events-auto relative mx-auto flex items-center gap-4 transition-[max-width,width,height,padding,background-color,box-shadow,border-radius] duration-500 ease-[cubic-bezier(0.2,0.8,0.2,1)]",
           floating
-            ? "h-[58px] w-[calc(100%-20px)] max-w-[1180px] rounded-full bg-white/80 pr-2 pl-4 shadow-[0_14px_36px_rgb(0_26_58/0.10)] ring-1 ring-ink-900/[0.07] backdrop-blur-xl backdrop-saturate-150 sm:pl-5 on-dark:bg-ink-950/[0.92] on-dark:shadow-[0_14px_44px_rgb(0_8_20/0.45),inset_0_1px_0_rgb(255_255_255/0.06)] on-dark:ring-white/10"
+            ? "h-[58px] w-[calc(100%-20px)] max-w-[1180px] rounded-full bg-white/95 pr-2 pl-4 shadow-[0_14px_40px_rgb(0_26_58/0.16)] ring-1 ring-ink-900/10 backdrop-blur-xl backdrop-saturate-150 sm:pl-5 on-dark:bg-ink-950/[0.92] on-dark:shadow-[0_14px_44px_rgb(0_8_20/0.45),inset_0_1px_0_rgb(255_255_255/0.06)] on-dark:ring-white/10"
             : "h-[72px] w-full max-w-[1240px] rounded-none px-5 sm:px-7",
         )}
       >

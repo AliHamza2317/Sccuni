@@ -6,7 +6,7 @@ import { GroupPill, Monogram, StatusDot } from "@/components/ui/badges";
 import { ButtonLink } from "@/components/ui/button";
 import { Reveal } from "@/components/ui/controls";
 import { Eyebrow, SectionHeading } from "@/components/ui/section-heading";
-import { SilkCorners } from "@/components/site/silk-backdrop";
+import { SilkBackdrop } from "@/components/site/silk-backdrop";
 import { bestFit, DEMO_TODAY, events, getPrograms, getProgram, getUniversity } from "@/lib/data";
 import { cn, formatDate, pkr, relativeDays, signed } from "@/lib/format";
 import type { AdmissionEvent, FieldId } from "@/lib/types";
@@ -426,27 +426,27 @@ const STANDARDS = [
 export function PromiseSection() {
   return (
     <section className="px-3 pb-28 sm:px-5">
-      <div className="relative isolate mx-auto max-w-[1280px] overflow-hidden rounded-[40px] bg-linear-to-b from-white to-paper px-6 py-20 ring-1 ring-ink-200/60 sm:px-12 lg:py-28">
-        <SilkCorners corners={["tl", "br"]} size="lg" />
+      <div className="relative isolate mx-auto max-w-[1280px] overflow-hidden rounded-[40px] px-6 py-20 text-white sm:px-12 lg:py-28">
+        <SilkBackdrop position="50% 55%" shade="center" sizes="(min-width: 1280px) 1280px, 100vw" />
         <div className="mx-auto max-w-3xl text-center">
-          <Eyebrow>Our promise</Eyebrow>
-          <h2 className="mt-6 text-[clamp(2.3rem,5.2vw,4.25rem)] leading-[1.06] font-extrabold tracking-[-0.045em] text-ink-950">
+          <Eyebrow dark>Our promise</Eyebrow>
+          <h2 className="mt-6 text-[clamp(2.3rem,5.2vw,4.25rem)] leading-[1.02] font-extrabold tracking-[-0.045em] text-white">
             Merit is a guide,
             <br />
-            <span className="text-gradient-emerald-dark">not a guarantee.</span>
+            <span className="text-gradient-emerald">not a guarantee.</span>
           </h2>
-          <p className="mx-auto mt-6 max-w-xl text-lg leading-relaxed text-ink-600">
+          <p className="mx-auto mt-6 max-w-xl text-lg leading-relaxed text-ink-100">
             We show how past closing merits compare with your aggregate — clearly, with sources. We never promise admission, and paid placements never change your results.
           </p>
         </div>
         <dl className="mx-auto mt-14 grid max-w-[1040px] grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
           {STANDARDS.map((s) => (
-            <div key={s.label} className="rounded-[26px] bg-white/80 p-6 shadow-soft ring-1 ring-ink-200/70 backdrop-blur-xl transition duration-300 hover:-translate-y-0.5 hover:shadow-lift">
+            <div key={s.label} className="rounded-[26px] bg-white/[0.07] p-6 ring-1 ring-white/15 backdrop-blur-xl transition duration-300 hover:bg-white/[0.11]">
               <dt className="sr-only">{s.label}</dt>
               <dd>
-                <span className="grid size-10 place-items-center rounded-xl bg-brand-50 text-brand-700 ring-1 ring-brand-100"><s.icon className="size-5" aria-hidden /></span>
-                <span className="tabular mt-5 block font-display text-[clamp(2.3rem,3.6vw,3rem)] leading-none font-extrabold tracking-[-0.04em] text-ink-950">{s.value}</span>
-                <span className="mt-2 block text-[14.5px] leading-snug text-ink-600">{s.label}</span>
+                <span className="grid size-10 place-items-center rounded-xl bg-white/[0.1] ring-1 ring-white/15"><s.icon className="size-5 text-brand-200" aria-hidden /></span>
+                <span className="tabular mt-5 block font-display text-[clamp(2.3rem,3.6vw,3rem)] leading-none font-extrabold tracking-[-0.04em] text-white">{s.value}</span>
+                <span className="mt-2 block text-[14.5px] leading-snug text-ink-100">{s.label}</span>
               </dd>
             </div>
           ))}

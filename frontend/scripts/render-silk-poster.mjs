@@ -1,8 +1,5 @@
 /**
- * Renders the hero "silk" shader to still images:
- * - src/components/home/silk-poster.webp — the hero's first frame (navy and emerald);
- * - src/components/site/silk-light.webp — the same folds mapped to light tones (white, mist blue,
- *   mint), used as soft corner accents in page headers and sections.
+ * Renders the hero "silk" shader to a still image: src/components/home/silk-poster.webp.
  *
  * The page shows this poster immediately, before JavaScript runs; the live WebGL canvas then
  * fades in on top. Both start from the same frame, so the switch is invisible.
@@ -61,46 +58,12 @@ const dataUrl = await page.evaluate(
     gl.uniform2f(gl.getUniformLocation(program, "uMouse"), 0.62, 0.65);
     gl.uniform1f(gl.getUniformLocation(program, "uStrength"), 0);
     gl.drawArrays(gl.TRIANGLES, 0, 3);
-    const poster = canvas.toDataURL("image/webp", 0.95);
-
-    // Light version: map each pixel's brightness onto a light colour ramp, keeping the folds.
-    const c2 = document.createElement("canvas");
-    c2.width = width;
-    c2.height = height;
-    const ctx = c2.getContext("2d");
-    ctx.drawImage(canvas, 0, 0);
-    const img = ctx.getImageData(0, 0, width, height);
-    const px = img.data;
-    const lum = new Float32Array(width * height);
-    for (let i = 0; i < lum.length; i++) lum[i] = 0.2126 * px[i * 4] + 0.7152 * px[i * 4 + 1] + 0.0722 * px[i * 4 + 2];
-    const sorted = Float32Array.from(lum).sort();
-    const lo = sorted[Math.floor(sorted.length * 0.02)];
-    const hi = sorted[Math.floor(sorted.length * 0.995)];
-    const stops = [
-      [0.0, [247, 250, 252]],
-      [0.4, [228, 238, 245]],
-      [0.72, [196, 235, 222]],
-      [1.0, [127, 214, 190]],
-    ];
-    for (let i = 0; i < lum.length; i++) {
-      const t = Math.min(1, Math.max(0, (lum[i] - lo) / (hi - lo)));
-      let k = 0;
-      while (k < stops.length - 2 && t > stops[k + 1][0]) k++;
-      const [t0, c0] = stops[k];
-      const [t1, c1] = stops[k + 1];
-      const f = (t - t0) / (t1 - t0);
-      for (let ch = 0; ch < 3; ch++) px[i * 4 + ch] = Math.round(c0[ch] + (c1[ch] - c0[ch]) * f);
-    }
-    ctx.putImageData(img, 0, 0);
-    return { poster, light: c2.toDataURL("image/webp", 0.92) };
+    return canvas.toDataURL("image/webp", 0.95);
   },
   { vertex, fragment, width, height, time },
 );
 await browser.close();
 
 const out = join(root, "src/components/home/silk-poster.webp");
-writeFileSync(out, Buffer.from(dataUrl.poster.split(",")[1], "base64"));
+writeFileSync(out, Buffer.from(dataUrl.split(",")[1], "base64"));
 console.log(`Wrote ${out} (${width}×${height}, t=${time})`);
-const outLight = join(root, "src/components/site/silk-light.webp");
-writeFileSync(outLight, Buffer.from(dataUrl.light.split(",")[1], "base64"));
-console.log(`Wrote ${outLight}`);

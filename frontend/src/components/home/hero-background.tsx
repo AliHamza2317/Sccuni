@@ -89,8 +89,12 @@ void main() {
   vec3 halfway = normalize(light + vec3(0.0, 0.0, 1.0));
   float spec = pow(clamp(dot(n, halfway), 0.0, 1.0), 36.0);
 
-  vec3 shadow = vec3(0.000, 0.028, 0.080);
-  vec3 base   = vec3(0.000, 0.090, 0.205);
+  // The darkest navy stays at the edges. Towards the middle the shadows lift to a lighter
+  // navy-teal, so no dark patch drifts across the headline.
+  vec2 ec = (uv - 0.5) * vec2(1.0, 1.25);
+  float edge = smoothstep(0.18, 0.62, length(ec));
+  vec3 shadow = mix(vec3(0.000, 0.125, 0.220), vec3(0.000, 0.034, 0.092), edge);
+  vec3 base   = mix(vec3(0.004, 0.160, 0.255), vec3(0.000, 0.095, 0.210), edge);
   vec3 lit    = vec3(0.010, 0.300, 0.280);
   vec3 sheen  = vec3(0.420, 0.860, 0.760);
 
@@ -102,10 +106,10 @@ void main() {
   col *= mix(0.72, 1.0, smoothstep(1.0, 0.82, uv.y));
   col *= mix(0.80, 1.0, smoothstep(0.0, 0.25, uv.y));
   vec2 v = uv - 0.5;
-  col *= 1.0 - 0.30 * dot(v, v);
+  col *= 1.0 - 0.26 * dot(v, v);
   // A soft, wide shade behind the headline and search keeps text contrast high.
   vec2 tc = (uv - vec2(0.5, 0.64)) * vec2(1.1, 2.2);
-  col *= 1.0 - 0.18 * exp(-dot(tc, tc) * 2.0);
+  col *= 1.0 - 0.07 * exp(-dot(tc, tc) * 2.0);
 
   col += (hash(gl_FragCoord.xy + fract(uTime)) - 0.5) / 255.0;
   gl_FragColor = vec4(col, 1.0);

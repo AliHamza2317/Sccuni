@@ -27,6 +27,14 @@ All notable changes to Sccuni are documented here. The format follows [Keep a Ch
 - High-fidelity, clickable MVP design on a Design canvas: 12 desktop screens (home, search, program, calculator, Best Fit, compare, university, calendar, scholarships, sign-in, student dashboard, admin verification queue), a design-system page and 2 mobile screens. Sample data is fictional and labelled.
 - `docs/DESIGN_SYSTEM.md`: direction ("Ink & Emerald"), tokens, components, screen inventory with requirement mapping, accessibility and content rules, open design decisions.
 
+### Changed — 2026-11-21 (hero lighter in the middle; dark silk headers restored)
+
+- Home hero: the darkest navy stays at the edges. The shadows lift towards the middle and the shade behind the headline was reduced. The poster was regenerated to match.
+- Reverted the light silk corners: inner page headers, "Our promise" and the calculator card are on dark silk again. Removed `SilkCorners` and `silk-light.webp`.
+- Kept the clearer Popular and Explore sections, the descender fix, the double-logo fix and the URL filters.
+- Hero small texts (badge, chips, strip, subtitle) have a navy wash or a lighter colour, for contrast over the lighter middle.
+- The light floating navbar is more opaque, so it stays visible over white content.
+
 ### Changed — 2026-11-21 (light silk corners, clearer sections)
 
 - Every page header except the home hero, and the "Our promise" section, are now light: white backgrounds with the silk only in two corners. This uses `SilkCorners` and `silk-light.webp`, a light-toned version generated from the shader. The calculator result card is light too.

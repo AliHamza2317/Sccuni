@@ -3,7 +3,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { Suspense } from "react";
-import { SilkCorners } from "@/components/site/silk-backdrop";
+import { SilkBackdrop } from "@/components/site/silk-backdrop";
 import { DetailSkeleton } from "@/components/site/skeletons";
 import { InquiryForm, UniversityPrograms } from "@/components/programs/university-islands";
 import { SaveButton } from "@/components/programs/program-islands";
@@ -50,34 +50,34 @@ async function UniversityContent({ params }: { params: PageProps<"/universities/
   return (
     <>
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
-      <section className="relative isolate overflow-hidden border-b border-ink-200/60 bg-linear-to-b from-white to-paper">
-        <SilkCorners eager corners={["tl", "br"]} />
+      <section data-header-theme="dark" className="relative isolate overflow-hidden rounded-b-[28px] bg-ink-950 text-white sm:rounded-b-[40px]">
+        <SilkBackdrop eager position="35% 55%" />
         <div className="mx-auto max-w-[1240px] space-y-9 px-5 pt-[112px] pb-12 sm:px-7 lg:pt-[120px]">
-          <nav aria-label="Breadcrumb" className="flex flex-wrap items-center gap-2 text-[13px] text-ink-600">
-            <Link href="/" className="hover:text-ink-900">Home</Link><span className="text-ink-300">/</span><Link href="/programs" className="hover:text-ink-900">Universities</Link><span className="text-ink-300">/</span><span aria-current="page" className="font-semibold text-ink-900">{u.shortName}</span>
+          <nav aria-label="Breadcrumb" className="flex flex-wrap items-center gap-2 text-[13px] text-white/70">
+            <Link href="/" className="hover:text-white">Home</Link><span className="text-white/35">/</span><Link href="/programs" className="hover:text-white">Universities</Link><span className="text-white/35">/</span><span aria-current="page" className="font-semibold text-white">{u.shortName}</span>
           </nav>
           <div className="flex flex-wrap items-end justify-between gap-6">
             <div className="flex min-w-0 flex-[1_1_560px] items-center gap-5">
-              <Monogram text={u.mono} tone={u.tone} size="lg" className="shadow-soft ring-4 ring-white" />
+              <Monogram text={u.mono} tone={u.tone} size="lg" className="ring-4 ring-white/10" />
               <div className="min-w-0 space-y-3">
-                <h1 className="text-[clamp(2.2rem,4.2vw,3.6rem)] leading-[1.06] font-extrabold tracking-[-0.045em] text-ink-950">{u.name}</h1>
+                <h1 className="text-[clamp(2.2rem,4.2vw,3.6rem)] leading-[1.02] font-extrabold tracking-[-0.045em] text-white">{u.name}</h1>
                 <div className="flex flex-wrap gap-2">
-                  <Tag><MapPin className="size-3.5" aria-hidden />{u.city}, {u.province}</Tag>
-                  <Tag>{u.sector}</Tag>
-                  <Tag>Chartered by {u.charteredBy}</Tag>
+                  <Tag tone="ondark"><MapPin className="size-3.5" aria-hidden />{u.city}, {u.province}</Tag>
+                  <Tag tone="ondark">{u.sector}</Tag>
+                  <Tag tone="ondark">Chartered by {u.charteredBy}</Tag>
                   <Verified>HEC recognised</Verified>
                 </div>
               </div>
             </div>
             <div className="flex flex-wrap gap-2">
-              <SaveButton />
+              <SaveButton onDark />
               <ButtonLink href="#contact">Official website <ExternalLink className="size-4" aria-hidden /></ButtonLink>
             </div>
           </div>
-          <dl className="grid grid-cols-2 overflow-hidden rounded-3xl bg-white/80 shadow-soft ring-1 ring-ink-200/70 backdrop-blur-xl md:grid-cols-4">
+          <dl className="grid grid-cols-2 overflow-hidden rounded-3xl bg-white/[0.06] ring-1 ring-white/[0.12] backdrop-blur-xl md:grid-cols-4">
             {[["Programs on Sccuni", `${u.programsOnSccuni} undergraduate`], ["Campuses", `${u.campuses.length} ${u.campuses.length === 1 ? "campus" : "campuses"}`], ["Admission session", `${formula.session} · open`], ["Tuition / semester", `From ${pkr(u.tuitionFrom)}`]].map(([k, v], i) => (
-              <div key={k} className={cn("p-5", i > 0 && "md:border-l md:border-ink-100", i % 2 === 1 && "border-l border-ink-100", i > 1 && "border-t border-ink-100 md:border-t-0")}>
-                <dt className="text-[12.5px] text-ink-500">{k}</dt>
+              <div key={k} className={cn("p-5", i > 0 && "md:border-l md:border-white/[0.08]", i % 2 === 1 && "border-l border-white/[0.08]", i > 1 && "border-t border-white/[0.08] md:border-t-0")}>
+                <dt className="text-[12.5px] text-ink-200">{k}</dt>
                 <dd className="mt-1.5 text-lg font-semibold tracking-[-0.01em]">{v}</dd>
               </div>
             ))}

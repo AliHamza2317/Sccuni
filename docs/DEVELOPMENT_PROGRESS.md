@@ -196,6 +196,25 @@ All inner page headers moved onto the silk (see DESIGN_SYSTEM §8b).
 | All routes, desktop and mobile | No console errors; no sideways scrolling (page-level and element-level checks) |
 | Lint, typecheck, build, 11 unit tests | Pass |
 
+**Correction (21 Nov 2026).** The founder clarified that the "lighter, at the edges" request was about the home hero, not the page headers.
+
+What changed:
+- The light silk corners were reverted. Inner headers, "Our promise" and the calculator card are back on dark silk.
+- The hero's dark navy is now lighter in the middle and stays at the edges.
+- Kept from the last round:
+  - the clearer Popular and Explore sections;
+  - the descender fix;
+  - the double-logo fix;
+  - the `?field=` and `?q=` filters.
+- The light floating navbar is now more opaque, so it is visible over white content.
+
+| Check | Result |
+|---|---|
+| Hero text contrast with the lighter middle | All text passes. Small texts got a navy wash or a lighter colour |
+| Inner silk headers | White ≥ 9.5:1; `ink-200` ≥ 7.4:1 |
+| Navbar at the top and after scrolling (home, Programs, program page) | Visible on all |
+| All routes | No console errors; no sideways scrolling; 11/11 tests pass |
+
 **Still open:** unknown program/university URLs still return HTTP 200 with the 404 page (see limitation 3 above).
 
 ### Next phase

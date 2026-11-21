@@ -14,17 +14,17 @@ export default function ScholarshipsPage() {
   return (
     <>
       <PageHeader
-        corners={["tl", "br"]}
+        silkPosition="22% 50%"
         eyebrow="Scholarships & financial aid"
         title="Money shouldn’t decide your future"
         description="Need-based, merit and regional scholarships for undergraduate students — with eligibility, coverage and deadlines checked against official notices."
         aside={
-          <div className="relative isolate overflow-hidden rounded-[28px] bg-white/80 p-7 shadow-lift ring-1 ring-ink-200/70 backdrop-blur-xl">
-            <Eyebrow><Info className="size-3.5" aria-hidden />How need-based aid works</Eyebrow>
+          <div className="relative isolate overflow-hidden rounded-[28px] bg-white/[0.07] p-7 text-white shadow-[0_24px_60px_rgb(0_8_20/0.35)] ring-1 ring-white/15 backdrop-blur-xl">
+            <Eyebrow dark><Info className="size-3.5" aria-hidden />How need-based aid works</Eyebrow>
             <ol className="mt-5 space-y-4">
               {["Get admission first — most need-based awards are given after you join.", "Collect income documents: salary slips, utility bills, guardian CNIC.", "Apply through your university’s financial aid office before its deadline."].map((t, i) => (
-                <li key={t} className="flex items-start gap-3 text-sm text-ink-600">
-                  <span className="grid size-7 shrink-0 place-items-center rounded-full bg-ink-950 font-display text-[13px] font-bold text-white">{i + 1}</span>{t}
+                <li key={t} className="flex items-start gap-3 text-sm text-ink-200">
+                  <span className="grid size-7 shrink-0 place-items-center rounded-full bg-white/[0.08] font-display text-[13px] font-bold text-white ring-1 ring-white/10">{i + 1}</span>{t}
                 </li>
               ))}
             </ol>

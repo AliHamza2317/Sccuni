@@ -218,7 +218,7 @@
   }
   /* Mint to emerald for text on the navy silk hero (darkest stop still ≥ 3:1 on its brightest folds) */
   .text-gradient-emerald {
-    background: linear-gradient(100deg, #c5f0e4 0%, #8fdfc8 45%, #5fd0b0 100%);
+    background: linear-gradient(100deg, #c9f2e6 0%, #9be3cf 45%, #6fd6b8 100%);
     -webkit-background-clip: text;
     background-clip: text;
     color: transparent;

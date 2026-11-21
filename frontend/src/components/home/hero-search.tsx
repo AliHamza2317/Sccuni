@@ -128,7 +128,7 @@ export function HeroSearch() {
           <Link
             key={p}
             href="/programs"
-            className="inline-flex h-8 items-center rounded-full border border-white/15 bg-white/[0.07] px-3.5 text-[13px] text-ink-100 backdrop-blur transition hover:border-white/30 hover:bg-white/[0.14] hover:text-white"
+            className="inline-flex h-8 items-center rounded-full border border-white/15 bg-ink-950/35 px-3.5 text-[13px] text-white backdrop-blur transition hover:border-white/30 hover:bg-ink-950/55"
           >
             {p}
           </Link>

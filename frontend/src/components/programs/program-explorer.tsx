@@ -88,7 +88,7 @@ export function ProgramExplorer({ items }: { items: ExplorerItem[] }) {
         />
       </Suspense>
       <PageHeader
-        corners={["tr", "bl"]}
+        silkPosition="30% 38%"
         crumbs={[{ label: "Home", href: "/" }, { label: "Programs" }]}
         eyebrow="Explore programs"
         title="Find your program"
@@ -96,7 +96,8 @@ export function ProgramExplorer({ items }: { items: ExplorerItem[] }) {
         actions={<ButtonLink href="/best-fit" variant="light"><Target className="size-4" aria-hidden />Match programs to my marks</ButtonLink>}
       >
         <div className="space-y-5">
-          <div role="search" className="flex flex-wrap items-center gap-1 rounded-[24px] bg-white p-1.5 shadow-lift ring-1 ring-ink-200/80 transition focus-within:ring-brand-500/40 sm:flex-nowrap sm:rounded-full">
+          <div className="rounded-[30px] bg-white/[0.1] p-1.5 shadow-[0_24px_70px_rgb(0_10_26/0.4)] ring-1 ring-white/20 backdrop-blur-xl sm:rounded-full">
+          <div role="search" className="flex flex-wrap items-center gap-1 rounded-[24px] bg-white p-1.5 sm:flex-nowrap sm:rounded-full">
             <label className="flex h-12 min-w-0 flex-[1_1_100%] items-center gap-3 pr-2 pl-4 sm:flex-1">
               <Search className="size-[18px] shrink-0 text-ink-400" aria-hidden />
               <span className="sr-only">Search programs</span>
@@ -109,8 +110,9 @@ export function ProgramExplorer({ items }: { items: ExplorerItem[] }) {
               <select className="h-full w-full cursor-pointer bg-transparent text-[15px] text-ink-700 outline-none"><option>Any city</option><option>Lahore</option><option>Islamabad</option><option>Karachi</option><option>Peshawar</option><option>Rawalpindi</option></select>
             </label>
           </div>
+          </div>
           <div className="flex flex-wrap gap-2">
-            {FIELDS.map((f) => <Chip key={f.id} active={field === f.id} onClick={() => setField(f.id)}>{f.label}</Chip>)}
+            {FIELDS.map((f) => <Chip key={f.id} tone="dark" active={field === f.id} onClick={() => setField(f.id)}>{f.label}</Chip>)}
           </div>
         </div>
       </PageHeader>

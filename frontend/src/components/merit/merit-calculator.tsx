@@ -7,7 +7,7 @@ import { GroupPill, SourceChip, Tag, Verified } from "@/components/ui/badges";
 import { Button, ButtonLink } from "@/components/ui/button";
 import { Segmented } from "@/components/ui/controls";
 import { MeritMeter } from "@/components/ui/merit-meter";
-import { SilkCorners } from "@/components/site/silk-backdrop";
+import { SilkBackdrop } from "@/components/site/silk-backdrop";
 import { calculateAggregate, classify, requiredTestMarks } from "@/lib/merit/engine";
 import { cn, formulaSummary, signed } from "@/lib/format";
 import type { Formula, Group } from "@/lib/types";
@@ -139,22 +139,22 @@ export function MeritCalculator({ programs }: { programs: CalcProgram[] }) {
 
       {/* Results */}
       <div className="min-w-0 flex-[999_1_560px] space-y-5">
-        <section aria-label="Your result" className="relative isolate overflow-hidden rounded-[30px] bg-white p-7 shadow-lift ring-1 ring-ink-200/70 sm:p-9">
-          <SilkCorners corners={["tr"]} size="sm" />
+        <section aria-label="Your result" className="relative isolate overflow-hidden rounded-[30px] bg-ink-950 p-7 text-white shadow-lift sm:p-9">
+          <SilkBackdrop position="70% 40%" shade="left" sizes="(min-width: 1024px) 66vw, 100vw" />
           <div className="flex flex-wrap items-start justify-between gap-5">
             <div className="space-y-2">
-              <p className="text-sm text-ink-500">Your aggregate · {program.short}</p>
+              <p className="text-sm text-ink-300">Your aggregate · {program.short}</p>
               <p className="tabular font-display text-[clamp(3rem,7vw,4.6rem)] leading-none font-extrabold tracking-[-0.045em]" aria-live="polite">
-                {result.ok ? result.aggregate : "—"}<span className="text-[0.4em] text-ink-500">%</span>
+                {result.ok ? result.aggregate : "—"}<span className="text-[0.4em] text-ink-400">%</span>
               </p>
-              {expected && <Tag tone="gold">Based on an expected test score</Tag>}
+              {expected && <Tag tone="ondark">Based on an expected test score</Tag>}
             </div>
             <div className="flex max-w-[280px] flex-col items-end gap-2 text-right">
-              {result.ok ? <GroupPill group={group} /> : <Tag tone="danger">Check marks</Tag>}
-              <p className="text-sm text-ink-600">{result.ok ? REASONS[group] : "Fix the highlighted entries to see your result."}</p>
+              {result.ok ? <GroupPill group={group} /> : <Tag tone="ondark">Check marks</Tag>}
+              <p className="text-sm text-ink-300">{result.ok ? REASONS[group] : "Fix the highlighted entries to see your result."}</p>
             </div>
           </div>
-          <MeritMeter className="mt-9" value={aggregate} marks={[...program.closings].reverse().map((c) => ({ label: String(c.year), value: c.value }))} caption="Final-list closing aggregates · Open merit" />
+          <MeritMeter className="mt-9" dark value={aggregate} marks={[...program.closings].reverse().map((c) => ({ label: String(c.year), value: c.value }))} caption="Final-list closing aggregates · Open merit" />
         </section>
 
         <section className="space-y-4 rounded-[28px] bg-white ring-1 ring-ink-200/70 p-6 shadow-xs sm:p-8">
