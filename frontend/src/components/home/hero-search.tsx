@@ -51,7 +51,7 @@ export function HeroSearch() {
       </form>
 
       <div className="flex flex-wrap items-center justify-center gap-2">
-        <span className="mr-1 text-[13px] text-ink-400">Popular</span>
+        <span className="mr-1 text-[13px] text-ink-300">Popular</span>
         {POPULAR.map((p) => (
           <Link
             key={p}

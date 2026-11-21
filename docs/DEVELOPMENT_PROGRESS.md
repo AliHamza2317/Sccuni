@@ -121,6 +121,17 @@ See the Phase 0 summary in chat and REQUIREMENTS §9.2:
 | `pnpm build` | Succeeds; 41 pages |
 | Every route at 1440 px and 390 px (production server) | No console errors; no sideways scrolling |
 
+**Interactive hero background (21 Nov 2026):** a WebGL background that follows the cursor (aurora light, glowing grid, parallax).
+
+| Check | Result |
+|---|---|
+| WebGL starts in Chromium | Yes |
+| Cursor tracking | The glow follows the cursor and fades out when the cursor leaves the hero |
+| Reduced motion | One static frame; no cursor reaction |
+| Console errors | None |
+| Text contrast over the background (worst case, cursor on the text) | White ≥ 10.7:1; subtitle ≥ 5.9:1; headline green 2.9:1 at worst, just below the 3:1 large-text target |
+| Smoothness | Headless test machine without a GPU (software rendering): 13 frames per second. Not yet measured on real phones or laptops with a GPU; to check during Phase 18 |
+
 **Still open:** unknown program/university URLs still return HTTP 200 with the 404 page (see limitation 3 above).
 
 ### Next phase

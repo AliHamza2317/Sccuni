@@ -188,6 +188,21 @@ The founder said the home page and some pages still felt simple. The refresh kee
 | Home sections | Many coloured boxes | Fewer sections: three alternating feature rows, a 3-step strip, featured programs, fields + cities, closing soon, a dark "promise" block with four standards, and a centred final call to action |
 | Inner pages | Plain white title bands | One shared `PageHeader`: soft green/blue light, fine grid, pill eyebrow, large gradient title |
 
+**Interactive hero background (added 21 Nov 2026).** Code: `frontend/src/components/home/hero-background.tsx`.
+
+| Layer | Behaviour |
+|---|---|
+| WebGL aurora | Navy, emerald and a little blue light that drifts slowly. Near the cursor the light bends gently and a soft mint glow appears |
+| Line grid | Moves a few pixels opposite the cursor (parallax). Around the cursor the same grid lines light up in mint |
+| Fallback | Without WebGL, the earlier CSS glows stay and the grid and cursor spotlight still react |
+
+**Accessibility and performance rules:**
+- Text never moves.
+- Under `prefers-reduced-motion` the aurora is drawn once and does not follow the cursor.
+- The animation pauses when the hero is off screen or the tab is hidden.
+- At most 450,000 pixels are shaded per frame (reduced resolution; the image is soft, so this is not visible).
+- Measured text contrast over the moving background, with the cursor on the text: white ≥ 10.7:1 and the subtitle grey ≥ 5.9:1. The darkest green of the headline gradient measured 2.9:1 at worst. That is just below the 3:1 target for large text, so this needs a fix.
+
 **Rules kept:**
 - One primary action per view.
 - Sample data stays labelled. The "Sample" tag is also shown in the product window.

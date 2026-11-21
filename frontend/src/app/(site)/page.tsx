@@ -4,6 +4,7 @@ import {
 } from "lucide-react";
 import Link from "next/link";
 import type { ReactNode } from "react";
+import { HeroBackground } from "@/components/home/hero-background";
 import { HeroSearch } from "@/components/home/hero-search";
 import { ProductWindow, type WindowRow } from "@/components/home/product-window";
 import { DateTile, GroupPill, Monogram, SourceChip, Verified } from "@/components/ui/badges";
@@ -91,13 +92,7 @@ export default function HomePage() {
         className="relative isolate overflow-hidden bg-ink-950 text-white"
         style={{ paddingBottom: OVERLAP, borderBottomLeftRadius: "50% 56px", borderBottomRightRadius: "50% 56px" }}
       >
-        <div aria-hidden className="pointer-events-none absolute inset-0 -z-10">
-          <div className="bg-lines-dark mask-radial absolute inset-0" />
-          <div className="absolute top-[-340px] left-1/2 h-[820px] w-[1200px] -translate-x-1/2 bg-[radial-gradient(closest-side,rgb(0_152_124/0.34),rgb(0_152_124/0.08)_55%,transparent)]" />
-          <div className="animate-aurora absolute top-[160px] left-[-14%] size-[560px] rounded-full bg-[#2c5bd8]/[0.13] blur-[120px]" />
-          <div className="animate-aurora absolute right-[-12%] bottom-[-160px] size-[520px] rounded-full bg-brand-500/[0.16] blur-[120px] [animation-delay:-9s]" />
-          <div className="bg-noise absolute inset-0 opacity-[0.2] mix-blend-soft-light" />
-        </div>
+        <HeroBackground />
 
         <div className="mx-auto max-w-[1240px] px-5 pt-16 text-center sm:px-7 sm:pt-24 lg:pt-28">
           <Link
@@ -123,7 +118,7 @@ export default function HomePage() {
             <HeroSearch />
           </div>
 
-          <ul className="animate-rise mt-8 flex flex-wrap justify-center gap-x-7 gap-y-2 text-[13.5px] text-ink-400 [animation-delay:320ms]">
+          <ul className="animate-rise mt-8 flex flex-wrap justify-center gap-x-7 gap-y-2 text-[13.5px] text-ink-300 [animation-delay:320ms]">
             {["Official sources only", "Checked by two people", "Free for students"].map((t) => (
               <li key={t} className="inline-flex items-center gap-2">
                 <BadgeCheck className="size-4 text-brand-400" aria-hidden />

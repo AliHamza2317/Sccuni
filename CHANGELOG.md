@@ -27,6 +27,12 @@ All notable changes to Sccuni are documented here. The format follows [Keep a Ch
 - High-fidelity, clickable MVP design on a Design canvas: 12 desktop screens (home, search, program, calculator, Best Fit, compare, university, calendar, scholarships, sign-in, student dashboard, admin verification queue), a design-system page and 2 mobile screens. Sample data is fictional and labelled.
 - `docs/DESIGN_SYSTEM.md`: direction ("Ink & Emerald"), tokens, components, screen inventory with requirement mapping, accessibility and content rules, open design decisions.
 
+### Added — 2026-11-21 (interactive hero background)
+
+- WebGL hero background (`HeroBackground`): a slow aurora in brand colours that bends and glows around the cursor; the line grid has parallax and lights up near the cursor.
+- Falls back to CSS when WebGL is unavailable. Static under reduced motion. Pauses off screen. Limited to 450,000 shaded pixels per frame.
+- Hero helper text raised to `ink-300` for contrast over the moving background.
+
 ### Changed — 2026-11-21 (premium minimal design refresh)
 
 - Home page redesigned:
