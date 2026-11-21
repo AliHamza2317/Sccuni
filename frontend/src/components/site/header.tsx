@@ -4,7 +4,6 @@ import { ArrowRight, Menu, X } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { Suspense, useEffect, useState } from "react";
-import { ButtonLink } from "@/components/ui/button";
 import { cn } from "@/lib/format";
 import { Logo } from "./logo";
 
@@ -16,9 +15,12 @@ export const NAV = [
   { href: "/scholarships", label: "Scholarships" },
 ];
 
-/** Routes whose top section is navy, so the header sits on it in its dark style. (Home uses a light header above its silk hero card.) */
+/** Height of the header row. Pages start their first section this much lower (the header floats over it). */
+export const HEADER_HEIGHT = 72;
+
+/** Routes whose top section is navy, so the header uses its light-on-dark style. */
 function isDarkRoute(path: string) {
-  return path.startsWith("/best-fit") || path.startsWith("/universities/");
+  return path === "/" || path.startsWith("/best-fit") || path.startsWith("/universities/");
 }
 
 /**
@@ -37,37 +39,48 @@ function HeaderWithPath() {
   return <HeaderView pathname={usePathname()} />;
 }
 
+/**
+ * Premium header.
+ * - At the top of the page it is transparent and sits on the page's first section (no gap, no bar).
+ * - Once you scroll, it becomes a floating glass capsule.
+ */
 function HeaderView({ pathname }: { pathname: string | null }) {
   const [open, setOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const dark = pathname !== null && isDarkRoute(pathname);
+  const floating = scrolled || open;
 
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 8);
+    const onScroll = () => setScrolled(window.scrollY > 24);
     onScroll();
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
-  return (
-    <header
-      className={cn(
-        "sticky top-0 z-50 border-b transition-[background,border-color,box-shadow] duration-300",
-        // Dark routes: solid navy, so the light page behind never tints it grey.
-        dark ? "border-white/[0.06] bg-ink-950" : "border-ink-200/60 bg-white/75 backdrop-blur-xl backdrop-saturate-150",
-        scrolled && (dark ? "shadow-[0_12px_32px_rgb(0_8_20/0.45)]" : "bg-white/90 shadow-[0_8px_24px_rgb(0_26_58/0.05)]"),
-      )}
-    >
-      <div className="mx-auto flex h-[72px] max-w-[1240px] items-center gap-6 px-5 sm:px-7">
-        <Logo onDark={dark} priority />
+  useEffect(() => {
+    if (!open) return;
+    const onKey = (e: KeyboardEvent) => e.key === "Escape" && setOpen(false);
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+  }, [open]);
 
-        <nav
-          aria-label="Main"
-          className={cn(
-            "mx-auto hidden items-center gap-0.5 rounded-full border p-1 lg:flex",
-            dark ? "border-white/[0.08] bg-white/[0.03]" : "border-ink-200/70 bg-ink-50/70",
-          )}
-        >
+  return (
+    <header className="pointer-events-none sticky top-0 z-50 -mb-[72px] flex h-[72px] items-center justify-center">
+      <div
+        className={cn(
+          "pointer-events-auto relative mx-auto flex items-center gap-4 transition-[max-width,width,height,padding,background-color,box-shadow,border-radius] duration-500 ease-[cubic-bezier(0.2,0.8,0.2,1)]",
+          floating
+            ? "h-[58px] w-[calc(100%-20px)] max-w-[1180px] rounded-full pr-2 pl-4 backdrop-blur-xl backdrop-saturate-150 sm:pl-5"
+            : "h-[72px] w-full max-w-[1240px] rounded-none px-5 sm:px-7",
+          floating &&
+            (dark
+              ? "bg-ink-950/[0.92] shadow-[0_14px_44px_rgb(0_8_20/0.45),inset_0_1px_0_rgb(255_255_255/0.06)] ring-1 ring-white/10"
+              : "bg-white/80 shadow-[0_14px_36px_rgb(0_26_58/0.10)] ring-1 ring-ink-900/[0.07]"),
+        )}
+      >
+        <Logo onDark={dark} priority imageClassName={cn("w-auto transition-[height] duration-500", floating ? "h-8 sm:h-9" : "h-9 sm:h-10")} />
+
+        <nav aria-label="Main" className="mx-auto hidden items-center gap-1 lg:flex">
           {NAV.map((n) => {
             const active = pathname !== null && (pathname === n.href || pathname.startsWith(n.href + "/"));
             return (
@@ -76,10 +89,10 @@ function HeaderView({ pathname }: { pathname: string | null }) {
                 href={n.href}
                 aria-current={active ? "page" : undefined}
                 className={cn(
-                  "rounded-full px-4 py-2 text-[14.5px] font-medium whitespace-nowrap transition-colors duration-200",
+                  "relative rounded-full px-3.5 py-2 text-[14.5px] font-medium tracking-[-0.01em] whitespace-nowrap transition-colors duration-200",
                   dark
-                    ? active ? "bg-white/[0.1] text-white" : "text-ink-300 hover:text-white"
-                    : active ? "bg-white text-ink-900 shadow-xs" : "text-ink-500 hover:text-ink-900",
+                    ? active ? "bg-white/[0.1] text-white" : "text-white/70 hover:text-white"
+                    : active ? "bg-ink-900/[0.05] text-ink-900" : "text-ink-500 hover:text-ink-900",
                 )}
               >
                 {n.label}
@@ -93,14 +106,23 @@ function HeaderView({ pathname }: { pathname: string | null }) {
             href="/sign-in"
             className={cn(
               "hidden h-10 items-center rounded-full px-4 text-[14.5px] font-medium transition-colors sm:inline-flex",
-              dark ? "text-ink-200 hover:text-white" : "text-ink-600 hover:text-ink-900",
+              dark ? "text-white/80 hover:text-white" : "text-ink-600 hover:text-ink-900",
             )}
           >
             Sign in
           </Link>
-          <ButtonLink href="/best-fit" size="sm" className="hidden h-10 rounded-full px-4.5 sm:inline-flex">
-            Find my best fit <ArrowRight className="size-4" aria-hidden />
-          </ButtonLink>
+          <Link
+            href="/best-fit"
+            className={cn(
+              "group hidden h-10 items-center gap-1.5 rounded-full pr-3.5 pl-4.5 text-[14.5px] font-semibold transition-[background-color,box-shadow] sm:inline-flex",
+              dark
+                ? "bg-white text-ink-950 shadow-[0_6px_20px_rgb(0_0_0/0.25)] hover:bg-brand-50"
+                : "bg-ink-950 text-white shadow-[inset_0_1px_0_rgb(255_255_255/0.12),0_6px_18px_rgb(0_26_58/0.22)] hover:bg-ink-800",
+            )}
+          >
+            Find my best fit
+            <ArrowRight className="size-4 transition-transform group-hover:translate-x-0.5" aria-hidden />
+          </Link>
           <button
             type="button"
             onClick={() => setOpen((v) => !v)}
@@ -108,32 +130,55 @@ function HeaderView({ pathname }: { pathname: string | null }) {
             aria-controls="mobile-nav"
             aria-label={open ? "Close menu" : "Open menu"}
             className={cn(
-              "grid size-11 place-items-center rounded-full border lg:hidden",
-              dark ? "border-white/15 bg-white/[0.06] text-white" : "border-ink-200 bg-white text-ink-900",
+              "grid size-11 place-items-center rounded-full transition-colors lg:hidden",
+              dark ? "bg-white/[0.08] text-white ring-1 ring-white/15 hover:bg-white/[0.14]" : "bg-white text-ink-900 ring-1 ring-ink-200 hover:bg-ink-50",
             )}
           >
-            {open ? <X className="size-5" /> : <Menu className="size-5" />}
+            {open ? <X className="size-5" aria-hidden /> : <Menu className="size-5" aria-hidden />}
           </button>
         </div>
-      </div>
 
-      {open && (
-        <nav id="mobile-nav" aria-label="Mobile" className={cn("border-t px-5 pb-5 lg:hidden", dark ? "border-white/10" : "border-ink-200")}>
-          {NAV.concat([{ href: "/sign-in", label: "Sign in" }]).map((n) => (
+        {open && (
+          <nav
+            id="mobile-nav"
+            aria-label="Mobile"
+            className={cn(
+              "animate-rise absolute top-[calc(100%+10px)] right-0 left-0 overflow-hidden rounded-3xl p-2 backdrop-blur-xl lg:hidden",
+              dark ? "bg-ink-950/[0.97] shadow-[0_24px_60px_rgb(0_8_20/0.55)] ring-1 ring-white/10" : "bg-white/[0.97] shadow-[0_24px_60px_rgb(0_26_58/0.16)] ring-1 ring-ink-900/[0.07]",
+            )}
+          >
+            {NAV.concat([{ href: "/sign-in", label: "Sign in" }]).map((n) => {
+              const active = pathname !== null && (pathname === n.href || pathname.startsWith(n.href + "/"));
+              return (
+                <Link
+                  key={n.href}
+                  href={n.href}
+                  onClick={() => setOpen(false)}
+                  aria-current={active ? "page" : undefined}
+                  className={cn(
+                    "flex h-12 items-center rounded-2xl px-4 text-[15.5px] font-medium transition-colors",
+                    dark
+                      ? active ? "bg-white/[0.08] text-white" : "text-white/80 hover:bg-white/[0.06] hover:text-white"
+                      : active ? "bg-ink-900/[0.05] text-ink-900" : "text-ink-700 hover:bg-ink-50",
+                  )}
+                >
+                  {n.label}
+                </Link>
+              );
+            })}
             <Link
-              key={n.href}
-              href={n.href}
+              href="/best-fit"
               onClick={() => setOpen(false)}
-              className={cn("flex h-12 items-center border-b text-[15px] font-semibold", dark ? "border-white/[0.08] text-white" : "border-ink-100 text-ink-900")}
+              className={cn(
+                "mt-2 flex h-12 items-center justify-center gap-2 rounded-2xl text-[15.5px] font-semibold",
+                dark ? "bg-white text-ink-950" : "bg-ink-950 text-white",
+              )}
             >
-              {n.label}
+              Find my best fit <ArrowRight className="size-4" aria-hidden />
             </Link>
-          ))}
-          <ButtonLink href="/best-fit" onClick={() => setOpen(false)} className="mt-4 w-full rounded-full">
-            Find my best fit
-          </ButtonLink>
-        </nav>
-      )}
+          </nav>
+        )}
+      </div>
     </header>
   );
 }

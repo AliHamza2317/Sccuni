@@ -53,7 +53,7 @@ async function UniversityContent({ params }: { params: PageProps<"/universities/
         <div aria-hidden className="absolute inset-0 -z-10 bg-[radial-gradient(60%_90%_at_85%_-10%,rgb(0_152_124/0.3),transparent_65%),radial-gradient(45%_80%_at_5%_-10%,rgb(44_91_216/0.16),transparent_60%)]" />
         <div aria-hidden className="bg-lines-dark mask-radial-right absolute inset-0 -z-10" />
         <div aria-hidden className="bg-noise absolute inset-0 -z-10 opacity-[0.18] mix-blend-soft-light" />
-        <div className="mx-auto max-w-[1240px] space-y-9 px-5 pt-10 pb-12 sm:px-7 lg:pt-12">
+        <div className="mx-auto max-w-[1240px] space-y-9 px-5 pt-[112px] pb-12 sm:px-7 lg:pt-[120px]">
           <nav aria-label="Breadcrumb" className="flex flex-wrap items-center gap-2 text-[13px] text-ink-400">
             <Link href="/" className="hover:text-white">Home</Link><span className="text-ink-600">/</span><Link href="/programs" className="hover:text-white">Universities</Link><span className="text-ink-600">/</span><span aria-current="page" className="font-semibold text-white">{u.shortName}</span>
           </nav>

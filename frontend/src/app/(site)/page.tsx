@@ -81,12 +81,12 @@ export default function HomePage() {
   return (
     <>
       {/* ───────────────── HERO ─────────────────
-          A rounded "silk" card inset from the page edges. */}
-      <div className="px-2 pt-2 sm:px-3 sm:pt-3">
-        <section className="relative isolate overflow-hidden rounded-[28px] bg-[#021a4d] text-white sm:rounded-[36px]" style={{ paddingBottom: OVERLAP }}>
+          Full width, directly under the floating header (which sits on top of it), with rounded bottom corners. */}
+      <div>
+        <section className="relative isolate overflow-hidden rounded-b-[28px] bg-ink-950 text-white sm:rounded-b-[44px]" style={{ paddingBottom: OVERLAP }}>
           <HeroBackground />
 
-          <div className="mx-auto max-w-[1240px] px-5 pt-14 text-center sm:px-7 sm:pt-20 lg:pt-24">
+          <div className="mx-auto max-w-[1240px] px-5 pt-[128px] text-center sm:px-7 sm:pt-[152px] lg:pt-[168px]">
             <Link
               href="/admissions-calendar"
               className="animate-rise group inline-flex h-9 items-center gap-2.5 rounded-full border border-white/15 bg-white/[0.07] pr-3.5 pl-1.5 text-[13.5px] text-white/90 backdrop-blur transition hover:border-white/30 hover:text-white"
@@ -99,7 +99,7 @@ export default function HomePage() {
             <h1 className="animate-rise mx-auto mt-8 max-w-[1100px] font-display text-[clamp(2.75rem,6.4vw,5.1rem)] leading-[1] font-extrabold tracking-[-0.05em] [animation-delay:80ms]">
               <span className="text-white">Know where you’ll get in,</span>
               <br />
-              <span className="text-gradient-mint">before you apply.</span>
+              <span className="text-gradient-emerald">before you apply.</span>
             </h1>
 
             <p className="animate-rise mx-auto mt-7 max-w-[600px] text-[clamp(1.05rem,1.45vw,1.2rem)] leading-relaxed text-ink-200 [animation-delay:160ms]">

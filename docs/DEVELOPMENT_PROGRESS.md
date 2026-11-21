@@ -146,6 +146,16 @@ See the Phase 0 summary in chat and REQUIREMENTS §9.2:
 | Mobile (390 px) | No sideways scrolling; no console errors |
 | Demo video | Recorded for the founder (not committed) |
 
+**Header and colour update (21 Nov 2026).** At the founder's request:
+- The silk is back to the original navy and green.
+- The hero now touches the header, with no gap.
+- The header has a premium look: transparent at the top, then a floating glass capsule once you scroll.
+
+| Check | Result |
+|---|---|
+| All routes at 1440 px and 390 px | No console errors; no sideways scrolling |
+| Contrast over the silk | All text passes; see DESIGN_SYSTEM §8a |
+
 **Still open:** unknown program/university URLs still return HTTP 200 with the 404 page (see limitation 3 above).
 
 ### Next phase

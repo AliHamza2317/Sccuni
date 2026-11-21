@@ -192,8 +192,8 @@ The founder said the home page and some pages still felt simple. The refresh kee
 
 | Part | Behaviour | Code |
 |---|---|---|
-| Hero card | The hero is a rounded card set a few pixels in from the page edges, under a light header | `frontend/src/app/(site)/page.tsx` |
-| Silk background (WebGL) | Smooth satin folds in deep navy and royal blue, with a faint mint sheen. They drift and change shape slowly. The light leans towards the cursor, and the cloth dips gently under it | `frontend/src/components/home/hero-background.tsx` |
+| Hero | Full width, starting right under the prototype banner. The header floats on top of it (no gap). Rounded bottom corners | `frontend/src/app/(site)/page.tsx` |
+| Silk background (WebGL) | Smooth satin folds in the logo colours: deep navy shadows and emerald-teal on the lit folds, with a faint mint sheen. They drift and change shape slowly. The light leans towards the cursor, and the cloth dips gently under it. (A royal-blue version was tried first; the founder chose the original navy and green) | `frontend/src/components/home/hero-background.tsx` |
 | Typing search | The empty search box types example searches ("BS Computer Science in Lahore", "MBBS merit lists in Punjab"…), pauses, deletes, and moves on. It stops when the box is focused or has text | `frontend/src/components/home/hero-search.tsx` |
 | Sources strip | An endless, slow strip of official source types (prospectuses, merit lists, HEC lists, fee schedules, IBCC rules…). It pauses on hover. These are source *types*, not partner logos, so we make no false claims | `frontend/src/components/home/source-marquee.tsx` |
 
@@ -208,14 +208,21 @@ The founder said the home page and some pages still felt simple. The refresh kee
 - At most 450,000 pixels are shaded per frame.
 - Without WebGL, a still CSS gradient is shown.
 
-**Measured text contrast over the moving silk.** Worst 2% of background pixels, across 6 moments and 3 cursor positions:
+**Measured text contrast over the moving navy silk.** Worst 2% of background pixels, across 6 moments and 3 cursor positions:
 
 | Text | Contrast |
 |---|---|
-| White headline | ≥ 6.0:1 |
-| Mint headline gradient, darkest stop | ≥ 3.6:1 (large text) |
-| Subtitle (`ink-200`) | ≥ 5.0:1 |
-| Small labels (white) | ≥ 5.5:1 |
+| White headline | ≥ 6.8:1 |
+| Mint headline gradient, darkest stop `#5FD0B0` | ≥ 3.6:1 (large text) |
+| Subtitle (`ink-200`) | ≥ 5.3:1 |
+| Small labels (white) | ≥ 6.2:1 |
+| Header links (white at 70%) | ≥ 7.3:1 |
+
+**Header (21 Nov 2026).** Code: `frontend/src/components/site/header.tsx`.
+- At the top of every page the header is transparent and sits on the page's first section. On dark pages it uses white text and a white "Find my best fit" pill; on light pages, dark text and a navy pill.
+- Once you scroll, it turns into a floating glass capsule with rounded ends, a soft shadow and a slightly smaller logo: navy on dark pages, frosted white on light pages.
+- On phones, the menu opens as a rounded panel under the capsule, with large tap targets. Escape closes it.
+- Each page's first section is padded so its content starts below the header.
 
 **Rules kept:**
 - One primary action per view.

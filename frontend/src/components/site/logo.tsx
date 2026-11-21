@@ -3,7 +3,20 @@ import Link from "next/link";
 import { cn } from "@/lib/format";
 
 /** The Sccuni logo. `onDark` swaps to the white-and-green version for navy backgrounds. */
-export function Logo({ onDark = false, className, href = "/", priority = false }: { onDark?: boolean; className?: string; href?: string; priority?: boolean }) {
+export function Logo({
+  onDark = false,
+  className,
+  imageClassName,
+  href = "/",
+  priority = false,
+}: {
+  onDark?: boolean;
+  className?: string;
+  /** Overrides the default image height (h-10 / sm:h-11). */
+  imageClassName?: string;
+  href?: string;
+  priority?: boolean;
+}) {
   return (
     <Link href={href} aria-label="Sccuni — home" className={cn("inline-flex shrink-0 items-center", className)}>
       <Image
@@ -12,7 +25,7 @@ export function Logo({ onDark = false, className, href = "/", priority = false }
         width={1200}
         height={409}
         priority={priority}
-        className="h-10 w-auto sm:h-11"
+        className={imageClassName ?? "h-10 w-auto sm:h-11"}
       />
     </Link>
   );

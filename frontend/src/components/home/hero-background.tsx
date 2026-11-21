@@ -12,8 +12,8 @@ void main() { gl_Position = vec4(aPos, 0.0, 1.0); }
  * "Silk": a smooth height field of slow, folded waves, lit like satin.
  * - Large soft folds drift and change shape slowly.
  * - The light leans towards the cursor, and the cloth dips gently under it.
- * - Colours: deep brand navy in the shadows, a luminous royal blue on the lit folds,
- *   and a faint mint sheen (the logo green) on the highlights.
+ * - Colours (from the logo): deep navy in the shadows, brand navy in between,
+ *   emerald-teal on the lit folds, and a faint mint sheen on the highlights.
  * Brightness is capped so white text on top keeps strong contrast.
  */
 const FRAGMENT = `
@@ -69,9 +69,9 @@ void main() {
   vec3 halfway = normalize(light + vec3(0.0, 0.0, 1.0));
   float spec = pow(clamp(dot(n, halfway), 0.0, 1.0), 36.0);
 
-  vec3 shadow = vec3(0.000, 0.035, 0.105);
-  vec3 base   = vec3(0.012, 0.120, 0.360);
-  vec3 lit    = vec3(0.035, 0.280, 0.700);
+  vec3 shadow = vec3(0.000, 0.028, 0.080);
+  vec3 base   = vec3(0.000, 0.090, 0.205);
+  vec3 lit    = vec3(0.010, 0.300, 0.280);
   vec3 sheen  = vec3(0.420, 0.860, 0.760);
 
   vec3 col = mix(shadow, base, smoothstep(0.25, 0.58, diff));
@@ -231,7 +231,7 @@ export function HeroBackground() {
   return (
     <div ref={wrapRef} aria-hidden className="pointer-events-none absolute inset-0 -z-10 overflow-hidden">
       {/* Still CSS version: shown until WebGL starts, or if it can't */}
-      <div className="absolute inset-0 bg-[radial-gradient(70%_60%_at_65%_30%,#0a3f9e_0%,transparent_70%),radial-gradient(60%_70%_at_15%_85%,#000c24_0%,transparent_70%),linear-gradient(160deg,#021a4d,#052a6e_45%,#01163f)]" />
+      <div className="absolute inset-0 bg-[radial-gradient(70%_60%_at_65%_30%,#0a4d4a_0%,transparent_70%),radial-gradient(60%_70%_at_15%_85%,#000816_0%,transparent_70%),linear-gradient(160deg,#001a3a,#012c45_45%,#000f24)]" />
       <canvas ref={canvasRef} className="absolute inset-0 size-full opacity-0 transition-opacity duration-1000 data-[on=1]:opacity-100" />
     </div>
   );

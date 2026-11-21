@@ -55,7 +55,7 @@ export function PageHeader({
         </>
       )}
 
-      <div className="mx-auto max-w-[1240px] px-5 pt-10 pb-10 sm:px-7 lg:pt-14 lg:pb-12">
+      <div className="mx-auto max-w-[1240px] px-5 pt-[112px] pb-10 sm:px-7 lg:pt-[128px] lg:pb-12">
         {crumbs?.length ? (
           <nav aria-label="Breadcrumb" className={cn("mb-7 flex flex-wrap items-center gap-2 text-[13px]", dark ? "text-ink-400" : "text-ink-500")}>
             {crumbs.map((c, i) => (

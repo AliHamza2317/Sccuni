@@ -81,7 +81,7 @@ async function ProgramContent({ params }: { params: PageProps<"/programs/[slug]"
           <div className="absolute inset-0 bg-[radial-gradient(55%_90%_at_88%_-10%,rgb(0_152_124/0.12),transparent_65%),radial-gradient(45%_80%_at_6%_-20%,rgb(44_91_216/0.07),transparent_60%)]" />
           <div className="bg-lines-light mask-radial-right absolute inset-0" />
         </div>
-        <div className="mx-auto max-w-[1240px] space-y-8 px-5 pt-10 pb-10 sm:px-7 lg:pt-12">
+        <div className="mx-auto max-w-[1240px] space-y-8 px-5 pt-[112px] pb-10 sm:px-7 lg:pt-[120px]">
           <nav aria-label="Breadcrumb" className="flex flex-wrap items-center gap-2 text-[13px] text-ink-500">
             <Link href="/" className="hover:text-ink-900">Home</Link><span className="text-ink-300">/</span>
             <Link href="/programs" className="hover:text-ink-900">Programs</Link><span className="text-ink-300">/</span>

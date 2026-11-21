@@ -27,6 +27,17 @@ All notable changes to Sccuni are documented here. The format follows [Keep a Ch
 - High-fidelity, clickable MVP design on a Design canvas: 12 desktop screens (home, search, program, calculator, Best Fit, compare, university, calendar, scholarships, sign-in, student dashboard, admin verification queue), a design-system page and 2 mobile screens. Sample data is fictional and labelled.
 - `docs/DESIGN_SYSTEM.md`: direction ("Ink & Emerald"), tokens, components, screen inventory with requirement mapping, accessibility and content rules, open design decisions.
 
+### Changed — 2026-11-21 (premium header, hero attached, navy-green silk)
+
+- New header:
+  - transparent over each page's first section at the top;
+  - a floating glass capsule after scrolling (navy on dark pages, frosted white on light pages);
+  - white or navy "Find my best fit" pill;
+  - rounded mobile menu panel; Escape closes it.
+- The home hero is full width and starts directly under the header, with no gap and rounded bottom corners.
+- Silk colours back to the logo's navy and emerald (no royal blue). Headline gradient lightened to keep ≥ 3:1.
+- First sections of all pages are padded for the floating header.
+
 ### Changed — 2026-11-21 (silk hero, based on the founder's reference video)
 
 - The home hero is now a rounded card with a WebGL "silk" background (navy and royal blue, mint sheen) that reacts to the cursor; the home header is light.
