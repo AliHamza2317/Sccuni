@@ -2,10 +2,13 @@ import { ArrowRight, BadgeCheck, Building2, Calculator, CalendarDays, Clock, Col
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
+import { Suspense } from "react";
+import { DetailSkeleton } from "@/components/site/skeletons";
 import { MeritHistory, RemindSwitch, SaveButton, ShareButton } from "@/components/programs/program-islands";
 import { Monogram, SourceChip, StatusDot, Tag, Verified } from "@/components/ui/badges";
 import { ButtonLink } from "@/components/ui/button";
 import { MeritMeter } from "@/components/ui/merit-meter";
+import { Eyebrow } from "@/components/ui/section-heading";
 import { feeItems, firstYearCost, getFormula, getProgram, getPrograms, getUniversity, latestClosing } from "@/lib/data";
 import { cn, formatDate, pkr } from "@/lib/format";
 
@@ -32,7 +35,16 @@ function addDays(iso: string, days: number) {
 
 const SEGMENT_COLORS = ["bg-ink-600", "bg-brand-600", "bg-ink-900"];
 
-export default async function ProgramPage({ params }: PageProps<"/programs/[slug]">) {
+/** The shell (header, footer) renders instantly; the page streams in behind a skeleton. */
+export default function ProgramPage({ params }: PageProps<"/programs/[slug]">) {
+  return (
+    <Suspense fallback={<DetailSkeleton />}>
+      <ProgramContent params={params} />
+    </Suspense>
+  );
+}
+
+async function ProgramContent({ params }: { params: PageProps<"/programs/[slug]">["params"] }) {
   const { slug } = await params;
   const p = getProgram(slug);
   if (!p) notFound();
@@ -64,19 +76,23 @@ export default async function ProgramPage({ params }: PageProps<"/programs/[slug
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
 
       {/* Header */}
-      <section className="bg-white">
-        <div className="mx-auto max-w-[1240px] space-y-6 px-5 pt-8 pb-7 sm:px-7">
-          <nav aria-label="Breadcrumb" className="flex flex-wrap gap-2 text-[13px] text-ink-500">
-            <Link href="/" className="hover:text-ink-900">Home</Link><span>/</span>
-            <Link href="/programs" className="hover:text-ink-900">Programs</Link><span>/</span>
-            <Link href={`/universities/${u.slug}`} className="hover:text-ink-900">{u.shortName}</Link><span>/</span>
-            <span className="font-semibold text-ink-900">{p.title}</span>
+      <section className="relative isolate bg-white">
+        <div aria-hidden className="absolute inset-0 -z-10 overflow-hidden">
+          <div className="absolute inset-0 bg-[radial-gradient(55%_90%_at_88%_-10%,rgb(0_152_124/0.12),transparent_65%),radial-gradient(45%_80%_at_6%_-20%,rgb(44_91_216/0.07),transparent_60%)]" />
+          <div className="bg-lines-light mask-radial-right absolute inset-0" />
+        </div>
+        <div className="mx-auto max-w-[1240px] space-y-8 px-5 pt-10 pb-10 sm:px-7 lg:pt-12">
+          <nav aria-label="Breadcrumb" className="flex flex-wrap items-center gap-2 text-[13px] text-ink-500">
+            <Link href="/" className="hover:text-ink-900">Home</Link><span className="text-ink-300">/</span>
+            <Link href="/programs" className="hover:text-ink-900">Programs</Link><span className="text-ink-300">/</span>
+            <Link href={`/universities/${u.slug}`} className="hover:text-ink-900">{u.shortName}</Link><span className="text-ink-300">/</span>
+            <span aria-current="page" className="font-semibold text-ink-900">{p.title}</span>
           </nav>
-          <div className="flex flex-wrap items-start justify-between gap-6">
+          <div className="flex flex-wrap items-end justify-between gap-6">
             <div className="flex min-w-0 flex-[1_1_560px] items-start gap-5">
-              <Monogram text={u.mono} tone={u.tone} size="lg" />
-              <div className="min-w-0 space-y-2.5">
-                <h1 className="text-[clamp(2rem,3.6vw,3rem)] leading-tight font-extrabold tracking-[-0.035em]">{p.title}</h1>
+              <Monogram text={u.mono} tone={u.tone} size="lg" className="shadow-soft ring-1 ring-ink-900/5" />
+              <div className="min-w-0 space-y-3">
+                <h1 className="text-gradient-ink text-[clamp(2.2rem,4.2vw,3.5rem)] leading-[1.04] font-extrabold tracking-[-0.045em]">{p.title}</h1>
                 <Link href={`/universities/${u.slug}`} className="flex items-start gap-2 text-ink-500 hover:text-ink-800">
                   <Building2 className="mt-1 size-4 shrink-0" aria-hidden />{u.name} · {p.campus}, {p.city} · {p.shift}
                 </Link>
@@ -96,10 +112,10 @@ export default async function ProgramPage({ params }: PageProps<"/programs/[slug
             </div>
           </div>
         </div>
-        <div className="sticky top-[72px] z-20 border-y border-ink-200 bg-white/90 backdrop-blur-xl">
-          <nav aria-label="On this page" className="mx-auto flex max-w-[1240px] gap-1 overflow-x-auto px-5 sm:px-7">
+        <div className="sticky top-[72px] z-20 border-y border-ink-200/70 bg-white/80 backdrop-blur-xl">
+          <nav aria-label="On this page" className="mx-auto flex max-w-[1240px] gap-1 overflow-x-auto px-5 py-2 sm:px-7">
             {[["#overview", "Overview"], ["#eligibility", "Eligibility"], ["#formula", "Merit formula"], ["#merits", "Past merits"], ["#fees", "Fees"], ["#dates", "Key dates"], ["#apply", "How to apply"]].map(([href, label]) => (
-              <a key={href} href={href} className="border-b-2 border-transparent px-3 py-3.5 text-[15px] font-semibold whitespace-nowrap text-ink-500 transition-colors hover:border-ink-300 hover:text-ink-900">{label}</a>
+              <a key={href} href={href} className="rounded-full px-4 py-2 text-[14.5px] font-medium whitespace-nowrap text-ink-500 transition-colors hover:bg-ink-50 hover:text-ink-900">{label}</a>
             ))}
           </nav>
         </div>
@@ -119,7 +135,7 @@ export default async function ProgramPage({ params }: PageProps<"/programs/[slug
             ].map(([Icon, k, v, n]) => {
               const I = Icon as typeof Clock;
               return (
-                <div key={k as string} className="rounded-[20px] border border-ink-200 bg-white p-5">
+                <div key={k as string} className="rounded-[22px] bg-white p-5 shadow-xs ring-1 ring-ink-200/70">
                   <p className="flex items-center gap-2 text-xs text-ink-500"><I className="size-4" aria-hidden />{k as string}</p>
                   <p className="mt-2 text-lg font-bold">{v as string}</p>
                   <p className="text-xs text-ink-500">{n as string}</p>
@@ -246,7 +262,7 @@ export default async function ProgramPage({ params }: PageProps<"/programs/[slug
                 {similar.map((s) => {
                   const su = getUniversity(s.universitySlug)!;
                   return (
-                    <Link key={s.slug} href={`/programs/${s.slug}`} className="group space-y-4 rounded-3xl border border-ink-200 bg-white p-5 transition duration-300 hover:-translate-y-1 hover:shadow-lift">
+                    <Link key={s.slug} href={`/programs/${s.slug}`} className="group space-y-4 rounded-3xl bg-white ring-1 ring-ink-200/70 p-5 transition duration-300 hover:-translate-y-1 hover:shadow-lift">
                       <div className="flex items-center gap-3"><Monogram text={su.mono} tone={su.tone} /><div className="min-w-0"><p className="font-bold">{s.title}</p><p className="truncate text-xs text-ink-500">{su.shortName} · {s.city}</p></div></div>
                       <div className="flex justify-between text-sm"><span className="text-ink-500">Last closing</span><b className="tabular">{latestClosing(s) ? `${latestClosing(s)!.toFixed(2)}%` : "New"}</b></div>
                       <div className="flex justify-between text-sm"><span className="text-ink-500">Tuition / semester</span><b className="tabular">{pkr(s.feePerSemester)}</b></div>
@@ -260,10 +276,11 @@ export default async function ProgramPage({ params }: PageProps<"/programs/[slug
 
         {/* Aside */}
         <aside className="w-full space-y-4 lg:sticky lg:top-[136px] lg:w-[360px]">
-          <div className="relative isolate overflow-hidden rounded-[28px] bg-ink-900 p-7 text-white shadow-lift">
+          <div className="relative isolate overflow-hidden rounded-[28px] bg-ink-950 p-7 text-white shadow-lift">
             <div aria-hidden className="absolute -top-32 -right-28 -z-10 size-80 rounded-full bg-brand-500/30 blur-3xl" />
-            <p className="text-[13px] font-bold tracking-[0.12em] text-brand-400 uppercase">Where do you stand?</p>
-            <h2 className="mt-3 text-[22px] leading-snug font-bold">See your aggregate for this program</h2>
+            <div aria-hidden className="bg-noise absolute inset-0 -z-10 opacity-[0.18] mix-blend-soft-light" />
+            <Eyebrow dark>Where do you stand?</Eyebrow>
+            <h2 className="text-gradient-light mt-4 text-[24px] leading-tight font-extrabold tracking-[-0.03em]">See your aggregate for this program</h2>
             <p className="mt-2 text-sm text-ink-300">Uses the verified {formula.session} formula and compares you with the last three years of closing merits.</p>
             {p.history.length > 0 && (
               <MeritMeter className="mt-7" dark value={null} marks={p.history.map((h) => ({ label: `’${String(h.year).slice(2)}`, value: h.open[2] })).reverse()} />
@@ -274,7 +291,7 @@ export default async function ProgramPage({ params }: PageProps<"/programs/[slug
             </div>
           </div>
 
-          <div className="rounded-3xl border border-ink-200 bg-white p-6">
+          <div className="rounded-[28px] bg-white p-6 shadow-xs ring-1 ring-ink-200/70">
             <p className="font-display font-bold">Quick facts</p>
             <dl className="mt-3 divide-y divide-ink-100 text-sm">
               {[["Apply by", formatDate(p.deadline, true)], ["Tuition / semester", pkr(p.feePerSemester)], ["Entry test", p.test], ["Application fee", "PKR 3,000"], ["Last closing (final)", closing ? `${closing.toFixed(2)}%` : "New program"]].map(([k, v]) => (
@@ -284,7 +301,7 @@ export default async function ProgramPage({ params }: PageProps<"/programs/[slug
             <Link href={`/universities/${u.slug}`} className="mt-2 inline-flex items-center gap-1.5 text-sm font-semibold text-brand-700 hover:text-brand-800">About {u.shortName} <ArrowRight className="size-4" aria-hidden /></Link>
           </div>
 
-          <div className="rounded-3xl border border-brand-100 bg-brand-50 p-6">
+          <div className="rounded-[28px] bg-brand-50/70 p-6 ring-1 ring-brand-100">
             <p className="flex items-center gap-2 font-bold text-brand-800"><ShieldCheck className="size-5" aria-hidden />Data verified</p>
             <p className="mt-2 text-sm text-ink-700">Every figure on this page was checked against official documents by two reviewers on <b>{u.lastVerified}</b>.</p>
             <ul className="mt-3 space-y-1 text-[13px] text-ink-600">
@@ -299,11 +316,11 @@ export default async function ProgramPage({ params }: PageProps<"/programs/[slug
 
 function Panel({ id, eyebrow, title, aside, children }: { id: string; eyebrow: string; title: string; aside?: React.ReactNode; children: React.ReactNode }) {
   return (
-    <section id={id} className="space-y-5 rounded-[28px] border border-ink-200 bg-white p-6 shadow-xs sm:p-8">
+    <section id={id} className="scroll-mt-[140px] space-y-6 rounded-[28px] bg-white p-6 shadow-xs ring-1 ring-ink-200/70 sm:p-8">
       <div className="flex flex-wrap items-end justify-between gap-3">
-        <div className="space-y-1.5">
-          <p className="text-[12.5px] font-bold tracking-[0.12em] text-brand-700 uppercase">{eyebrow}</p>
-          <h2 className="text-2xl font-bold tracking-tight">{title}</h2>
+        <div className="space-y-3">
+          <Eyebrow>{eyebrow}</Eyebrow>
+          <h2 className="text-[26px] leading-tight font-extrabold tracking-[-0.03em]">{title}</h2>
         </div>
         {aside}
       </div>

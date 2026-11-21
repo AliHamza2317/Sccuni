@@ -64,7 +64,7 @@ export function AdmissionCalendar({ events, today }: { events: AdmissionEvent[];
 
       <div className="grid gap-4 md:grid-cols-3">
         {soon.map((e) => (
-          <Link key={e.id} href={e.href} className="group flex items-center gap-4 rounded-3xl border border-ink-200 bg-white p-5 shadow-xs transition duration-300 hover:-translate-y-1 hover:shadow-lift">
+          <Link key={e.id} href={e.href} className="group flex items-center gap-4 rounded-3xl bg-white ring-1 ring-ink-200/70 p-5 shadow-xs transition duration-300 hover:-translate-y-1 hover:shadow-lift">
             <DateTile iso={e.date} tone={TILE[e.type]} />
             <div className="min-w-0">
               <p className="text-[13px] font-semibold text-gold-700">{relativeDays(e.date)}</p>
@@ -109,7 +109,7 @@ export function AdmissionCalendar({ events, today }: { events: AdmissionEvent[];
               </div>
             </div>
           ) : (
-            <ul className="divide-y divide-ink-100 rounded-3xl border border-ink-200 bg-white">
+            <ul className="divide-y divide-ink-100 rounded-3xl bg-white ring-1 ring-ink-200/70">
               {shown.map((e) => (
                 <li key={e.id} className="flex items-center gap-4 px-5 py-4">
                   <DateTile iso={e.date} tone={TILE[e.type]} />
@@ -122,7 +122,7 @@ export function AdmissionCalendar({ events, today }: { events: AdmissionEvent[];
           <p className="text-xs text-ink-500">All dates are Pakistan Standard Time. Tentative dates are marked “expected” until the official notice is published.</p>
         </section>
 
-        <aside className="w-full space-y-3 rounded-3xl border border-ink-200 bg-white p-6 shadow-xs lg:sticky lg:top-24 lg:w-[360px]">
+        <aside className="w-full space-y-3 rounded-3xl bg-white ring-1 ring-ink-200/70 p-6 shadow-xs lg:sticky lg:top-24 lg:w-[360px]">
           <div className="flex items-center justify-between"><p className="font-display text-lg font-bold">Upcoming</p><span className="rounded-lg bg-ink-100 px-2 py-0.5 text-xs font-bold text-ink-700">{reminders.length} reminders on</span></div>
           <ul className="divide-y divide-ink-100">
             {upcoming.slice(0, 7).map((e) => (

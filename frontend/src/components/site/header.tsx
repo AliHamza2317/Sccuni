@@ -1,18 +1,18 @@
 "use client";
 
-import { Menu, X } from "lucide-react";
+import { ArrowRight, Menu, X } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useEffect, useState } from "react";
+import { Suspense, useEffect, useState } from "react";
 import { ButtonLink } from "@/components/ui/button";
 import { cn } from "@/lib/format";
 import { Logo } from "./logo";
 
 export const NAV = [
-  { href: "/programs", label: "Explore programs" },
+  { href: "/programs", label: "Programs" },
   { href: "/merit-calculator", label: "Merit calculator" },
-  { href: "/best-fit", label: "Best Fit Finder" },
-  { href: "/admissions-calendar", label: "Admission calendar" },
+  { href: "/best-fit", label: "Best Fit" },
+  { href: "/admissions-calendar", label: "Calendar" },
   { href: "/scholarships", label: "Scholarships" },
 ];
 
@@ -21,11 +21,26 @@ function isDarkRoute(path: string) {
   return path === "/" || path.startsWith("/best-fit") || path.startsWith("/universities/");
 }
 
+/**
+ * The header reads the URL to pick its style and the active link. With Cache Components,
+ * reading the URL must sit inside <Suspense>; the fallback is the same header with no active link.
+ */
 export function SiteHeader() {
-  const pathname = usePathname() ?? "/";
+  return (
+    <Suspense fallback={<HeaderView pathname={null} />}>
+      <HeaderWithPath />
+    </Suspense>
+  );
+}
+
+function HeaderWithPath() {
+  return <HeaderView pathname={usePathname()} />;
+}
+
+function HeaderView({ pathname }: { pathname: string | null }) {
   const [open, setOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
-  const dark = isDarkRoute(pathname);
+  const dark = pathname !== null && isDarkRoute(pathname);
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 8);
@@ -37,27 +52,34 @@ export function SiteHeader() {
   return (
     <header
       className={cn(
-        "sticky top-0 z-50 border-b backdrop-blur-xl backdrop-saturate-150 transition-[background,border-color,box-shadow] duration-300",
+        "sticky top-0 z-50 border-b transition-[background,border-color,box-shadow] duration-300",
         // Dark routes: solid navy, so the light page behind never tints it grey.
-        dark ? "border-white/[0.08] bg-ink-900" : "border-ink-200/70 bg-paper/85",
-        scrolled && (dark ? "shadow-[0_10px_30px_rgb(0_15_36/0.35)]" : "bg-white/90 shadow-[0_8px_24px_rgb(0_26_58/0.06)]"),
+        dark ? "border-white/[0.06] bg-ink-950" : "border-ink-200/60 bg-white/75 backdrop-blur-xl backdrop-saturate-150",
+        scrolled && (dark ? "shadow-[0_12px_32px_rgb(0_8_20/0.45)]" : "bg-white/90 shadow-[0_8px_24px_rgb(0_26_58/0.05)]"),
       )}
     >
       <div className="mx-auto flex h-[72px] max-w-[1240px] items-center gap-6 px-5 sm:px-7">
         <Logo onDark={dark} priority />
-        <nav aria-label="Main" className="ml-2 hidden flex-1 items-center gap-0.5 lg:flex">
+
+        <nav
+          aria-label="Main"
+          className={cn(
+            "mx-auto hidden items-center gap-0.5 rounded-full border p-1 lg:flex",
+            dark ? "border-white/[0.08] bg-white/[0.03]" : "border-ink-200/70 bg-ink-50/70",
+          )}
+        >
           {NAV.map((n) => {
-            const active = pathname === n.href || pathname.startsWith(n.href + "/");
+            const active = pathname !== null && (pathname === n.href || pathname.startsWith(n.href + "/"));
             return (
               <Link
                 key={n.href}
                 href={n.href}
                 aria-current={active ? "page" : undefined}
                 className={cn(
-                  "rounded-[10px] px-3 py-2 text-[15px] font-medium whitespace-nowrap transition-colors duration-200",
+                  "rounded-full px-4 py-2 text-[14.5px] font-medium whitespace-nowrap transition-colors duration-200",
                   dark
-                    ? active ? "bg-white/[0.12] text-white" : "text-ink-300 hover:bg-white/[0.08] hover:text-white"
-                    : active ? "bg-white text-ink-900 shadow-xs" : "text-ink-600 hover:bg-ink-100 hover:text-ink-900",
+                    ? active ? "bg-white/[0.1] text-white" : "text-ink-300 hover:text-white"
+                    : active ? "bg-white text-ink-900 shadow-xs" : "text-ink-500 hover:text-ink-900",
                 )}
               >
                 {n.label}
@@ -65,26 +87,36 @@ export function SiteHeader() {
             );
           })}
         </nav>
-        <div className="ml-auto flex items-center gap-2">
+
+        <div className="ml-auto flex items-center gap-1.5 lg:ml-0">
           <Link
             href="/sign-in"
-            className={cn("hidden h-11 items-center rounded-xl px-4 text-[15px] font-semibold transition-colors sm:inline-flex", dark ? "text-ink-100 hover:bg-white/[0.08]" : "text-ink-700 hover:bg-ink-100")}
+            className={cn(
+              "hidden h-10 items-center rounded-full px-4 text-[14.5px] font-medium transition-colors sm:inline-flex",
+              dark ? "text-ink-200 hover:text-white" : "text-ink-600 hover:text-ink-900",
+            )}
           >
             Sign in
           </Link>
-          <ButtonLink href="/best-fit" className="hidden sm:inline-flex">Find my best fit</ButtonLink>
+          <ButtonLink href="/best-fit" size="sm" className="hidden h-10 rounded-full px-4.5 sm:inline-flex">
+            Find my best fit <ArrowRight className="size-4" aria-hidden />
+          </ButtonLink>
           <button
             type="button"
             onClick={() => setOpen((v) => !v)}
             aria-expanded={open}
             aria-controls="mobile-nav"
             aria-label={open ? "Close menu" : "Open menu"}
-            className={cn("grid size-11 place-items-center rounded-xl border lg:hidden", dark ? "border-white/15 bg-white/[0.08] text-white" : "border-ink-200 bg-white text-ink-900")}
+            className={cn(
+              "grid size-11 place-items-center rounded-full border lg:hidden",
+              dark ? "border-white/15 bg-white/[0.06] text-white" : "border-ink-200 bg-white text-ink-900",
+            )}
           >
             {open ? <X className="size-5" /> : <Menu className="size-5" />}
           </button>
         </div>
       </div>
+
       {open && (
         <nav id="mobile-nav" aria-label="Mobile" className={cn("border-t px-5 pb-5 lg:hidden", dark ? "border-white/10" : "border-ink-200")}>
           {NAV.concat([{ href: "/sign-in", label: "Sign in" }]).map((n) => (
@@ -97,7 +129,9 @@ export function SiteHeader() {
               {n.label}
             </Link>
           ))}
-          <ButtonLink href="/best-fit" onClick={() => setOpen(false)} className="mt-4 w-full">Find my best fit</ButtonLink>
+          <ButtonLink href="/best-fit" onClick={() => setOpen(false)} className="mt-4 w-full rounded-full">
+            Find my best fit
+          </ButtonLink>
         </nav>
       )}
     </header>

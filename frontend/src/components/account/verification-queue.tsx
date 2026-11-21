@@ -61,7 +61,7 @@ export function VerificationQueue() {
         {[[ShieldCheck, "Tier-1 verified", "92%", "Launch cohort · Fall 2027"], [ListChecks, "Waiting for review", String(12 - approved.length), "Oldest: 3 days"], [Clock, "Outdated records", "7", "Need re-checking"], [Flag, "Reports from users", "4", "Fix within 48 h"]].map(([Icon, k, v, n]) => {
           const I = Icon as typeof ShieldCheck;
           return (
-            <div key={k as string} className="rounded-[20px] border border-ink-200 bg-white p-5">
+            <div key={k as string} className="rounded-[20px] bg-white ring-1 ring-ink-200/70 p-5">
               <p className="flex items-center gap-2 text-xs text-ink-500"><I className="size-4" aria-hidden />{k as string}</p>
               <p className="tabular mt-2 font-display text-3xl font-extrabold tracking-tight">{v as string}</p>
               <p className="text-xs text-ink-500">{n as string}</p>
@@ -71,7 +71,7 @@ export function VerificationQueue() {
       </div>
 
       <div className="flex flex-wrap items-start gap-5">
-        <section aria-label="Pending review" className="w-full overflow-hidden rounded-3xl border border-ink-200 bg-white lg:w-[380px]">
+        <section aria-label="Pending review" className="w-full overflow-hidden rounded-3xl bg-white ring-1 ring-ink-200/70 lg:w-[380px]">
           <div className="flex items-center justify-between border-b border-ink-200 px-5 py-4">
             <h2 className="font-display font-bold">Pending review</h2>
             <Segmented size="sm" label="Tier" value={tier} onChange={setTier} options={[{ value: "all", label: "All" }, { value: "1", label: "Tier 1" }]} />
@@ -93,7 +93,7 @@ export function VerificationQueue() {
           </ul>
         </section>
 
-        <section aria-label="Review" className="min-w-0 flex-[999_1_520px] space-y-6 rounded-3xl border border-ink-200 bg-white p-6 shadow-soft sm:p-8">
+        <section aria-label="Review" className="min-w-0 flex-[999_1_520px] space-y-6 rounded-3xl bg-white ring-1 ring-ink-200/70 p-6 shadow-soft sm:p-8">
           <div className="flex flex-wrap items-start justify-between gap-3">
             <div className="space-y-1">
               <p className="text-xs text-ink-500">{cur.id} · submitted by {cur.who} · {cur.when}</p>

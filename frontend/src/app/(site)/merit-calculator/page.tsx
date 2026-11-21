@@ -1,6 +1,7 @@
 import { Target } from "lucide-react";
 import type { Metadata } from "next";
 import { MeritCalculator, type CalcProgram } from "@/components/merit/merit-calculator";
+import { PageHeader } from "@/components/site/page-header";
 import { ButtonLink } from "@/components/ui/button";
 import { getFormula, getProgram, getUniversity } from "@/lib/data";
 
@@ -26,16 +27,12 @@ export default function MeritCalculatorPage() {
 
   return (
     <>
-      <section className="border-b border-ink-200 bg-white">
-        <div className="mx-auto flex max-w-[1240px] flex-wrap items-end justify-between gap-6 px-5 pt-10 pb-8 sm:px-7">
-          <div className="max-w-2xl space-y-3">
-            <p className="text-[13px] font-bold tracking-[0.12em] text-brand-700 uppercase">Merit calculator</p>
-            <h1 className="text-[clamp(2rem,3.6vw,3rem)] leading-tight font-extrabold tracking-[-0.035em]">Your aggregate, calculated the official way</h1>
-            <p className="text-lg text-ink-500">Each university uses its own formula. Pick a program, enter your marks, and see every step — with the source.</p>
-          </div>
-          <ButtonLink href="/best-fit" variant="light"><Target className="size-4" aria-hidden />Check all programs at once</ButtonLink>
-        </div>
-      </section>
+      <PageHeader
+        eyebrow="Merit calculator"
+        title="Your aggregate, calculated the official way"
+        description="Each university uses its own formula. Pick a program, enter your marks, and see every step — with the source."
+        actions={<ButtonLink href="/best-fit" variant="light"><Target className="size-4" aria-hidden />Check all programs at once</ButtonLink>}
+      />
       <MeritCalculator programs={programs} />
     </>
   );

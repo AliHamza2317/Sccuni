@@ -61,7 +61,7 @@ export default function DashboardPage() {
       </div>
 
       <div className="grid gap-5 lg:grid-cols-3">
-        <section className="space-y-4 rounded-3xl border border-ink-200 bg-white p-6">
+        <section className="space-y-4 rounded-3xl bg-white ring-1 ring-ink-200/70 p-6">
           <div className="flex justify-between"><h2 className="font-display font-bold">Your profile</h2><b className="text-sm">80%</b></div>
           <div className="h-2 overflow-hidden rounded-full bg-ink-100"><div className="h-full w-4/5 rounded-full bg-linear-to-r from-brand-400 to-brand-600" /></div>
           <ul className="space-y-2.5 text-sm">
@@ -75,7 +75,7 @@ export default function DashboardPage() {
           <ButtonLink href="/merit-calculator" variant="light" size="sm">Add domicile</ButtonLink>
         </section>
 
-        <section className="space-y-4 rounded-3xl border border-ink-200 bg-white p-6">
+        <section className="space-y-4 rounded-3xl bg-white ring-1 ring-ink-200/70 p-6">
           <div className="flex justify-between"><h2 className="font-display font-bold">Best fit</h2><Link href="/best-fit" className="text-sm font-semibold text-brand-700">View all</Link></div>
           <div className="grid grid-cols-3 gap-2.5">
             {([["safe", "bg-safe-bg text-safe"], ["target", "bg-target-bg text-target"], ["reach", "bg-reach-bg text-reach"]] as const).map(([g, cls]) => (
@@ -97,7 +97,7 @@ export default function DashboardPage() {
         </section>
       </div>
 
-      <section className="space-y-4 rounded-3xl border border-ink-200 bg-white p-6 sm:p-7">
+      <section className="space-y-4 rounded-3xl bg-white ring-1 ring-ink-200/70 p-6 sm:p-7">
         <div className="flex flex-wrap items-center justify-between gap-3"><h2 className="text-xl font-bold">Saved programs</h2><ButtonLink href="/compare" variant="light" size="sm"><Columns2 className="size-4" aria-hidden />Compare saved</ButtonLink></div>
         <div className="overflow-x-auto rounded-2xl border border-ink-200">
           <table className="w-full min-w-[680px] text-[14.5px]">
@@ -121,7 +121,7 @@ export default function DashboardPage() {
       </section>
 
       <div className="grid gap-5 lg:grid-cols-[1.3fr_1fr]">
-        <section className="space-y-3.5 rounded-3xl border border-ink-200 bg-white p-6 sm:p-7">
+        <section className="space-y-3.5 rounded-3xl bg-white ring-1 ring-ink-200/70 p-6 sm:p-7">
           <h2 className="text-xl font-bold">Saved calculations</h2>
           {[["BS Computer Science · Northstar", "Formula v2027.1 · saved 6 Jul 2027 · expected test score", "86.8636", ""], ["BS Software Engineering · Highland", "Formula v2027.1 · saved 2 Jul 2027", "88.1445", "Formula updated to v2027.2 — this snapshot keeps v2027.1"], ["BS Artificial Intelligence · Greenfield", "Formula v2027.1 · saved 28 Jun 2027", "88.5364", ""]].map(([t, m, a, note]) => (
             <div key={t} className="flex items-center justify-between gap-4 rounded-2xl border border-ink-200 p-4">
@@ -130,7 +130,7 @@ export default function DashboardPage() {
             </div>
           ))}
         </section>
-        <section className="space-y-1 rounded-3xl border border-ink-200 bg-white p-6 sm:p-7">
+        <section className="space-y-1 rounded-3xl bg-white ring-1 ring-ink-200/70 p-6 sm:p-7">
           <h2 className="pb-2 text-xl font-bold">Updates</h2>
           {[[TrendingUp, "bg-target-bg text-target", "Merit list 1 published for BS Electrical Engineering, Northstar.", "2 hours ago"], [ShieldCheck, "bg-brand-50 text-brand-700", "Fee schedule 2027–28 verified for Highland Institute of Computing.", "Yesterday"], [Layers, "bg-gold-100 text-gold-700", "Highland updated its merit formula (v2027.2). Your saved result is unchanged.", "3 days ago"]].map(([Icon, cls, t, w]) => {
             const I = Icon as typeof TrendingUp;

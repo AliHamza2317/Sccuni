@@ -45,7 +45,7 @@ export function ScholarshipDirectory({ items }: { items: Scholarship[] }) {
           const Icon = ICON[s.icon];
           const isSaved = saved.includes(s.id);
           return (
-            <article key={s.id} className="flex flex-col gap-4 rounded-[26px] border border-ink-200 bg-white p-6 shadow-xs transition duration-300 hover:-translate-y-1 hover:shadow-lift">
+            <article key={s.id} className="flex flex-col gap-4 rounded-[26px] bg-white ring-1 ring-ink-200/70 p-6 shadow-xs transition duration-300 hover:-translate-y-1 hover:shadow-lift">
               <div className="flex items-center justify-between">
                 <span className={cn("grid size-12 place-items-center rounded-2xl", ICON_BG[s.icon])}><Icon className="size-[22px]" aria-hidden /></span>
                 <Button variant={isSaved ? "primary" : "light"} size="icon-sm" aria-pressed={isSaved} aria-label={isSaved ? "Remove from saved" : "Save scholarship"} onClick={() => setSaved((cur) => (isSaved ? cur.filter((x) => x !== s.id) : [...cur, s.id]))}>

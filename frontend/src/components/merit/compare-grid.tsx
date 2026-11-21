@@ -85,7 +85,7 @@ export function CompareGrid({ items }: { items: CompareItem[] }) {
         </Button>
       </div>
 
-      <div className="overflow-x-auto rounded-[28px] border border-ink-200 bg-white shadow-soft">
+      <div className="overflow-x-auto rounded-[28px] bg-white ring-1 ring-ink-200/70 shadow-soft">
         <div role="table" aria-label="Program comparison" className="min-w-[860px]">
           <div role="row" className="grid border-b border-ink-200" style={{ gridTemplateColumns: template }}>
             <div role="columnheader" className="flex items-end p-5 text-xs text-ink-500">{cols.length} of 4 programs</div>

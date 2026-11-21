@@ -1,6 +1,7 @@
 import { Pencil } from "lucide-react";
 import type { Metadata } from "next";
 import { BestFitResults, type FitCard } from "@/components/merit/best-fit-results";
+import { PageHeader } from "@/components/site/page-header";
 import { ButtonLink } from "@/components/ui/button";
 import { bestFit, sampleStudent } from "@/lib/data";
 import { formatDate, formulaSummary, pkr } from "@/lib/format";
@@ -40,25 +41,19 @@ export default function BestFitPage() {
 
   return (
     <>
-      <section className="relative isolate overflow-hidden bg-ink-900 text-white">
-        <div aria-hidden className="bg-grid-dark mask-fade-b absolute inset-0 -z-10" />
-        <div aria-hidden className="animate-aurora absolute -top-72 right-[-10%] -z-10 size-[640px] rounded-full bg-brand-500/30 blur-[110px]" />
-        <div className="mx-auto max-w-[1240px] space-y-6 px-5 pt-12 pb-10 sm:px-7">
-          <div className="flex flex-wrap items-end justify-between gap-5">
-            <div className="max-w-2xl space-y-3">
-              <p className="text-[13px] font-bold tracking-[0.12em] text-brand-400 uppercase">Best Fit Finder</p>
-              <h1 className="text-[clamp(2rem,3.8vw,3.2rem)] leading-tight font-extrabold tracking-[-0.035em]">{cards.length} programs you’re eligible for</h1>
-              <p className="text-lg text-ink-300">Grouped by how your aggregate — under each university’s own formula — compares with verified past closing merits.</p>
-            </div>
-            <ButtonLink href="/merit-calculator" variant="ondark"><Pencil className="size-4" aria-hidden />Edit marks & preferences</ButtonLink>
-          </div>
-          <ul className="flex flex-wrap gap-2">
-            {chips.map(([k, v]) => (
-              <li key={k} className="inline-flex h-9 items-center gap-2 rounded-full border border-white/12 bg-white/[0.06] px-3.5 text-sm backdrop-blur"><span className="text-ink-400">{k}</span><b className="font-semibold">{v}</b></li>
-            ))}
-          </ul>
-        </div>
-      </section>
+      <PageHeader
+        dark
+        eyebrow="Best Fit Finder"
+        title={`${cards.length} programs you’re eligible for`}
+        description="Grouped by how your aggregate — under each university’s own formula — compares with verified past closing merits."
+        actions={<ButtonLink href="/merit-calculator" variant="ondark"><Pencil className="size-4" aria-hidden />Edit marks & preferences</ButtonLink>}
+      >
+        <ul className="flex flex-wrap gap-2">
+          {chips.map(([k, v]) => (
+            <li key={k} className="inline-flex h-9 items-center gap-2 rounded-full bg-white/[0.04] px-3.5 text-sm ring-1 ring-white/10"><span className="text-ink-400">{k}</span><b className="font-semibold">{v}</b></li>
+          ))}
+        </ul>
+      </PageHeader>
       <BestFitResults
         cards={cards}
         notEligible={notEligible.map((n) => ({ title: `${n.program.title} · ${n.university.shortName}`, why: n.reason }))}

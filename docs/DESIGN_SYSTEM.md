@@ -1,7 +1,7 @@
 # Sccuni — Design System and MVP Screens
 
-- **Status:** v0.2. The design is now **built in code** in [`frontend/`](../frontend/README.md) (Next.js), using the founder's Sccuni logo and a palette taken from it.
-- **Last updated:** 20 Nov 2026.
+- **Status:** v0.3 "premium minimal" refresh. The design is **built in code** in [`frontend/`](../frontend/README.md) (Next.js), using the founder's Sccuni logo and a palette taken from it.
+- **Last updated:** 21 Nov 2026.
 - **Source of truth:** the code. Tokens live in `frontend/src/app/globals.css`, components in `frontend/src/components/`.
 - **Earlier design canvas (v0.1, superseded):** https://claude.ai/artifact/WfsSxNW1nMwyKLkPw5xdR1 — it still uses the older "Ink & Emerald" colours and the placeholder logo.
 - **Related:** [REQUIREMENTS.md](./REQUIREMENTS.md) (MVP scope) · [SYSTEM_ARCHITECTURE.md](./SYSTEM_ARCHITECTURE.md) §5.5 (rendering)
@@ -113,6 +113,7 @@ Tailwind names in brackets (for example `bg-brand-600`, `text-ink-500`).
 | Forms | Input, select, "obtained out of total" pair, segmented control, checkbox, switch, range slider, inline validation notice |
 | Data | Result card, key-fact grid, grid-based tables (horizontal scroll on phones), compare grid, calendar month grid, timeline, KPI tile, progress bar |
 | Signature | **Merit Meter**, **Source chip**, date tile, university monogram (used until logo permission exists), weight bar (formula split) |
+| Page structure (v0.3) | `PageHeader` (light or dark top section for inner pages), `SectionHeading` + `Eyebrow` (pill label with a dot), `ProductWindow` (framed app preview on the home page), `DetailSkeleton` (loading state) |
 | Feedback | Neutral and gold notices (no left-border accents, no gradients behind text), empty state, success state |
 
 ## 4. MVP screens in the canvas
@@ -170,6 +171,28 @@ All desktop screens are fluid pages. Grids collapse to one column, menus stack, 
 - **Gentle motion:** sections rise in as you scroll; cards lift on hover. All motion turns off under `prefers-reduced-motion`.
 - **Merit Meter:** year labels move to a second row when ticks are close, so they never overlap on phones.
 - **Checked on screens:** every route was screenshotted at 1440 px and 390 px wide: no console errors and no sideways scrolling.
+
+## 8a. Premium minimal refresh (v0.3, 21 Nov 2026)
+
+The founder said the home page and some pages still felt simple. The refresh keeps the same colours and makes everything calmer and more refined:
+
+| Area | Before | After |
+|---|---|---|
+| Home hero | Text on the left, card on the right, floating chips | Centred hero: one big two-line headline (white, then a green gradient), one short sentence, one search bar |
+| Hero background | Dotted grid and colour blobs | A soft light from the top, a fine line grid that fades out, light film grain, and a curved bottom edge |
+| Product preview | Small glass card | A large framed "app window" of Best Fit that overlaps the hero and the page below |
+| Search | Tabs + three boxes | One pill-shaped command bar: what, where, Search |
+| Navigation | Plain links | Links inside one pill; short labels (Programs, Merit calculator, Best Fit, Calendar, Scholarships) |
+| Buttons | Rounded rectangles | Full pills, with a soft top highlight |
+| Cards | Grey borders | Hairline rings and soft shadows |
+| Home sections | Many coloured boxes | Fewer sections: three alternating feature rows, a 3-step strip, featured programs, fields + cities, closing soon, a dark "promise" block with four standards, and a centred final call to action |
+| Inner pages | Plain white title bands | One shared `PageHeader`: soft green/blue light, fine grid, pill eyebrow, large gradient title |
+
+**Rules kept:**
+- One primary action per view.
+- Sample data stays labelled. The "Sample" tag is also shown in the product window.
+- The four numbers in the promise block (2 people verify, 0 paid placements, 100% sourced, 1 profile) are **product standards from the plan**, not usage statistics.
+- All new text colours were checked against the palette's contrast pairs.
 
 ## 9. Handover to development
 

@@ -4,6 +4,7 @@ import { ArrowRight, Bookmark, Check, ChevronLeft, ChevronRight, Columns2, MapPi
 import Link from "next/link";
 import { useMemo, useState } from "react";
 import { Monogram, StatusDot, Tag } from "@/components/ui/badges";
+import { PageHeader } from "@/components/site/page-header";
 import { Button, ButtonLink } from "@/components/ui/button";
 import { Chip, Segmented, Switch } from "@/components/ui/controls";
 import { cn, formatDate, pkr } from "@/lib/format";
@@ -60,39 +61,36 @@ export function ProgramExplorer({ items }: { items: ExplorerItem[] }) {
 
   return (
     <>
-      <section className="border-b border-ink-200 bg-white">
-        <div className="mx-auto max-w-[1240px] space-y-5 px-5 pt-9 pb-7 sm:px-7">
-          <nav aria-label="Breadcrumb" className="flex gap-2 text-[13px] text-ink-500">
-            <Link href="/" className="hover:text-ink-900">Home</Link><span>/</span><span className="font-semibold text-ink-900">Programs</span>
-          </nav>
-          <div className="flex flex-wrap items-end justify-between gap-4">
-            <div className="space-y-2">
-              <h1 className="text-[clamp(2rem,3.6vw,3rem)] leading-tight font-extrabold tracking-[-0.035em]">Find your program</h1>
-              <p className="text-ink-500">Undergraduate programs with verified fees, formulas and past merits.</p>
-            </div>
-            <ButtonLink href="/best-fit" variant="light"><Target className="size-4" aria-hidden />Match programs to my marks</ButtonLink>
-          </div>
-          <div role="search" className="flex flex-wrap gap-2">
-            <label className="flex h-14 min-w-0 flex-[1_1_260px] items-center gap-3 rounded-2xl border border-transparent bg-ink-50 px-4 transition focus-within:border-brand-500 focus-within:bg-white focus-within:ring-4 focus-within:ring-brand-500/15">
-              <Search className="size-5 text-ink-400" aria-hidden />
+      <PageHeader
+        crumbs={[{ label: "Home", href: "/" }, { label: "Programs" }]}
+        eyebrow="Explore programs"
+        title="Find your program"
+        description="Undergraduate programs with verified fees, formulas and past merits."
+        actions={<ButtonLink href="/best-fit" variant="light"><Target className="size-4" aria-hidden />Match programs to my marks</ButtonLink>}
+      >
+        <div className="space-y-5">
+          <div role="search" className="flex flex-wrap items-center gap-1 rounded-[24px] bg-white p-1.5 shadow-soft ring-1 ring-ink-200/80 transition focus-within:ring-brand-500/40 sm:flex-nowrap sm:rounded-full">
+            <label className="flex h-12 min-w-0 flex-[1_1_100%] items-center gap-3 pr-2 pl-4 sm:flex-1">
+              <Search className="size-[18px] shrink-0 text-ink-400" aria-hidden />
               <span className="sr-only">Search programs</span>
               <input value={query} onChange={(e) => setQuery(e.target.value)} placeholder="Search a program, university or city" className="h-full w-full min-w-0 bg-transparent text-[15.5px] outline-none placeholder:text-ink-400" />
             </label>
-            <label className="flex h-14 min-w-0 flex-[0_1_210px] items-center gap-3 rounded-2xl bg-ink-50 px-4">
-              <MapPin className="size-5 text-ink-400" aria-hidden />
+            <span aria-hidden className="hidden h-7 w-px bg-ink-200 sm:block" />
+            <label className="flex h-12 min-w-0 flex-1 items-center gap-2 rounded-full bg-ink-50 px-4 sm:w-[200px] sm:flex-none sm:bg-transparent">
+              <MapPin className="size-[18px] shrink-0 text-ink-400" aria-hidden />
               <span className="sr-only">City</span>
-              <select className="h-full w-full bg-transparent text-[15.5px] outline-none"><option>Any city</option><option>Lahore</option><option>Islamabad</option><option>Karachi</option><option>Peshawar</option><option>Rawalpindi</option></select>
+              <select className="h-full w-full cursor-pointer bg-transparent text-[15px] text-ink-700 outline-none"><option>Any city</option><option>Lahore</option><option>Islamabad</option><option>Karachi</option><option>Peshawar</option><option>Rawalpindi</option></select>
             </label>
           </div>
           <div className="flex flex-wrap gap-2">
             {FIELDS.map((f) => <Chip key={f.id} active={field === f.id} onClick={() => setField(f.id)}>{f.label}</Chip>)}
           </div>
         </div>
-      </section>
+      </PageHeader>
 
       <section className="mx-auto flex max-w-[1240px] flex-wrap items-start gap-8 px-5 py-10 sm:px-7">
         {/* Filters */}
-        <aside aria-label="Filters" className="w-full rounded-3xl border border-ink-200 bg-white p-6 shadow-xs lg:sticky lg:top-24 lg:w-[280px]">
+        <aside aria-label="Filters" className="w-full rounded-3xl bg-white ring-1 ring-ink-200/70 p-6 shadow-xs lg:sticky lg:top-24 lg:w-[280px]">
           <div className="flex items-center justify-between pb-3">
             <span className="flex items-center gap-2 font-display font-bold"><SlidersHorizontal className="size-[18px]" aria-hidden />Filters</span>
             <Button variant="ghost" size="sm" onClick={reset}>Clear all</Button>
@@ -189,7 +187,7 @@ export function ProgramExplorer({ items }: { items: ExplorerItem[] }) {
           })}
 
           {results.length === 0 && (
-            <div className="flex flex-col items-center gap-3 rounded-3xl border border-ink-200 bg-white px-6 py-16 text-center">
+            <div className="flex flex-col items-center gap-3 rounded-3xl bg-white ring-1 ring-ink-200/70 px-6 py-16 text-center">
               <span className="grid size-12 place-items-center rounded-2xl bg-ink-100 text-ink-600"><Search className="size-5" aria-hidden /></span>
               <h2 className="text-xl font-bold">No programs match these filters</h2>
               <p className="max-w-md text-ink-500">Try another field or widen the fee range. Searches with no results help our data team decide which programs to verify next.</p>

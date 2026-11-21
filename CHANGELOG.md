@@ -27,6 +27,17 @@ All notable changes to Sccuni are documented here. The format follows [Keep a Ch
 - High-fidelity, clickable MVP design on a Design canvas: 12 desktop screens (home, search, program, calculator, Best Fit, compare, university, calendar, scholarships, sign-in, student dashboard, admin verification queue), a design-system page and 2 mobile screens. Sample data is fictional and labelled.
 - `docs/DESIGN_SYSTEM.md`: direction ("Ink & Emerald"), tokens, components, screen inventory with requirement mapping, accessibility and content rules, open design decisions.
 
+### Changed — 2026-11-21 (premium minimal design refresh)
+
+- Home page redesigned:
+  - centred hero with a gradient headline, a pill command-bar search, and a framed Best Fit preview over a curved hero edge;
+  - alternating feature rows, a 3-step strip, a standards block and a centred call to action.
+- New shared components: `PageHeader`, `SectionHeading`, `Eyebrow`, `ProductWindow`, `DetailSkeleton`.
+- Inner pages use the new header. Pill navigation and pill buttons; hairline rings replace card borders.
+- Header, program and university pages read the URL inside `<Suspense>` (fixes Cache Components dev warnings; the shell renders instantly).
+- Fixed a feature row overflowing the screen on phones.
+- `docs/DESIGN_SYSTEM.md` v0.3 and `docs/DEVELOPMENT_PROGRESS.md` updated.
+
 ### Added — 2026-11-20 (frontend code + brand)
 
 - **`frontend/`**: the web app in Next.js 16 (App Router), React 19, TypeScript and Tailwind CSS 4, with 12 screens as real routes (home, program search, program detail, university profile, merit calculator, Best Fit, compare, admission calendar, scholarships, sign-in, student dashboard, admin verification queue), plus 404, sitemap, robots, favicon and Open Graph image.

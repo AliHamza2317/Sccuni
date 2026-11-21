@@ -1,7 +1,7 @@
 @import "tailwindcss";
 
 /* =====================================================================
-   Sccuni design tokens — "Ink & Emerald", derived from the Sccuni logo
+   Sccuni design tokens — "Navy & Emerald", derived from the Sccuni logo
    (navy #001A3A, green #00987C). See docs/DESIGN_SYSTEM.md.
    ===================================================================== */
 @theme {
@@ -21,6 +21,7 @@
   --color-ink-50: #f6f8fb;
 
   --color-paper: #f5f7fa;
+  --color-night: #000a1a;
 
   --color-brand-900: #003a30;
   --color-brand-800: #004f41;
@@ -81,6 +82,8 @@
   body {
     @apply bg-paper font-sans text-ink-900 antialiased;
     text-rendering: optimizeLegibility;
+    /* Inter: single-storey a and open digits read calmer and more premium */
+    font-feature-settings: "cv11", "ss01";
   }
   h1, h2, h3, h4 {
     @apply font-display text-balance;
@@ -130,6 +133,69 @@
   }
   .tabular {
     font-variant-numeric: tabular-nums;
+  }
+
+  /* Fine line grids, faded out with a radial mask */
+  .bg-lines-dark {
+    background-image:
+      linear-gradient(to right, rgb(255 255 255 / 0.055) 1px, transparent 1px),
+      linear-gradient(to bottom, rgb(255 255 255 / 0.055) 1px, transparent 1px);
+    background-size: 72px 72px;
+    background-position: center top;
+  }
+  .bg-lines-light {
+    background-image:
+      linear-gradient(to right, rgb(0 26 58 / 0.05) 1px, transparent 1px),
+      linear-gradient(to bottom, rgb(0 26 58 / 0.05) 1px, transparent 1px);
+    background-size: 56px 56px;
+    background-position: center top;
+  }
+  .mask-radial {
+    mask-image: radial-gradient(ellipse 70% 60% at 50% 0%, #000 30%, transparent 100%);
+  }
+  .mask-radial-right {
+    mask-image: radial-gradient(ellipse 60% 90% at 85% 0%, #000 20%, transparent 100%);
+  }
+
+  /* Film grain for depth on dark surfaces */
+  .bg-noise {
+    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='180' height='180'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 0.55 0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
+    background-size: 180px 180px;
+  }
+
+  /* Gradient text */
+  .text-gradient-light {
+    background: linear-gradient(180deg, #ffffff 30%, rgb(255 255 255 / 0.62));
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+  .text-gradient-brand {
+    background: linear-gradient(100deg, #7fd9c2 0%, #2dba98 45%, #00987c 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+  .text-gradient-ink {
+    background: linear-gradient(180deg, var(--color-ink-900) 40%, var(--color-ink-700));
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+
+  /* A soft light line along the top edge of a card (sits on dark backgrounds) */
+  .edge-light {
+    position: relative;
+  }
+  .edge-light::after {
+    content: "";
+    position: absolute;
+    top: -1px;
+    left: 12%;
+    right: 12%;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, rgb(127 217 194 / 0.9), transparent);
+    pointer-events: none;
   }
 }
 

@@ -1,6 +1,6 @@
 # Sccuni — Development Progress
 
-- **Last updated:** 20 Nov 2026.
+- **Last updated:** 21 Nov 2026.
 - **Current phase:** Phase 0 — Discovery and planning ✅ drafted, ⏳ **awaiting founder approval**. Phase 5 (design) and the frontend part of Phase 10 were started early at the founder's request.
 - **Code status:** the web frontend exists in `frontend/` (Next.js), running on **fictional sample data**. No backend, database or real data yet.
 
@@ -98,6 +98,30 @@ See the Phase 0 summary in chat and REQUIREMENTS §9.2:
 3. Unknown program or university URLs show the 404 page with `noindex`, but the HTTP status is 200, because Cache Components streams the page before `notFound()` runs. To fix with the API phase (for example, with a proxy check or a different rendering mode for those routes).
 4. Not yet tested: keyboard-only and screen-reader passes, Lighthouse budgets, real phones, end-to-end tests. These belong to Phase 18.
 5. SAFE/TARGET/REACH thresholds (+2 / −1.5 / −4) are placeholders until the founder decides them.
+
+### Design refresh: premium minimal (21 Nov 2026)
+
+**Done** at the founder's request (the home page and some pages still felt simple):
+- New home page: centred hero, command-bar search, framed Best Fit preview, alternating feature rows, standards block and a centred final call to action.
+- New shared `PageHeader` for Programs, Merit calculator, Compare, Calendar, Scholarships and Best Fit. Program and university pages got the same treatment.
+- Pill navigation and pill buttons; hairline rings instead of grey borders on cards.
+- Fixed two development-mode warnings:
+  - the header read the URL outside `<Suspense>`;
+  - program and university pages read `params` outside `<Suspense>`.
+
+  Both now stream behind a skeleton, so the page shell shows instantly.
+- Fixed a mobile layout bug found during the check: a feature row was wider than the screen.
+
+**Tested:**
+
+| Check | Result |
+|---|---|
+| `pnpm test` | 11 of 11 pass |
+| `pnpm lint` and `pnpm typecheck` | No errors |
+| `pnpm build` | Succeeds; 41 pages |
+| Every route at 1440 px and 390 px (production server) | No console errors; no sideways scrolling |
+
+**Still open:** unknown program/university URLs still return HTTP 200 with the 404 page (see limitation 3 above).
 
 ### Next phase
 

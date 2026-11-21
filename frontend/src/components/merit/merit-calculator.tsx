@@ -67,7 +67,7 @@ export function MeritCalculator({ programs }: { programs: CalcProgram[] }) {
   return (
     <div className="mx-auto flex max-w-[1240px] flex-wrap items-start gap-7 px-5 py-10 sm:px-7">
       {/* Inputs */}
-      <form className="min-w-0 flex-[1_1_400px] space-y-6 rounded-[28px] border border-ink-200 bg-white p-6 shadow-soft sm:p-8" onSubmit={(e) => e.preventDefault()}>
+      <form className="min-w-0 flex-[1_1_400px] space-y-6 rounded-[28px] bg-white ring-1 ring-ink-200/70 p-6 shadow-soft sm:p-8" onSubmit={(e) => e.preventDefault()}>
         <div className="space-y-2">
           <label htmlFor="program" className="text-sm font-semibold">Program</label>
           <select id="program" value={slug} onChange={(e) => changeProgram(e.target.value)} className="h-12 w-full rounded-xl border border-ink-300 bg-white px-3.5 text-[15px] outline-none focus:border-brand-500 focus:ring-4 focus:ring-brand-500/15">
@@ -157,7 +157,7 @@ export function MeritCalculator({ programs }: { programs: CalcProgram[] }) {
           <MeritMeter className="mt-9" dark value={aggregate} marks={[...program.closings].reverse().map((c) => ({ label: String(c.year), value: c.value }))} caption="Final-list closing aggregates · Open merit" />
         </section>
 
-        <section className="space-y-4 rounded-[28px] border border-ink-200 bg-white p-6 shadow-xs sm:p-8">
+        <section className="space-y-4 rounded-[28px] bg-white ring-1 ring-ink-200/70 p-6 shadow-xs sm:p-8">
           <div className="flex flex-wrap items-center justify-between gap-2">
             <h2 className="text-xl font-bold">How we got this number</h2>
             <Verified>Verified formula</Verified>
@@ -177,7 +177,7 @@ export function MeritCalculator({ programs }: { programs: CalcProgram[] }) {
         </section>
 
         <div className="grid gap-5 md:grid-cols-2">
-          <section className="space-y-3 rounded-[24px] border border-ink-200 bg-white p-6">
+          <section className="space-y-3 rounded-[24px] bg-white ring-1 ring-ink-200/70 p-6">
             <h2 className="font-display font-bold">Compared with past merits</h2>
             <ul className="divide-y divide-ink-100 text-sm">
               {program.closings.map((c) => {
@@ -192,7 +192,7 @@ export function MeritCalculator({ programs }: { programs: CalcProgram[] }) {
             </ul>
             <p className="text-xs text-ink-500">Same program, campus, shift and category. Each year uses that year’s verified formula.</p>
           </section>
-          <section className="space-y-3 rounded-[24px] border border-ink-200 bg-white p-6">
+          <section className="space-y-3 rounded-[24px] bg-white ring-1 ring-ink-200/70 p-6">
             <h2 className="flex items-center gap-2 font-display font-bold"><Target className="size-[18px] text-target" aria-hidden />What test score do I need?</h2>
             {program.closings.slice(0, 2).map((c) => {
               const need = requiredTestMarks(f, { ssc, hssc }, c.value);

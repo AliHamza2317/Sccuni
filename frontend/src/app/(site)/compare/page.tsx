@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
-import Link from "next/link";
 import { CompareGrid, type CompareItem } from "@/components/merit/compare-grid";
+import { PageHeader } from "@/components/site/page-header";
 import { bestFit, firstYearCost } from "@/lib/data";
 import { formatDate, formulaSummary } from "@/lib/format";
 
@@ -37,15 +37,12 @@ export default function ComparePage() {
 
   return (
     <>
-      <section className="border-b border-ink-200 bg-white">
-        <div className="mx-auto max-w-[1240px] space-y-3 px-5 pt-9 pb-8 sm:px-7">
-          <nav aria-label="Breadcrumb" className="flex gap-2 text-[13px] text-ink-500">
-            <Link href="/" className="hover:text-ink-900">Home</Link><span>/</span><Link href="/programs" className="hover:text-ink-900">Programs</Link><span>/</span><span className="font-semibold text-ink-900">Compare</span>
-          </nav>
-          <h1 className="text-[clamp(2rem,3.6vw,3rem)] leading-tight font-extrabold tracking-[-0.035em]">Compare programs</h1>
-          <p className="text-ink-500">Side by side, with your aggregate under each university’s own formula.</p>
-        </div>
-      </section>
+      <PageHeader
+        crumbs={[{ label: "Home", href: "/" }, { label: "Programs", href: "/programs" }, { label: "Compare" }]}
+        eyebrow="Compare"
+        title="Compare programs"
+        description="Side by side, with your aggregate under each university’s own formula."
+      />
       <CompareGrid items={items} />
     </>
   );

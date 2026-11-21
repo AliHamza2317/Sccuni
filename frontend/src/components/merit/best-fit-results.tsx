@@ -77,7 +77,7 @@ export function BestFitResults({ cards, notEligible, needsInfo }: { cards: FitCa
           </div>
 
           {list.map((c) => (
-            <article key={c.slug} className="space-y-4 rounded-[26px] border border-ink-200 bg-white p-6 shadow-xs transition duration-300 hover:-translate-y-0.5 hover:shadow-lift">
+            <article key={c.slug} className="space-y-4 rounded-[26px] bg-white ring-1 ring-ink-200/70 p-6 shadow-xs transition duration-300 hover:-translate-y-0.5 hover:shadow-lift">
               <div className="flex flex-wrap items-start justify-between gap-4">
                 <div className="flex min-w-0 flex-[1_1_320px] items-start gap-4">
                   <Monogram text={c.mono} tone={c.tone} />
@@ -117,11 +117,11 @@ export function BestFitResults({ cards, notEligible, needsInfo }: { cards: FitCa
               </div>
             </article>
           ))}
-          {list.length === 0 && <p className="rounded-3xl border border-ink-200 bg-white p-8 text-center text-ink-500">No programs in this group with the current filter.</p>}
+          {list.length === 0 && <p className="rounded-3xl bg-white ring-1 ring-ink-200/70 p-8 text-center text-ink-500">No programs in this group with the current filter.</p>}
         </div>
 
         <aside className="w-full space-y-4 lg:sticky lg:top-[140px] lg:w-[360px]">
-          <div className="space-y-3.5 rounded-3xl border border-ink-200 bg-white p-6">
+          <div className="space-y-3.5 rounded-3xl bg-white ring-1 ring-ink-200/70 p-6">
             <p className="font-display font-bold">How the groups work</p>
             {([["safe", "At least 2.00 above the closing merit in each of the last 3 years."], ["target", "Within 1.50 of the latest closing merit, or above it."], ["reach", "1.50 to 4.00 below the latest closing merit."], ["none", "No comparable past aggregate — new programs, or merits published as positions."]] as const).map(([g, t]) => (
               <div key={g} className="flex items-start gap-3"><GroupPill group={g} size="sm" className="mt-0.5" /><span className="text-sm text-ink-500">{t}</span></div>
@@ -138,7 +138,7 @@ export function BestFitResults({ cards, notEligible, needsInfo }: { cards: FitCa
             </div>
           )}
 
-          <div className="space-y-2 rounded-3xl border border-ink-200 bg-white p-6">
+          <div className="space-y-2 rounded-3xl bg-white ring-1 ring-ink-200/70 p-6">
             <div className="flex items-center justify-between"><p className="font-display font-bold">Not eligible</p><span className="rounded-lg bg-danger-bg px-2 py-0.5 text-xs font-bold text-danger">{notEligible.length}</span></div>
             <p className="text-sm text-ink-500">Hidden from your results — here’s why.</p>
             {notEligible.map((n) => (
