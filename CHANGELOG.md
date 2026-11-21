@@ -27,6 +27,13 @@ All notable changes to Sccuni are documented here. The format follows [Keep a Ch
 - High-fidelity, clickable MVP design on a Design canvas: 12 desktop screens (home, search, program, calculator, Best Fit, compare, university, calendar, scholarships, sign-in, student dashboard, admin verification queue), a design-system page and 2 mobile screens. Sample data is fictional and labelled.
 - `docs/DESIGN_SYSTEM.md`: direction ("Ink & Emerald"), tokens, components, screen inventory with requirement mapping, accessibility and content rules, open design decisions.
 
+### Changed — 2026-11-21 (silk hero, based on the founder's reference video)
+
+- The home hero is now a rounded card with a WebGL "silk" background (navy and royal blue, mint sheen) that reacts to the cursor; the home header is light.
+- The search box types example searches (`HeroSearch`); a slow, endless strip lists official source types (`SourceMarquee`).
+- Replaced the aurora, line grid and noise layers. Text colours on the hero were re-checked for contrast.
+- Static under reduced motion; pauses off screen; 450k-pixel budget.
+
 ### Added — 2026-11-21 (interactive hero background)
 
 - WebGL hero background (`HeroBackground`): a slow aurora in brand colours that bends and glows around the cursor; the line grid has parallax and lights up near the cursor.

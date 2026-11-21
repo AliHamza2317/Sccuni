@@ -9,9 +9,12 @@ void main() { gl_Position = vec4(aPos, 0.0, 1.0); }
 `;
 
 /*
- * Slow "aurora" of navy, emerald and a little blue, made from layered noise.
- * The cursor gently bends the light around it and adds a soft mint glow.
- * Colours come from the brand palette; brightness is kept low so white text stays readable.
+ * "Silk": a smooth height field of slow, folded waves, lit like satin.
+ * - Large soft folds drift and change shape slowly.
+ * - The light leans towards the cursor, and the cloth dips gently under it.
+ * - Colours: deep brand navy in the shadows, a luminous royal blue on the lit folds,
+ *   and a faint mint sheen (the logo green) on the highlights.
+ * Brightness is capped so white text on top keeps strong contrast.
  */
 const FRAGMENT = `
 #ifdef GL_FRAGMENT_PRECISION_HIGH
@@ -25,64 +28,65 @@ uniform float uTime;
 uniform vec2 uMouse;
 uniform float uStrength;
 
+float field(vec2 p, float t) {
+  vec2 q = p;
+  q += 0.42 * vec2(sin(q.y * 1.10 + t * 0.55), cos(q.x * 0.90 - t * 0.45));
+  q += 0.20 * vec2(sin(q.y * 2.20 - t * 0.35 + 1.7), cos(q.x * 2.00 + t * 0.40 + 0.6));
+  float h = sin(q.x * 1.15 + q.y * 0.85 + t * 0.25);
+  h += 0.65 * sin(q.x * 0.55 - q.y * 1.50 - t * 0.18 + 2.0);
+  vec2 c = q - vec2(0.4, -0.3);
+  h += 0.22 * sin(dot(c, c) * 1.6 - t * 0.5);
+  return h;
+}
+
+float height(vec2 p, vec2 m, float t) {
+  vec2 d = p - m;
+  return field(p, t) - 1.1 * exp(-dot(d, d) * 1.8) * uStrength;
+}
+
 float hash(vec2 p) {
   p = fract(p * vec2(123.34, 456.21));
   p += dot(p, p + 45.32);
   return fract(p.x * p.y);
 }
 
-float noise(vec2 p) {
-  vec2 i = floor(p);
-  vec2 f = fract(p);
-  vec2 u = f * f * (3.0 - 2.0 * f);
-  return mix(mix(hash(i), hash(i + vec2(1.0, 0.0)), u.x),
-             mix(hash(i + vec2(0.0, 1.0)), hash(i + vec2(1.0, 1.0)), u.x), u.y);
-}
-
-float fbm(vec2 p) {
-  float v = 0.0;
-  float a = 0.5;
-  mat2 r = mat2(0.8, -0.6, 0.6, 0.8);
-  for (int i = 0; i < 4; i++) {
-    v += a * noise(p);
-    p = r * p * 2.02 + vec2(1.7, 9.2);
-    a *= 0.5;
-  }
-  return v;
-}
-
 void main() {
   vec2 uv = gl_FragCoord.xy / uRes;
   float aspect = uRes.x / uRes.y;
-  vec2 p = vec2(uv.x * aspect, uv.y);
-  vec2 m = vec2(uMouse.x * aspect, uMouse.y);
-  float t = uTime * 0.035;
+  vec2 p = (uv - 0.5) * vec2(aspect, 1.0) * 2.1;
+  vec2 m = (uMouse - 0.5) * vec2(aspect, 1.0) * 2.1;
+  float t = uTime * 0.22;
 
-  vec2 d = p - m;
-  float md = length(d);
-  p += (d / (md + 0.0001)) * 0.07 * exp(-md * md * 5.0) * uStrength;
+  float e = 0.012;
+  float h = height(p, m, t);
+  float hx = height(p + vec2(e, 0.0), m, t);
+  float hy = height(p + vec2(0.0, e), m, t);
+  vec3 n = normalize(vec3((h - hx) / e, (h - hy) / e, 2.1));
 
-  vec2 q = vec2(fbm(p * 1.3 + vec2(0.0, t)), fbm(p * 1.3 + vec2(5.2, -t)));
-  float n = fbm(p * 1.6 + 1.8 * q + vec2(t * 0.6, t * 0.2));
+  vec2 lean = (uMouse - 0.5) * 0.9 * uStrength;
+  vec3 light = normalize(vec3(-0.30 + lean.x, 0.55 + lean.y, 0.80));
+  float diff = clamp(dot(n, light), 0.0, 1.0);
+  vec3 halfway = normalize(light + vec3(0.0, 0.0, 1.0));
+  float spec = pow(clamp(dot(n, halfway), 0.0, 1.0), 36.0);
 
-  vec3 deep = vec3(0.0, 0.035, 0.09);
-  vec3 navy = vec3(0.0, 0.07, 0.165);
-  vec3 emerald = vec3(0.0, 0.596, 0.486);
-  vec3 mint = vec3(0.176, 0.729, 0.596);
-  vec3 blue = vec3(0.172, 0.357, 0.847);
+  vec3 shadow = vec3(0.000, 0.035, 0.105);
+  vec3 base   = vec3(0.012, 0.120, 0.360);
+  vec3 lit    = vec3(0.035, 0.280, 0.700);
+  vec3 sheen  = vec3(0.420, 0.860, 0.760);
 
-  vec3 col = mix(deep, navy, smoothstep(0.0, 1.0, uv.y));
-  float aurora = smoothstep(0.45, 0.92, n);
-  col = mix(col, emerald * 0.5, aurora * 0.5 * smoothstep(0.05, 1.0, uv.y));
-  col += blue * 0.09 * smoothstep(0.5, 0.95, q.x) * (1.0 - uv.y * 0.5);
+  vec3 col = mix(shadow, base, smoothstep(0.25, 0.58, diff));
+  col = mix(col, lit, smoothstep(0.60, 0.95, diff));
+  col += sheen * spec * 0.22;
 
-  vec2 s = (uv - vec2(0.5, 1.08)) * vec2(1.25, 2.4);
-  col += emerald * 0.26 * exp(-dot(s, s) * 2.2);
-
-  col += mint * 0.15 * exp(-md * md * 7.0) * uStrength;
-
+  // Calm the very top (under the header) and the bottom (behind the product window).
+  col *= mix(0.72, 1.0, smoothstep(1.0, 0.82, uv.y));
+  col *= mix(0.80, 1.0, smoothstep(0.0, 0.25, uv.y));
   vec2 v = uv - 0.5;
-  col *= 1.0 - 0.45 * dot(v, v);
+  col *= 1.0 - 0.30 * dot(v, v);
+  // A soft, wide shade behind the headline and search keeps text contrast high.
+  vec2 tc = (uv - vec2(0.5, 0.64)) * vec2(1.1, 2.2);
+  col *= 1.0 - 0.18 * exp(-dot(tc, tc) * 2.0);
+
   col += (hash(gl_FragCoord.xy + fract(uTime)) - 0.5) / 255.0;
   gl_FragColor = vec4(col, 1.0);
 }
@@ -90,9 +94,6 @@ void main() {
 
 /** Maximum pixels the shader paints per frame (about 700×640). */
 const PIXEL_BUDGET = 450_000;
-
-/** How far the grid layer extends past the hero on each side (matches `-inset-10`). */
-const GRID_BLEED = 40;
 
 function compile(gl: WebGLRenderingContext, type: number, source: string) {
   const shader = gl.createShader(type);
@@ -107,11 +108,10 @@ function compile(gl: WebGLRenderingContext, type: number, source: string) {
 }
 
 /**
- * Interactive hero background.
- * - WebGL aurora that drifts slowly and bends around the cursor.
- * - The line grid lights up near the cursor and shifts slightly (parallax).
- * - Falls back to the CSS layers when WebGL is unavailable.
- * - Static under prefers-reduced-motion; paused when off screen.
+ * Interactive "silk" hero background.
+ * - WebGL satin folds that drift slowly; the light leans towards the cursor and the cloth dips under it.
+ * - Falls back to a still CSS gradient when WebGL is unavailable.
+ * - Static under prefers-reduced-motion; paused when off screen or the tab is hidden.
  */
 export function HeroBackground() {
   const wrapRef = useRef<HTMLDivElement>(null);
@@ -124,48 +124,33 @@ export function HeroBackground() {
 
     const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     const pointer = { x: -1, y: -1, seen: false };
-    const target = { x: 0.5, y: 0.3, s: 0 };
-    const current = { x: 0.5, y: 0.3, s: 0 };
+    const target = { x: 0.62, y: 0.35, s: 0 };
+    const current = { x: 0.62, y: 0.35, s: 0 };
 
-    // ── WebGL setup (optional) ──
     const gl = canvas.getContext("webgl", { antialias: false, alpha: false, depth: false, stencil: false, powerPreference: "low-power" });
-    let program: WebGLProgram | null = null;
-    let uRes: WebGLUniformLocation | null = null;
-    let uTime: WebGLUniformLocation | null = null;
-    let uMouse: WebGLUniformLocation | null = null;
-    let uStrength: WebGLUniformLocation | null = null;
+    if (!gl) return;
+    const vs = compile(gl, gl.VERTEX_SHADER, VERTEX);
+    const fs = compile(gl, gl.FRAGMENT_SHADER, FRAGMENT);
+    const program = vs && fs ? gl.createProgram() : null;
+    if (!program || !vs || !fs) return;
+    gl.attachShader(program, vs);
+    gl.attachShader(program, fs);
+    gl.linkProgram(program);
+    if (!gl.getProgramParameter(program, gl.LINK_STATUS)) return;
 
-    if (gl) {
-      const vs = compile(gl, gl.VERTEX_SHADER, VERTEX);
-      const fs = compile(gl, gl.FRAGMENT_SHADER, FRAGMENT);
-      if (vs && fs) {
-        program = gl.createProgram();
-        if (program) {
-          gl.attachShader(program, vs);
-          gl.attachShader(program, fs);
-          gl.linkProgram(program);
-          if (!gl.getProgramParameter(program, gl.LINK_STATUS)) program = null;
-        }
-      }
-      if (program) {
-        gl.useProgram(program);
-        const buffer = gl.createBuffer();
-        gl.bindBuffer(gl.ARRAY_BUFFER, buffer);
-        gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([-1, -1, 3, -1, -1, 3]), gl.STATIC_DRAW);
-        const aPos = gl.getAttribLocation(program, "aPos");
-        gl.enableVertexAttribArray(aPos);
-        gl.vertexAttribPointer(aPos, 2, gl.FLOAT, false, 0, 0);
-        uRes = gl.getUniformLocation(program, "uRes");
-        uTime = gl.getUniformLocation(program, "uTime");
-        uMouse = gl.getUniformLocation(program, "uMouse");
-        uStrength = gl.getUniformLocation(program, "uStrength");
-      }
-    }
+    gl.useProgram(program);
+    gl.bindBuffer(gl.ARRAY_BUFFER, gl.createBuffer());
+    gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([-1, -1, 3, -1, -1, 3]), gl.STATIC_DRAW);
+    const aPos = gl.getAttribLocation(program, "aPos");
+    gl.enableVertexAttribArray(aPos);
+    gl.vertexAttribPointer(aPos, 2, gl.FLOAT, false, 0, 0);
+    const uRes = gl.getUniformLocation(program, "uRes");
+    const uTime = gl.getUniformLocation(program, "uTime");
+    const uMouse = gl.getUniformLocation(program, "uMouse");
+    const uStrength = gl.getUniformLocation(program, "uStrength");
 
-    // Soft, low-resolution render: the image is smooth, so a reduced resolution looks the same and costs far less.
-    // At most PIXEL_BUDGET pixels are shaded per frame, whatever the screen size.
+    // The image is soft, so a reduced resolution looks the same and costs far less.
     const resize = () => {
-      if (!gl || !program) return;
       const rect = wrap.getBoundingClientRect();
       let scale = Math.min(window.devicePixelRatio || 1, 2) * 0.5;
       const pixels = rect.width * rect.height * scale * scale;
@@ -197,7 +182,6 @@ export function HeroBackground() {
 
     const draw = (now: number) => {
       frameId = 0;
-
       if (pointer.seen) {
         const rect = wrap.getBoundingClientRect();
         const x = (pointer.x - rect.left) / rect.width;
@@ -211,33 +195,18 @@ export function HeroBackground() {
       } else {
         target.s = 0;
       }
-
-      const ease = reduceMotion ? 1 : 0.07;
+      const ease = reduceMotion ? 1 : 0.05;
       current.x += (target.x - current.x) * ease;
       current.y += (target.y - current.y) * ease;
       current.s += (target.s - current.s) * ease;
 
-      // Parallax offset of the grid, and the cursor position inside the (40px larger, shifted) grid layer.
-      const px = (current.x - 0.5) * -28;
-      const py = (current.y - 0.5) * -18;
-      const gx = current.x * wrap.clientWidth + GRID_BLEED - px;
-      const gy = current.y * wrap.clientHeight + GRID_BLEED - py;
-      wrap.style.setProperty("--mx", `${(current.x * 100).toFixed(2)}%`);
-      wrap.style.setProperty("--my", `${(current.y * 100).toFixed(2)}%`);
-      wrap.style.setProperty("--ms", current.s.toFixed(3));
-      wrap.style.setProperty("--px", `${px.toFixed(2)}px`);
-      wrap.style.setProperty("--py", `${py.toFixed(2)}px`);
-      wrap.style.setProperty("--gx", `${gx.toFixed(1)}px`);
-      wrap.style.setProperty("--gy", `${gy.toFixed(1)}px`);
-
-      if (gl && program) {
-        gl.uniform2f(uRes, canvas.width, canvas.height);
-        gl.uniform1f(uTime, reduceMotion ? 12 : (now - start) / 1000);
-        gl.uniform2f(uMouse, current.x, 1 - current.y);
-        gl.uniform1f(uStrength, current.s);
-        gl.drawArrays(gl.TRIANGLES, 0, 3);
-        canvas.dataset.on = "1";
-      }
+      gl.uniform2f(uRes, canvas.width, canvas.height);
+      // Start part-way into the motion so the first frame already has nice folds.
+      gl.uniform1f(uTime, 40 + (reduceMotion ? 0 : (now - start) / 1000));
+      gl.uniform2f(uMouse, current.x, 1 - current.y);
+      gl.uniform1f(uStrength, current.s);
+      gl.drawArrays(gl.TRIANGLES, 0, 3);
+      canvas.dataset.on = "1";
 
       if (!reduceMotion && visible) frameId = requestAnimationFrame(draw);
     };
@@ -255,43 +224,15 @@ export function HeroBackground() {
       document.documentElement.removeEventListener("pointerleave", onPointerLeave);
       resizeObserver.disconnect();
       intersection.disconnect();
-      gl?.getExtension("WEBGL_lose_context")?.loseContext();
+      gl.getExtension("WEBGL_lose_context")?.loseContext();
     };
   }, []);
 
   return (
     <div ref={wrapRef} aria-hidden className="pointer-events-none absolute inset-0 -z-10 overflow-hidden">
-      {/* CSS fallback, visible until (or unless) WebGL starts */}
-      <div className="absolute top-[-340px] left-1/2 h-[820px] w-[1200px] -translate-x-1/2 bg-[radial-gradient(closest-side,rgb(0_152_124/0.34),rgb(0_152_124/0.08)_55%,transparent)]" />
-      <div className="animate-aurora absolute top-[160px] left-[-14%] size-[560px] rounded-full bg-[#2c5bd8]/[0.13] blur-[120px]" />
-      <div className="animate-aurora absolute right-[-12%] bottom-[-160px] size-[520px] rounded-full bg-brand-500/[0.16] blur-[120px] [animation-delay:-9s]" />
-
-      {/* WebGL aurora */}
+      {/* Still CSS version: shown until WebGL starts, or if it can't */}
+      <div className="absolute inset-0 bg-[radial-gradient(70%_60%_at_65%_30%,#0a3f9e_0%,transparent_70%),radial-gradient(60%_70%_at_15%_85%,#000c24_0%,transparent_70%),linear-gradient(160deg,#021a4d,#052a6e_45%,#01163f)]" />
       <canvas ref={canvasRef} className="absolute inset-0 size-full opacity-0 transition-opacity duration-1000 data-[on=1]:opacity-100" />
-
-      {/* Line grid with a little parallax; the same grid lights up around the cursor */}
-      <div className="absolute -inset-10" style={{ transform: "translate3d(var(--px, 0px), var(--py, 0px), 0)" }}>
-        <div className="bg-lines-dark mask-radial absolute inset-0" />
-        <div
-          className="bg-lines-bright absolute inset-0"
-          style={{
-            opacity: "var(--ms, 0)",
-            maskImage: "radial-gradient(300px circle at var(--gx, 50%) var(--gy, 30%), #000 0%, transparent 72%)",
-            WebkitMaskImage: "radial-gradient(300px circle at var(--gx, 50%) var(--gy, 30%), #000 0%, transparent 72%)",
-          }}
-        />
-      </div>
-
-      {/* Soft spotlight that follows the cursor (also works without WebGL) */}
-      <div
-        className="absolute inset-0"
-        style={{
-          opacity: "var(--ms, 0)",
-          background: "radial-gradient(520px circle at var(--mx, 50%) var(--my, 30%), rgb(45 186 152 / 0.10), transparent 60%)",
-        }}
-      />
-
-      <div className="bg-noise absolute inset-0 opacity-[0.2] mix-blend-soft-light" />
     </div>
   );
 }

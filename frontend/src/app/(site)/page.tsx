@@ -1,11 +1,11 @@
 import {
-  ArrowRight, ArrowUpRight, BadgeCheck, Bell, Briefcase, Calculator, CalendarDays, Check, ChevronRight, Cpu, FileText,
-  Landmark, Pill, Scale, ShieldCheck, Sprout, Stethoscope, Target, TrendingUp, Users, Wallet, Wrench,
+  ArrowRight, ArrowUpRight, Bell, Briefcase, Calculator, Check, ChevronRight, Cpu, Pill, Scale, ShieldCheck, Sprout, Stethoscope, Target, Users, Wrench,
 } from "lucide-react";
 import Link from "next/link";
 import type { ReactNode } from "react";
 import { HeroBackground } from "@/components/home/hero-background";
 import { HeroSearch } from "@/components/home/hero-search";
+import { SourceMarquee } from "@/components/home/source-marquee";
 import { ProductWindow, type WindowRow } from "@/components/home/product-window";
 import { DateTile, GroupPill, Monogram, SourceChip, Verified } from "@/components/ui/badges";
 import { ButtonLink } from "@/components/ui/button";
@@ -26,13 +26,6 @@ const fields = [
   { icon: Sprout, name: "Agriculture & Food", sub: "Agriculture, Food Science, DVM" },
 ];
 
-const sources = [
-  { icon: FileText, label: "University prospectuses" },
-  { icon: TrendingUp, label: "Official merit lists" },
-  { icon: Landmark, label: "HEC recognition lists" },
-  { icon: Wallet, label: "Fee schedules" },
-  { icon: CalendarDays, label: "Entry-test bodies" },
-];
 
 const steps = [
   { title: "Enter your marks once", text: "Matric, FSc Part-I or full, and your entry-test score — real or expected." },
@@ -87,49 +80,42 @@ export default function HomePage() {
 
   return (
     <>
-      {/* ───────────────── HERO ───────────────── */}
-      <section
-        className="relative isolate overflow-hidden bg-ink-950 text-white"
-        style={{ paddingBottom: OVERLAP, borderBottomLeftRadius: "50% 56px", borderBottomRightRadius: "50% 56px" }}
-      >
-        <HeroBackground />
+      {/* ───────────────── HERO ─────────────────
+          A rounded "silk" card inset from the page edges. */}
+      <div className="px-2 pt-2 sm:px-3 sm:pt-3">
+        <section className="relative isolate overflow-hidden rounded-[28px] bg-[#021a4d] text-white sm:rounded-[36px]" style={{ paddingBottom: OVERLAP }}>
+          <HeroBackground />
 
-        <div className="mx-auto max-w-[1240px] px-5 pt-16 text-center sm:px-7 sm:pt-24 lg:pt-28">
-          <Link
-            href="/admissions-calendar"
-            className="animate-rise group inline-flex h-9 items-center gap-2.5 rounded-full border border-white/10 bg-white/[0.04] pr-3.5 pl-1.5 text-[13.5px] text-ink-200 backdrop-blur transition hover:border-white/20 hover:text-white"
-          >
-            <span className="rounded-full bg-brand-500/15 px-2.5 py-0.5 text-xs font-semibold text-brand-300 ring-1 ring-brand-400/30">2027</span>
-            Admission season is open
-            <ArrowRight className="size-3.5 text-ink-400 transition group-hover:translate-x-0.5 group-hover:text-white" aria-hidden />
-          </Link>
+          <div className="mx-auto max-w-[1240px] px-5 pt-14 text-center sm:px-7 sm:pt-20 lg:pt-24">
+            <Link
+              href="/admissions-calendar"
+              className="animate-rise group inline-flex h-9 items-center gap-2.5 rounded-full border border-white/15 bg-white/[0.07] pr-3.5 pl-1.5 text-[13.5px] text-white/90 backdrop-blur transition hover:border-white/30 hover:text-white"
+            >
+              <span className="rounded-full bg-white/[0.12] px-2.5 py-0.5 text-xs font-semibold text-brand-200 ring-1 ring-white/15">2027</span>
+              Admission season is open
+              <ArrowRight className="size-3.5 text-white/70 transition group-hover:translate-x-0.5 group-hover:text-white" aria-hidden />
+            </Link>
 
-          <h1 className="animate-rise mx-auto mt-8 max-w-[1100px] font-display text-[clamp(2.75rem,6.4vw,5.1rem)] leading-[1] font-extrabold tracking-[-0.05em] [animation-delay:80ms]">
-            <span className="text-gradient-light">Know where you’ll get in,</span>
-            <br />
-            <span className="text-gradient-brand">before you apply.</span>
-          </h1>
+            <h1 className="animate-rise mx-auto mt-8 max-w-[1100px] font-display text-[clamp(2.75rem,6.4vw,5.1rem)] leading-[1] font-extrabold tracking-[-0.05em] [animation-delay:80ms]">
+              <span className="text-white">Know where you’ll get in,</span>
+              <br />
+              <span className="text-gradient-mint">before you apply.</span>
+            </h1>
 
-          <p className="animate-rise mx-auto mt-7 max-w-[600px] text-[clamp(1.05rem,1.45vw,1.2rem)] leading-relaxed text-ink-300 [animation-delay:160ms]">
-            Official merit formulas, verified past merits, fees and deadlines for every program — in one calm place.
-          </p>
+            <p className="animate-rise mx-auto mt-7 max-w-[600px] text-[clamp(1.05rem,1.45vw,1.2rem)] leading-relaxed text-ink-200 [animation-delay:160ms]">
+              Official merit formulas, verified past merits, fees and deadlines for every program — in one calm place.
+            </p>
 
-          <div className="animate-rise mt-10 [animation-delay:240ms]">
-            <HeroSearch />
+            <div className="animate-rise mt-10 [animation-delay:240ms]">
+              <HeroSearch />
+            </div>
+
+            <div className="animate-rise mt-14 [animation-delay:320ms]">
+              <SourceMarquee />
+            </div>
           </div>
-
-          <ul className="animate-rise mt-8 flex flex-wrap justify-center gap-x-7 gap-y-2 text-[13.5px] text-ink-300 [animation-delay:320ms]">
-            {["Official sources only", "Checked by two people", "Free for students"].map((t) => (
-              <li key={t} className="inline-flex items-center gap-2">
-                <BadgeCheck className="size-4 text-brand-400" aria-hidden />
-                {t}
-              </li>
-            ))}
-          </ul>
-        </div>
-
-        <div aria-hidden className="absolute bottom-[-180px] left-1/2 -z-10 h-[420px] w-[min(1000px,90vw)] -translate-x-1/2 rounded-full bg-brand-500/25 blur-[110px]" />
-      </section>
+        </section>
+      </div>
 
       {/* ───────────────── PRODUCT WINDOW ───────────────── */}
       <div className="animate-rise relative z-10 mx-auto max-w-[1120px] px-5 [animation-delay:380ms] sm:px-7" style={{ marginTop: `calc(-1 * ${OVERLAP} + 64px)` }}>
@@ -151,21 +137,8 @@ export default function HomePage() {
         />
       </div>
 
-      {/* ───────────────── SOURCES ───────────────── */}
-      <section className="mx-auto max-w-[1240px] px-5 pt-20 pb-4 sm:px-7">
-        <p className="text-center text-[13px] font-medium text-ink-500">Every number traced to an official source</p>
-        <ul className="mt-6 flex flex-wrap items-center justify-center gap-x-10 gap-y-4">
-          {sources.map(({ icon: I, label }) => (
-            <li key={label} className="inline-flex items-center gap-2 font-display text-[15.5px] font-semibold tracking-[-0.01em] text-ink-500">
-              <I className="size-[18px]" aria-hidden />
-              {label}
-            </li>
-          ))}
-        </ul>
-      </section>
-
       {/* ───────────────── FEATURES ───────────────── */}
-      <section className="mx-auto max-w-[1240px] px-5 pt-24 pb-28 sm:px-7 lg:pt-28 lg:pb-36">
+      <section className="mx-auto max-w-[1240px] px-5 pt-28 pb-28 sm:px-7 lg:pt-32 lg:pb-36">
         <SectionHeading
           align="center"
           eyebrow="Why Sccuni"

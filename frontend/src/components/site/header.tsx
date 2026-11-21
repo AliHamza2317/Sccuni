@@ -16,9 +16,9 @@ export const NAV = [
   { href: "/scholarships", label: "Scholarships" },
 ];
 
-/** Routes whose top section is navy, so the header sits on it in its dark style. */
+/** Routes whose top section is navy, so the header sits on it in its dark style. (Home uses a light header above its silk hero card.) */
 function isDarkRoute(path: string) {
-  return path === "/" || path.startsWith("/best-fit") || path.startsWith("/universities/");
+  return path.startsWith("/best-fit") || path.startsWith("/universities/");
 }
 
 /**

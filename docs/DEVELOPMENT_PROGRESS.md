@@ -132,6 +132,20 @@ See the Phase 0 summary in chat and REQUIREMENTS §9.2:
 | Text contrast over the background (worst case, cursor on the text) | White ≥ 10.7:1; subtitle ≥ 5.9:1; headline green 2.9:1 at worst, just below the 3:1 large-text target |
 | Smoothness | Headless test machine without a GPU (software rendering): 13 frames per second. Not yet measured on real phones or laptops with a GPU; to check during Phase 18 |
 
+**Silk hero, second version (21 Nov 2026).** Built from the founder's reference video:
+- a rounded hero card with WebGL silk that reacts to the cursor;
+- a search box that types example searches;
+- a moving strip of official source types.
+
+| Check | Result |
+|---|---|
+| WebGL starts; console errors | Yes; none |
+| Reduced motion | Static silk, no typing, strip still |
+| Text contrast (worst case over time and cursor positions) | All text meets WCAG AA (details in DESIGN_SYSTEM §8a) |
+| Smoothness on the test machine without a GPU | About 35 frames per second (the first version managed 13) |
+| Mobile (390 px) | No sideways scrolling; no console errors |
+| Demo video | Recorded for the founder (not committed) |
+
 **Still open:** unknown program/university URLs still return HTTP 200 with the 404 page (see limitation 3 above).
 
 ### Next phase
