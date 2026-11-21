@@ -1,5 +1,12 @@
 @import "tailwindcss";
 
+/*
+ * `on-dark:` styles apply when the page's top section is navy. That section carries
+ * data-header-theme="dark", so the header picks its colours with CSS alone — correct on the
+ * very first paint, before any JavaScript runs.
+ */
+@custom-variant on-dark (&:where(html:has([data-header-theme="dark"]) *));
+
 /* =====================================================================
    Sccuni design tokens — "Navy & Emerald", derived from the Sccuni logo
    (navy #001A3A, green #00987C). See docs/DESIGN_SYSTEM.md.

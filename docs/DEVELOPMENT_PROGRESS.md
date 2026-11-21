@@ -156,6 +156,16 @@ See the Phase 0 summary in chat and REQUIREMENTS §9.2:
 | All routes at 1440 px and 390 px | No console errors; no sideways scrolling |
 | Contrast over the silk | All text passes; see DESIGN_SYSTEM §8a |
 
+**Fix: silk appeared late (21 Nov 2026).** The silk is now a poster image that shows before JavaScript loads; the canvas fades in on the same frame. The header colours are now set by CSS, so they are right on the first paint.
+
+| Check | Result |
+|---|---|
+| JavaScript disabled | Silk poster, white logo and header shown |
+| Scripts delayed by 4 s | Silk and header correct at 1.2 s |
+| Timeline on the local production server | Plain navy before 150 ms; silk by 300 ms; poster request done in about 25 ms |
+| Poster vs canvas first frame | Colour difference at most about 12/255 |
+| All routes, desktop and mobile | No console errors; no sideways scrolling; 11/11 unit tests pass |
+
 **Still open:** unknown program/university URLs still return HTTP 200 with the 404 page (see limitation 3 above).
 
 ### Next phase

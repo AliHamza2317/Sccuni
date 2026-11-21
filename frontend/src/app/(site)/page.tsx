@@ -83,7 +83,7 @@ export default function HomePage() {
       {/* ───────────────── HERO ─────────────────
           Full width, directly under the floating header (which sits on top of it), with rounded bottom corners. */}
       <div>
-        <section className="relative isolate overflow-hidden rounded-b-[28px] bg-ink-950 text-white sm:rounded-b-[44px]" style={{ paddingBottom: OVERLAP }}>
+        <section data-header-theme="dark" className="relative isolate overflow-hidden rounded-b-[28px] bg-ink-950 text-white sm:rounded-b-[44px]" style={{ paddingBottom: OVERLAP }}>
           <HeroBackground />
 
           <div className="mx-auto max-w-[1240px] px-5 pt-[128px] text-center sm:px-7 sm:pt-[152px] lg:pt-[168px]">

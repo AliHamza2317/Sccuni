@@ -8,7 +8,7 @@ function Bar({ className }: { className?: string }) {
 export function DetailSkeleton({ dark = false }: { dark?: boolean }) {
   return (
     <div aria-busy="true" aria-label="Loading">
-      <div className={cn("border-b", dark ? "border-white/[0.06] bg-ink-950" : "border-ink-200/70 bg-white")}>
+      <div data-header-theme={dark ? "dark" : undefined} className={cn("border-b", dark ? "border-white/[0.06] bg-ink-950" : "border-ink-200/70 bg-white")}>
         <div className="mx-auto max-w-[1240px] space-y-5 px-5 pt-[120px] pb-12 sm:px-7">
           <Bar className={cn("h-3 w-56", dark && "bg-white/10")} />
           <div className="flex items-center gap-5">

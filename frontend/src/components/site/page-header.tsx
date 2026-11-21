@@ -36,6 +36,7 @@ export function PageHeader({
 }) {
   return (
     <section
+      data-header-theme={dark ? "dark" : undefined}
       className={cn(
         "relative isolate overflow-hidden border-b",
         dark ? "border-white/[0.06] bg-ink-950 text-white" : "border-ink-200/70 bg-white",

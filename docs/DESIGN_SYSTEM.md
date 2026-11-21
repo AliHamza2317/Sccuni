@@ -218,6 +218,16 @@ The founder said the home page and some pages still felt simple. The refresh kee
 | Small labels (white) | ≥ 6.2:1 |
 | Header links (white at 70%) | ≥ 7.3:1 |
 
+**No more "plain first, silk later" (21 Nov 2026).** The founder noticed that the hero first showed a plain background, and the silk canvas appeared only some time later. The canvas waits for the page's JavaScript to load, and in development that takes seconds. The fix:
+
+| Step | What happens |
+|---|---|
+| Poster image | A still image of the silk's first frame (`silk-poster.webp`, 30 KB, 1700×1000) is in the page HTML. It has an inline blurred placeholder and is fetched with high priority, so the silk shows before any JavaScript runs |
+| Exact match | The shader crops to the poster's aspect ratio the way CSS `object-fit: cover` does, and starts at the poster's time. When the canvas fades in (0.5 s), it lands on the same frame: the colour difference is at most about 12/255 in the darkest areas |
+| Re-creating the poster | Generated from the shader by `frontend/scripts/render-silk-poster.mjs` |
+| Header | Its colours now come from CSS. A navy top section carries `data-header-theme="dark"`, and the `on-dark:` variant switches the header to light-on-dark. Before, the header briefly showed its light style (dark logo on navy) until JavaScript loaded |
+| Logo | Images are now generated at display size (256/384 px wide instead of 3840 px), so they load fast |
+
 **Header (21 Nov 2026).** Code: `frontend/src/components/site/header.tsx`.
 - At the top of every page the header is transparent and sits on the page's first section. On dark pages it uses white text and a white "Find my best fit" pill; on light pages, dark text and a navy pill.
 - Once you scroll, it turns into a floating glass capsule with rounded ends, a soft shadow and a slightly smaller logo: navy on dark pages, frosted white on light pages.

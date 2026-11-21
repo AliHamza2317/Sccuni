@@ -1,6 +1,18 @@
 "use client";
 
+import Image from "next/image";
 import { useEffect, useRef } from "react";
+import silkPoster from "./silk-poster.webp";
+
+/**
+ * Aspect ratio of the pre-rendered poster (`silk-poster.webp`). The shader crops to it like
+ * object-fit: cover, so the canvas's first frame matches the poster pixel for pixel.
+ * Regenerate the poster if the shader or this value changes (see frontend/README.md).
+ */
+export const POSTER_ASPECT = 1.7;
+
+/** Time (seconds) of the poster frame; the animation starts from here. */
+export const POSTER_TIME = 40;
 
 /* A full-screen triangle; the fragment shader paints every pixel. */
 const VERTEX = `
@@ -50,11 +62,19 @@ float hash(vec2 p) {
   return fract(p.x * p.y);
 }
 
+const float POSTER_ASPECT = ${POSTER_ASPECT.toFixed(2)};
+
+/* Maps screen UV to the poster's UV the way CSS object-fit: cover does, so the first frame matches the poster image. */
+vec2 coverUv(vec2 uv, float aspect) {
+  if (aspect < POSTER_ASPECT) return vec2(0.5 + (uv.x - 0.5) * aspect / POSTER_ASPECT, uv.y);
+  return vec2(uv.x, 0.5 + (uv.y - 0.5) * POSTER_ASPECT / aspect);
+}
+
 void main() {
-  vec2 uv = gl_FragCoord.xy / uRes;
   float aspect = uRes.x / uRes.y;
-  vec2 p = (uv - 0.5) * vec2(aspect, 1.0) * 2.1;
-  vec2 m = (uMouse - 0.5) * vec2(aspect, 1.0) * 2.1;
+  vec2 uv = coverUv(gl_FragCoord.xy / uRes, aspect);
+  vec2 p = (uv - 0.5) * vec2(POSTER_ASPECT, 1.0) * 2.1;
+  vec2 m = (coverUv(uMouse, aspect) - 0.5) * vec2(POSTER_ASPECT, 1.0) * 2.1;
   float t = uTime * 0.22;
 
   float e = 0.012;
@@ -110,7 +130,7 @@ function compile(gl: WebGLRenderingContext, type: number, source: string) {
 /**
  * Interactive "silk" hero background.
  * - WebGL satin folds that drift slowly; the light leans towards the cursor and the cloth dips under it.
- * - Falls back to a still CSS gradient when WebGL is unavailable.
+ * - Shows a pre-rendered poster of the first frame straight away; falls back to it when WebGL is unavailable.
  * - Static under prefers-reduced-motion; paused when off screen or the tab is hidden.
  */
 export function HeroBackground() {
@@ -202,7 +222,7 @@ export function HeroBackground() {
 
       gl.uniform2f(uRes, canvas.width, canvas.height);
       // Start part-way into the motion so the first frame already has nice folds.
-      gl.uniform1f(uTime, 40 + (reduceMotion ? 0 : (now - start) / 1000));
+      gl.uniform1f(uTime, POSTER_TIME + (reduceMotion ? 0 : (now - start) / 1000));
       gl.uniform2f(uMouse, current.x, 1 - current.y);
       gl.uniform1f(uStrength, current.s);
       gl.drawArrays(gl.TRIANGLES, 0, 3);
@@ -230,9 +250,15 @@ export function HeroBackground() {
 
   return (
     <div ref={wrapRef} aria-hidden className="pointer-events-none absolute inset-0 -z-10 overflow-hidden">
-      {/* Still CSS version: shown until WebGL starts, or if it can't */}
-      <div className="absolute inset-0 bg-[radial-gradient(70%_60%_at_65%_30%,#0a4d4a_0%,transparent_70%),radial-gradient(60%_70%_at_15%_85%,#000816_0%,transparent_70%),linear-gradient(160deg,#001a3a,#012c45_45%,#000f24)]" />
-      <canvas ref={canvasRef} className="absolute inset-0 size-full opacity-0 transition-opacity duration-1000 data-[on=1]:opacity-100" />
+      {/*
+        The first frame of the silk as a still image, fetched with high priority and with an inline
+        blurred placeholder, so the silk is visible at once — before any JavaScript runs.
+        It also stays as the background if WebGL is unavailable.
+      */}
+      {/* Served as-is (unoptimized): re-encoding would shift its colours away from the canvas's first frame. */}
+      <Image src={silkPoster} alt="" fill unoptimized loading="eager" fetchPriority="high" placeholder="blur" className="object-cover object-center" />
+      {/* The live canvas starts on exactly the same frame, so fading it in is invisible. */}
+      <canvas ref={canvasRef} className="absolute inset-0 size-full opacity-0 transition-opacity duration-500 data-[on=1]:opacity-100" />
     </div>
   );
 }

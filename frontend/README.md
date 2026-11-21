@@ -68,4 +68,10 @@ public/brand/       logo variants (full, white-on-navy, mark)
 - **Never hard-code a university formula.** Formulas are data (`Formula` in `src/lib/types.ts`) evaluated by `src/lib/merit/engine.ts`.
 - **Never present sample data as real.** Keep the prototype banner until real, verified data is connected.
 - Keep each page responsive down to 360 px; check with `pnpm build && pnpm start`.
+- **Header colours:** if a page's top section is navy, add `data-header-theme="dark"` to it. The header then switches to its light-on-dark style using CSS alone (the `on-dark:` variant in `globals.css`), so it is right on the first paint.
+- **Hero silk poster:** `src/components/home/silk-poster.webp` is the first frame of the WebGL silk. It shows before JavaScript loads. If you change the shader, `POSTER_ASPECT` or `POSTER_TIME` in `src/components/home/hero-background.tsx`, regenerate it. Run this from `frontend/`; it needs Playwright with Chromium:
+
+  ```bash
+  NODE_PATH="$(npm root -g)" node scripts/render-silk-poster.mjs
+  ```
 - Next.js 16 has breaking changes. Read `node_modules/next/dist/docs/` before using an unfamiliar API (see `AGENTS.md`). This app uses **Cache Components**: dynamic routes need `generateStaticParams`.
