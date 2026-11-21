@@ -215,6 +215,17 @@ What changed:
 | Navbar at the top and after scrolling (home, Programs, program page) | Visible on all |
 | All routes | No console errors; no sideways scrolling; 11/11 tests pass |
 
+**Greener hero (21 Nov 2026).** At the founder's request:
+- The hero silk is now mostly emerald green; navy shows only at the far edges.
+- The poster was regenerated to match.
+- The headline's mint gradient is lighter, so it stands out on green.
+
+| Check | Result |
+|---|---|
+| Hero text contrast, measured | All pass. The subtitle is the tightest at 4.9:1 |
+| Inner headers | White ≥ 8.2:1 |
+| Console errors | None |
+
 **Still open:** unknown program/university URLs still return HTTP 200 with the 404 page (see limitation 3 above).
 
 ### Next phase

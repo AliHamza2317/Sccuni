@@ -248,7 +248,7 @@ The founder said the home page and some pages still felt simple. The refresh kee
 
 | Where | Design |
 |---|---|
-| Home hero | Live WebGL silk. The darkest navy now stays at the edges. Towards the middle the shadows lift to a lighter navy-teal, and the extra shade behind the headline was reduced, so no dark patch drifts across the text. The poster image was regenerated to match |
+| Home hero | Live WebGL silk, **mostly emerald green** (founder's choice). Deep navy appears only at the far edges. The shade behind the headline is light, so no dark patch drifts across the text. The poster image was regenerated to match |
 | Inner page headers (`PageHeader`), program and university pages | Dark silk: a still, slowly drifting poster (`SilkBackdrop`) with a readability shade, white type, rounded bottom corners |
 | Home · Our promise, calculator result card | Dark silk, as above |
 | Home · How it works, Closing soon | As designed in the earlier round (UI previews; two-week day strip with timeline) |
@@ -262,12 +262,15 @@ The founder said the home page and some pages still felt simple. The refresh kee
 
 | Where | Text | Contrast |
 |---|---|---|
-| Home hero, lighter middle (worst 2% of pixels over time and cursor positions) | White headline | ≥ 5.8:1 |
-| | Mint headline gradient, darkest stop `#6FD6B8` | ≥ 3.3:1 (large text) |
-| | Subtitle (`ink-100`) | ≥ 5.8:1 |
-| | Badge, chips and strip text | White on a navy wash, ≥ 5.0:1 |
-| Inner silk headers | White | ≥ 9.5:1 |
-| | `ink-200` | ≥ 7.4:1 |
+| Home hero, green silk (worst 2% of pixels over time and cursor positions) | White headline | ≥ 4.9:1 (large text) |
+| | Mint headline gradient, darkest stop `#8FE3CB` | ≥ 3.3:1 (large text) |
+| | Subtitle (`ink-100`) | ≥ 4.9:1 |
+| | Strip text, labels (white) | ≥ 5.5:1 |
+| | Popular chips (white on a navy wash) | ≥ 10.9:1 |
+| | "Admission season" badge | ≥ 5.0:1 |
+| | Header links (white at 70%) | ≥ 5.7:1 |
+| Inner silk headers (same poster) | White | ≥ 8.2:1 |
+| | `ink-200` | ≥ 6.3:1 |
 
 ## 9. Handover to development
 

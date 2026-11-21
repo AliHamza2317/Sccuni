@@ -24,8 +24,8 @@ void main() { gl_Position = vec4(aPos, 0.0, 1.0); }
  * "Silk": a smooth height field of slow, folded waves, lit like satin.
  * - Large soft folds drift and change shape slowly.
  * - The light leans towards the cursor, and the cloth dips gently under it.
- * - Colours (from the logo): deep navy in the shadows, brand navy in between,
- *   emerald-teal on the lit folds, and a faint mint sheen on the highlights.
+ * - Colours (from the logo): mostly emerald green, with deep navy only at the far edges and a
+ *   faint mint sheen on the highlights.
  * Brightness is capped so white text on top keeps strong contrast.
  */
 const FRAGMENT = `
@@ -89,14 +89,14 @@ void main() {
   vec3 halfway = normalize(light + vec3(0.0, 0.0, 1.0));
   float spec = pow(clamp(dot(n, halfway), 0.0, 1.0), 36.0);
 
-  // The darkest navy stays at the edges. Towards the middle the shadows lift to a lighter
-  // navy-teal, so no dark patch drifts across the headline.
+  // Mostly emerald green (the logo's green). Navy appears only at the far edges, so the middle
+  // stays green and no dark patch drifts across the headline.
   vec2 ec = (uv - 0.5) * vec2(1.0, 1.25);
-  float edge = smoothstep(0.18, 0.62, length(ec));
-  vec3 shadow = mix(vec3(0.000, 0.125, 0.220), vec3(0.000, 0.034, 0.092), edge);
-  vec3 base   = mix(vec3(0.004, 0.160, 0.255), vec3(0.000, 0.095, 0.210), edge);
-  vec3 lit    = vec3(0.010, 0.300, 0.280);
-  vec3 sheen  = vec3(0.420, 0.860, 0.760);
+  float edge = smoothstep(0.30, 0.78, length(ec));
+  vec3 shadow = mix(vec3(0.000, 0.150, 0.130), vec3(0.000, 0.045, 0.090), edge);
+  vec3 base   = mix(vec3(0.000, 0.225, 0.185), vec3(0.000, 0.105, 0.150), edge);
+  vec3 lit    = vec3(0.020, 0.345, 0.275);
+  vec3 sheen  = vec3(0.500, 0.900, 0.780);
 
   vec3 col = mix(shadow, base, smoothstep(0.25, 0.58, diff));
   col = mix(col, lit, smoothstep(0.60, 0.95, diff));

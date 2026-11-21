@@ -27,6 +27,11 @@ All notable changes to Sccuni are documented here. The format follows [Keep a Ch
 - High-fidelity, clickable MVP design on a Design canvas: 12 desktop screens (home, search, program, calculator, Best Fit, compare, university, calendar, scholarships, sign-in, student dashboard, admin verification queue), a design-system page and 2 mobile screens. Sample data is fictional and labelled.
 - `docs/DESIGN_SYSTEM.md`: direction ("Ink & Emerald"), tokens, components, screen inventory with requirement mapping, accessibility and content rules, open design decisions.
 
+### Changed — 2026-11-21 (greener hero)
+
+- Hero silk is now mostly emerald green; deep navy appears only at the far edges. The poster was regenerated; inner headers use it too.
+- The headline's mint gradient is lighter (darkest stop `#8FE3CB`) for contrast on green.
+
 ### Changed — 2026-11-21 (hero lighter in the middle; dark silk headers restored)
 
 - Home hero: the darkest navy stays at the edges. The shadows lift towards the middle and the shade behind the headline was reduced. The poster was regenerated to match.
