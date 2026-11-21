@@ -197,12 +197,24 @@
     -webkit-background-clip: text;
     background-clip: text;
     color: transparent;
+    /* Room for descenders (g, y, p): background-clip: text only paints inside the box, and tight
+       line-heights would otherwise cut them off. The negative margin keeps the layout unchanged. */
+    padding-bottom: 0.14em;
+    margin-bottom: -0.14em;
+    -webkit-box-decoration-break: clone;
+    box-decoration-break: clone;
   }
   .text-gradient-brand {
     background: linear-gradient(100deg, #7fd9c2 0%, #2dba98 45%, #00987c 100%);
     -webkit-background-clip: text;
     background-clip: text;
     color: transparent;
+    /* Room for descenders (g, y, p): background-clip: text only paints inside the box, and tight
+       line-heights would otherwise cut them off. The negative margin keeps the layout unchanged. */
+    padding-bottom: 0.14em;
+    margin-bottom: -0.14em;
+    -webkit-box-decoration-break: clone;
+    box-decoration-break: clone;
   }
   /* Mint to emerald for text on the navy silk hero (darkest stop still ≥ 3:1 on its brightest folds) */
   .text-gradient-emerald {
@@ -210,12 +222,37 @@
     -webkit-background-clip: text;
     background-clip: text;
     color: transparent;
+    /* Room for descenders (g, y, p): background-clip: text only paints inside the box, and tight
+       line-heights would otherwise cut them off. The negative margin keeps the layout unchanged. */
+    padding-bottom: 0.14em;
+    margin-bottom: -0.14em;
+    -webkit-box-decoration-break: clone;
+    box-decoration-break: clone;
+  }
+  /* Emerald for large text on light backgrounds (lightest stop 3.6:1 on white — large text only; darkest 6.9:1) */
+  .text-gradient-emerald-dark {
+    background: linear-gradient(100deg, #00987c 0%, #007e67 50%, #006653 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    /* Room for descenders (g, y, p): background-clip: text only paints inside the box, and tight
+       line-heights would otherwise cut them off. The negative margin keeps the layout unchanged. */
+    padding-bottom: 0.14em;
+    margin-bottom: -0.14em;
+    -webkit-box-decoration-break: clone;
+    box-decoration-break: clone;
   }
   .text-gradient-ink {
     background: linear-gradient(180deg, var(--color-ink-900) 40%, var(--color-ink-700));
     -webkit-background-clip: text;
     background-clip: text;
     color: transparent;
+    /* Room for descenders (g, y, p): background-clip: text only paints inside the box, and tight
+       line-heights would otherwise cut them off. The negative margin keeps the layout unchanged. */
+    padding-bottom: 0.14em;
+    margin-bottom: -0.14em;
+    -webkit-box-decoration-break: clone;
+    box-decoration-break: clone;
   }
 
   /* A soft light line along the top edge of a card (sits on dark backgrounds) */

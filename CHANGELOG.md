@@ -27,6 +27,18 @@ All notable changes to Sccuni are documented here. The format follows [Keep a Ch
 - High-fidelity, clickable MVP design on a Design canvas: 12 desktop screens (home, search, program, calculator, Best Fit, compare, university, calendar, scholarships, sign-in, student dashboard, admin verification queue), a design-system page and 2 mobile screens. Sample data is fictional and labelled.
 - `docs/DESIGN_SYSTEM.md`: direction ("Ink & Emerald"), tokens, components, screen inventory with requirement mapping, accessibility and content rules, open design decisions.
 
+### Changed — 2026-11-21 (light silk corners, clearer sections)
+
+- Every page header except the home hero, and the "Our promise" section, are now light: white backgrounds with the silk only in two corners. This uses `SilkCorners` and `silk-light.webp`, a light-toned version generated from the shader. The calculator result card is light too.
+- "Popular this season" cards explain themselves:
+  - closing merit with year and list;
+  - trend since the first year;
+  - a chart with year labels;
+  - fee, last date and entry test;
+  - "View program" and "Check my chances".
+- "Explore" became eight clear field cards with program counts or "Coming soon". The links open the program list already filtered (`?field=`, `?q=`).
+- Fixed cut-off descenders in gradient headings. Fixed the double logo in the navbar on light pages.
+
 ### Changed — 2026-11-21 (silk across the site)
 
 - `SilkBackdrop`: the hero's silk as a still, slowly drifting background.

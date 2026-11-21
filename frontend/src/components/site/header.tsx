@@ -72,8 +72,8 @@ function HeaderView({ pathname }: { pathname: string | null }) {
         )}
       >
         {/* Both logo versions are in the page; CSS shows the one that suits the background. */}
-        <Logo preload className="on-dark:hidden" imageClassName={logoSize} />
-        <Logo onDark preload className="hidden on-dark:inline-flex" imageClassName={logoSize} />
+        <span className="flex on-dark:hidden"><Logo preload imageClassName={logoSize} /></span>
+        <span className="hidden on-dark:flex"><Logo onDark preload imageClassName={logoSize} /></span>
 
         <nav aria-label="Main" className="mx-auto hidden items-center gap-1 lg:flex">
           {NAV.map((n) => {

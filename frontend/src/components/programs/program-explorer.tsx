@@ -2,7 +2,8 @@
 
 import { ArrowRight, Bookmark, Check, ChevronLeft, ChevronRight, Columns2, MapPin, Plus, Search, SlidersHorizontal, Target, TrendingUp } from "lucide-react";
 import Link from "next/link";
-import { useMemo, useState } from "react";
+import { useSearchParams } from "next/navigation";
+import { Suspense, useEffect, useMemo, useRef, useState } from "react";
 import { Monogram, StatusDot, Tag } from "@/components/ui/badges";
 import { PageHeader } from "@/components/site/page-header";
 import { Button, ButtonLink } from "@/components/ui/button";
@@ -25,6 +26,23 @@ const FIELDS: { id: FieldId | "all"; label: string }[] = [
 ];
 
 type Sort = "match" | "fee" | "deadline" | "merit";
+
+/**
+ * Applies ?field= and ?q= from the URL once (for links such as "Browse programs" on the home page).
+ * Reading the URL sits in its own <Suspense>, so the program list itself still prerenders.
+ */
+function UrlFilters({ onApply }: { onApply: (f: { field: FieldId | null; q: string | null }) => void }) {
+  const params = useSearchParams();
+  const applied = useRef(false);
+  useEffect(() => {
+    if (applied.current) return;
+    applied.current = true;
+    const f = params.get("field");
+    const known = FIELDS.find((x) => x.id === f && x.id !== "all");
+    onApply({ field: known ? (known.id as FieldId) : null, q: params.get("q") });
+  }, [params, onApply]);
+  return null;
+}
 
 export function ProgramExplorer({ items }: { items: ExplorerItem[] }) {
   const [field, setField] = useState<FieldId | "all">("all");
@@ -61,8 +79,16 @@ export function ProgramExplorer({ items }: { items: ExplorerItem[] }) {
 
   return (
     <>
+      <Suspense fallback={null}>
+        <UrlFilters
+          onApply={({ field: f, q }) => {
+            if (f) setField(f);
+            if (q) setQuery(q);
+          }}
+        />
+      </Suspense>
       <PageHeader
-        silkPosition="30% 38%"
+        corners={["tr", "bl"]}
         crumbs={[{ label: "Home", href: "/" }, { label: "Programs" }]}
         eyebrow="Explore programs"
         title="Find your program"
@@ -70,8 +96,7 @@ export function ProgramExplorer({ items }: { items: ExplorerItem[] }) {
         actions={<ButtonLink href="/best-fit" variant="light"><Target className="size-4" aria-hidden />Match programs to my marks</ButtonLink>}
       >
         <div className="space-y-5">
-          <div className="rounded-[30px] bg-white/[0.1] p-1.5 shadow-[0_24px_70px_rgb(0_10_26/0.4)] ring-1 ring-white/20 backdrop-blur-xl sm:rounded-full">
-          <div role="search" className="flex flex-wrap items-center gap-1 rounded-[24px] bg-white p-1.5 sm:flex-nowrap sm:rounded-full">
+          <div role="search" className="flex flex-wrap items-center gap-1 rounded-[24px] bg-white p-1.5 shadow-lift ring-1 ring-ink-200/80 transition focus-within:ring-brand-500/40 sm:flex-nowrap sm:rounded-full">
             <label className="flex h-12 min-w-0 flex-[1_1_100%] items-center gap-3 pr-2 pl-4 sm:flex-1">
               <Search className="size-[18px] shrink-0 text-ink-400" aria-hidden />
               <span className="sr-only">Search programs</span>
@@ -84,9 +109,8 @@ export function ProgramExplorer({ items }: { items: ExplorerItem[] }) {
               <select className="h-full w-full cursor-pointer bg-transparent text-[15px] text-ink-700 outline-none"><option>Any city</option><option>Lahore</option><option>Islamabad</option><option>Karachi</option><option>Peshawar</option><option>Rawalpindi</option></select>
             </label>
           </div>
-          </div>
           <div className="flex flex-wrap gap-2">
-            {FIELDS.map((f) => <Chip key={f.id} tone="dark" active={field === f.id} onClick={() => setField(f.id)}>{f.label}</Chip>)}
+            {FIELDS.map((f) => <Chip key={f.id} active={field === f.id} onClick={() => setField(f.id)}>{f.label}</Chip>)}
           </div>
         </div>
       </PageHeader>

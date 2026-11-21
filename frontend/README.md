@@ -69,9 +69,15 @@ public/brand/       logo variants (full, white-on-navy, mark)
 - **Never present sample data as real.** Keep the prototype banner until real, verified data is connected.
 - Keep each page responsive down to 360 px; check with `pnpm build && pnpm start`.
 - **Header colours:** if a page's top section is navy, add `data-header-theme="dark"` to it. The header then switches to its light-on-dark style using CSS alone (the `on-dark:` variant in `globals.css`), so it is right on the first paint.
-- **Hero silk poster:** `src/components/home/silk-poster.webp` is the first frame of the WebGL silk. It shows before JavaScript loads. If you change the shader, `POSTER_ASPECT` or `POSTER_TIME` in `src/components/home/hero-background.tsx`, regenerate it. Run this from `frontend/`; it needs Playwright with Chromium:
+- **Silk images:**
+  - `src/components/home/silk-poster.webp` is the first frame of the WebGL silk. It shows before JavaScript loads.
+  - `src/components/site/silk-light.webp` is the same frame in light tones, used for the corner accents (`SilkCorners`).
+
+  Both come from the shader. If you change the shader, `POSTER_ASPECT` or `POSTER_TIME` in `src/components/home/hero-background.tsx`, regenerate them. Run this from `frontend/`; it needs Playwright with Chromium:
 
   ```bash
   NODE_PATH="$(npm root -g)" node scripts/render-silk-poster.mjs
   ```
+- **Gradient text:** use the `.text-gradient-*` classes in `globals.css`; they leave room for descenders. Do not add `background-clip: text` by hand.
+- **Program list links:** `/programs?field=<computing|engineering|medicine|business>` and `/programs?q=<text>` open the list already filtered.
 - Next.js 16 has breaking changes. Read `node_modules/next/dist/docs/` before using an unfamiliar API (see `AGENTS.md`). This app uses **Cache Components**: dynamic routes need `generateStaticParams`.

@@ -182,6 +182,20 @@ All inner page headers moved onto the silk (see DESIGN_SYSTEM §8b).
 | Sideways scrolling, desktop and mobile | None. A stricter check, element by element, also passes: it found that "Closing soon" was wider than a phone screen; fixed |
 | Header text contrast over silk | White ≥ 10.2:1; `ink-200` ≥ 7.9:1 |
 
+**Light silk corners and clearer sections (21 Nov 2026).** Founder feedback addressed:
+- The silk is now only in the corners and in light tones.
+- "Popular this season" and "Explore" now explain themselves.
+- Cut-off descenders are fixed everywhere.
+- The double logo in the navbar on light pages is fixed.
+
+| Check | Result |
+|---|---|
+| Headings with descenders on the home page | Captured and checked: "y", "g" and "p" are complete |
+| `/programs?field=engineering`, `/programs?q=Lahore` | 4 and 6 programs, with the matching chip active |
+| Dark text over light silk | Titles ≥ 11.8:1; descriptions ≥ 5.1:1 |
+| All routes, desktop and mobile | No console errors; no sideways scrolling (page-level and element-level checks) |
+| Lint, typecheck, build, 11 unit tests | Pass |
+
 **Still open:** unknown program/university URLs still return HTTP 200 with the 404 page (see limitation 3 above).
 
 ### Next phase

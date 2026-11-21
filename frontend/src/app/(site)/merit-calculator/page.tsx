@@ -28,7 +28,7 @@ export default function MeritCalculatorPage() {
   return (
     <>
       <PageHeader
-        silkPosition="62% 45%"
+        corners={["tr", "bl"]}
         eyebrow="Merit calculator"
         title="Your aggregate, calculated the official way"
         description="Each university uses its own formula. Pick a program, enter your marks, and see every step — with the source."

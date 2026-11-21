@@ -14,11 +14,11 @@ export default function CalendarPage() {
   return (
     <>
       <PageHeader
-        silkPosition="72% 30%"
+        corners={["tr", "bl"]}
         eyebrow="Admission calendar"
         title="Every deadline, in one place"
         description="Applications, entry tests, merit lists and scholarships — verified from official notices. Turn on reminders for the dates you care about."
-        actions={<ButtonLink href="/admissions-calendar" variant="light"><Download className="size-4" aria-hidden />Add to my phone calendar</ButtonLink>}
+        actions={<ButtonLink href="/admissions-calendar" variant="dark"><Download className="size-4" aria-hidden />Add to my phone calendar</ButtonLink>}
       />
       <AdmissionCalendar events={events} today={DEMO_TODAY} />
     </>
