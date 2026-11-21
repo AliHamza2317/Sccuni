@@ -38,6 +38,7 @@ export default function ComparePage() {
   return (
     <>
       <PageHeader
+        silkPosition="40% 62%"
         crumbs={[{ label: "Home", href: "/" }, { label: "Programs", href: "/programs" }, { label: "Compare" }]}
         eyebrow="Compare"
         title="Compare programs"

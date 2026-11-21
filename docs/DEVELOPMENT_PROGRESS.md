@@ -166,6 +166,22 @@ See the Phase 0 summary in chat and REQUIREMENTS §9.2:
 | Poster vs canvas first frame | Colour difference at most about 12/255 |
 | All routes, desktop and mobile | No console errors; no sideways scrolling; 11/11 unit tests pass |
 
+**Silk across the site (21 Nov 2026).** Redesigned these home sections:
+- How it works;
+- Popular this season;
+- Explore;
+- Closing soon;
+- Our promise.
+
+All inner page headers moved onto the silk (see DESIGN_SYSTEM §8b).
+
+| Check | Result |
+|---|---|
+| Lint, typecheck, build, 11 unit tests | Pass |
+| Console errors (all routes) | None |
+| Sideways scrolling, desktop and mobile | None. A stricter check, element by element, also passes: it found that "Closing soon" was wider than a phone screen; fixed |
+| Header text contrast over silk | White ≥ 10.2:1; `ink-200` ≥ 7.9:1 |
+
 **Still open:** unknown program/university URLs still return HTTP 200 with the 404 page (see limitation 3 above).
 
 ### Next phase

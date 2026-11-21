@@ -3,6 +3,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { Suspense } from "react";
+import { SilkBackdrop } from "@/components/site/silk-backdrop";
 import { DetailSkeleton } from "@/components/site/skeletons";
 import { MeritHistory, RemindSwitch, SaveButton, ShareButton } from "@/components/programs/program-islands";
 import { Monogram, SourceChip, StatusDot, Tag, Verified } from "@/components/ui/badges";
@@ -75,51 +76,50 @@ async function ProgramContent({ params }: { params: PageProps<"/programs/[slug]"
     <>
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
 
-      {/* Header */}
-      <section className="relative isolate bg-white">
-        <div aria-hidden className="absolute inset-0 -z-10 overflow-hidden">
-          <div className="absolute inset-0 bg-[radial-gradient(55%_90%_at_88%_-10%,rgb(0_152_124/0.12),transparent_65%),radial-gradient(45%_80%_at_6%_-20%,rgb(44_91_216/0.07),transparent_60%)]" />
-          <div className="bg-lines-light mask-radial-right absolute inset-0" />
-        </div>
-        <div className="mx-auto max-w-[1240px] space-y-8 px-5 pt-[112px] pb-10 sm:px-7 lg:pt-[120px]">
-          <nav aria-label="Breadcrumb" className="flex flex-wrap items-center gap-2 text-[13px] text-ink-500">
-            <Link href="/" className="hover:text-ink-900">Home</Link><span className="text-ink-300">/</span>
-            <Link href="/programs" className="hover:text-ink-900">Programs</Link><span className="text-ink-300">/</span>
-            <Link href={`/universities/${u.slug}`} className="hover:text-ink-900">{u.shortName}</Link><span className="text-ink-300">/</span>
-            <span aria-current="page" className="font-semibold text-ink-900">{p.title}</span>
+      {/* Header: the home page's silk, with large white type */}
+      <section data-header-theme="dark" className="relative isolate overflow-hidden rounded-b-[28px] bg-ink-950 text-white sm:rounded-b-[40px]">
+        <SilkBackdrop eager position="58% 40%" />
+        <div className="mx-auto max-w-[1240px] space-y-9 px-5 pt-[116px] pb-12 sm:px-7 lg:pt-[132px] lg:pb-14">
+          <nav aria-label="Breadcrumb" className="flex flex-wrap items-center gap-2 text-[13px] text-white/70">
+            <Link href="/" className="hover:text-white">Home</Link><span className="text-white/35">/</span>
+            <Link href="/programs" className="hover:text-white">Programs</Link><span className="text-white/35">/</span>
+            <Link href={`/universities/${u.slug}`} className="hover:text-white">{u.shortName}</Link><span className="text-white/35">/</span>
+            <span aria-current="page" className="font-semibold text-white">{p.title}</span>
           </nav>
           <div className="flex flex-wrap items-end justify-between gap-6">
             <div className="flex min-w-0 flex-[1_1_560px] items-start gap-5">
-              <Monogram text={u.mono} tone={u.tone} size="lg" className="shadow-soft ring-1 ring-ink-900/5" />
+              <Monogram text={u.mono} tone={u.tone} size="lg" className="shadow-[0_12px_30px_rgb(0_0_0/0.3)] ring-4 ring-white/10" />
               <div className="min-w-0 space-y-3">
-                <h1 className="text-gradient-ink text-[clamp(2.2rem,4.2vw,3.5rem)] leading-[1.04] font-extrabold tracking-[-0.045em]">{p.title}</h1>
-                <Link href={`/universities/${u.slug}`} className="flex items-start gap-2 text-ink-500 hover:text-ink-800">
+                <h1 className="text-[clamp(2.3rem,4.4vw,3.75rem)] leading-[1.02] font-extrabold tracking-[-0.045em] text-white">{p.title}</h1>
+                <Link href={`/universities/${u.slug}`} className="flex items-start gap-2 text-ink-200 hover:text-white">
                   <Building2 className="mt-1 size-4 shrink-0" aria-hidden />{u.name} · {p.campus}, {p.city} · {p.shift}
                 </Link>
                 <div className="flex flex-wrap items-center gap-2 pt-1">
-                  <Tag>{u.sector}</Tag>
-                  <Tag>Bachelor · {p.durationYears} years</Tag>
-                  {p.highlights.map((h) => <Tag key={h} tone="brand"><BadgeCheck className="size-3.5" aria-hidden />{h}</Tag>)}
-                  <span className="ml-1"><StatusDot status={p.status}>{p.status === "open" ? `Applications open · closes ${formatDate(p.deadline)}` : `Opens ${p.opensOn ? formatDate(p.opensOn) : "soon"}`}</StatusDot></span>
+                  <Tag tone="ondark">{u.sector}</Tag>
+                  <Tag tone="ondark">Bachelor · {p.durationYears} years</Tag>
+                  {p.highlights.map((h) => <Tag key={h} tone="ondark"><BadgeCheck className="size-3.5 text-brand-300" aria-hidden />{h}</Tag>)}
+                  <span className="ml-1"><StatusDot onDark status={p.status}>{p.status === "open" ? `Applications open · closes ${formatDate(p.deadline)}` : `Opens ${p.opensOn ? formatDate(p.opensOn) : "soon"}`}</StatusDot></span>
                 </div>
               </div>
             </div>
             <div className="flex flex-wrap gap-2">
-              <SaveButton />
-              <ButtonLink href="/compare" variant="light"><Columns2 className="size-4" aria-hidden />Compare</ButtonLink>
-              <ShareButton />
+              <SaveButton onDark />
+              <ButtonLink href="/compare" variant="ondark"><Columns2 className="size-4" aria-hidden />Compare</ButtonLink>
+              <ShareButton onDark />
               <ButtonLink href="#apply">Apply on official website <ExternalLink className="size-4" aria-hidden /></ButtonLink>
             </div>
           </div>
         </div>
-        <div className="sticky top-[72px] z-20 border-y border-ink-200/70 bg-white/80 backdrop-blur-xl">
-          <nav aria-label="On this page" className="mx-auto flex max-w-[1240px] gap-1 overflow-x-auto px-5 py-2 sm:px-7">
-            {[["#overview", "Overview"], ["#eligibility", "Eligibility"], ["#formula", "Merit formula"], ["#merits", "Past merits"], ["#fees", "Fees"], ["#dates", "Key dates"], ["#apply", "How to apply"]].map(([href, label]) => (
-              <a key={href} href={href} className="rounded-full px-4 py-2 text-[14.5px] font-medium whitespace-nowrap text-ink-500 transition-colors hover:bg-ink-50 hover:text-ink-900">{label}</a>
-            ))}
-          </nav>
-        </div>
       </section>
+
+      {/* On-this-page links: a floating pill that stays under the header while you read */}
+      <div className="sticky top-[76px] z-20 mt-6 px-3">
+        <nav aria-label="On this page" className="mx-auto flex w-fit max-w-full gap-0.5 overflow-x-auto rounded-full bg-white/85 p-1 shadow-[0_10px_30px_rgb(0_26_58/0.08)] ring-1 ring-ink-900/[0.07] backdrop-blur-xl">
+          {[["#overview", "Overview"], ["#eligibility", "Eligibility"], ["#formula", "Merit formula"], ["#merits", "Past merits"], ["#fees", "Fees"], ["#dates", "Key dates"], ["#apply", "How to apply"]].map(([href, label]) => (
+            <a key={href} href={href} className="rounded-full px-4 py-2 text-[14px] font-medium whitespace-nowrap text-ink-500 transition-colors hover:bg-ink-900/[0.05] hover:text-ink-900">{label}</a>
+          ))}
+        </nav>
+      </div>
 
       <div className="mx-auto flex max-w-[1240px] flex-wrap items-start gap-8 px-5 py-10 sm:px-7">
         <div className="min-w-0 flex-[999_1_560px] space-y-6">
@@ -275,7 +275,7 @@ async function ProgramContent({ params }: { params: PageProps<"/programs/[slug]"
         </div>
 
         {/* Aside */}
-        <aside className="w-full space-y-4 lg:sticky lg:top-[136px] lg:w-[360px]">
+        <aside className="w-full space-y-4 lg:sticky lg:top-[140px] lg:w-[360px]">
           <div className="relative isolate overflow-hidden rounded-[28px] bg-ink-950 p-7 text-white shadow-lift">
             <div aria-hidden className="absolute -top-32 -right-28 -z-10 size-80 rounded-full bg-brand-500/30 blur-3xl" />
             <div aria-hidden className="bg-noise absolute inset-0 -z-10 opacity-[0.18] mix-blend-soft-light" />

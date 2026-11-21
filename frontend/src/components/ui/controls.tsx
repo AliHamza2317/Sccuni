@@ -64,7 +64,7 @@ export function Switch({ checked, onChange, children, className }: { checked: bo
 }
 
 /** Chip used for filters. */
-export function Chip({ active, onClick, children, className }: { active?: boolean; onClick?: () => void; children: ReactNode; className?: string }) {
+export function Chip({ active, onClick, children, className, tone = "light" }: { active?: boolean; onClick?: () => void; children: ReactNode; className?: string; tone?: "light" | "dark" }) {
   return (
     <button
       type="button"
@@ -72,7 +72,9 @@ export function Chip({ active, onClick, children, className }: { active?: boolea
       onClick={onClick}
       className={cn(
         "inline-flex h-9 items-center gap-2 whitespace-nowrap rounded-full border px-4 text-sm font-medium transition-all duration-200",
-        active ? "border-ink-900 bg-ink-900 text-white shadow-[0_6px_16px_rgb(0_26_58/0.2)]" : "border-ink-200 bg-white text-ink-700 hover:border-ink-300 hover:text-ink-900 hover:shadow-xs",
+        tone === "dark"
+          ? active ? "border-white bg-white text-ink-950 shadow-[0_6px_16px_rgb(0_0_0/0.25)]" : "border-white/15 bg-white/[0.06] text-white/85 backdrop-blur hover:border-white/30 hover:bg-white/[0.12] hover:text-white"
+          : active ? "border-ink-900 bg-ink-900 text-white shadow-[0_6px_16px_rgb(0_26_58/0.2)]" : "border-ink-200 bg-white text-ink-700 hover:border-ink-300 hover:text-ink-900 hover:shadow-xs",
         className,
       )}
     >

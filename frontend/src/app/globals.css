@@ -67,6 +67,7 @@
   --animate-float: float 7s ease-in-out infinite;
   --animate-aurora: aurora 18s ease-in-out infinite alternate;
   --animate-marquee: marquee 48s linear infinite;
+  --animate-drift: drift 40s ease-in-out infinite alternate;
   --animate-caret: caret 1.05s steps(1) infinite;
 
   @keyframes rise {
@@ -76,6 +77,10 @@
   @keyframes float {
     0%, 100% { transform: translateY(0); }
     50% { transform: translateY(-8px); }
+  }
+  @keyframes drift {
+    from { transform: scale(1.06) translate3d(0, 0, 0); }
+    to { transform: scale(1.16) translate3d(-2.5%, 1.5%, 0); }
   }
   @keyframes marquee {
     from { transform: translate3d(0, 0, 0); }

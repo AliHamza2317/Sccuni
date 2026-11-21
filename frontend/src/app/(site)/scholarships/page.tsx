@@ -14,13 +14,12 @@ export default function ScholarshipsPage() {
   return (
     <>
       <PageHeader
+        silkPosition="22% 50%"
         eyebrow="Scholarships & financial aid"
         title="Money shouldn’t decide your future"
         description="Need-based, merit and regional scholarships for undergraduate students — with eligibility, coverage and deadlines checked against official notices."
         aside={
-          <div className="relative isolate overflow-hidden rounded-[28px] bg-ink-950 p-7 text-white shadow-lift">
-            <div aria-hidden className="absolute -top-28 -right-24 -z-10 size-72 rounded-full bg-brand-500/30 blur-3xl" />
-            <div aria-hidden className="bg-noise absolute inset-0 -z-10 opacity-[0.18] mix-blend-soft-light" />
+          <div className="relative isolate overflow-hidden rounded-[28px] bg-white/[0.07] p-7 text-white shadow-[0_24px_60px_rgb(0_8_20/0.35)] ring-1 ring-white/15 backdrop-blur-xl">
             <Eyebrow dark><Info className="size-3.5" aria-hidden />How need-based aid works</Eyebrow>
             <ol className="mt-5 space-y-4">
               {["Get admission first — most need-based awards are given after you join.", "Collect income documents: salary slips, utility bills, guardian CNIC.", "Apply through your university’s financial aid office before its deadline."].map((t, i) => (

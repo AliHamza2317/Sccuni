@@ -3,6 +3,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { Suspense } from "react";
+import { SilkBackdrop } from "@/components/site/silk-backdrop";
 import { DetailSkeleton } from "@/components/site/skeletons";
 import { InquiryForm, UniversityPrograms } from "@/components/programs/university-islands";
 import { SaveButton } from "@/components/programs/program-islands";
@@ -49,19 +50,17 @@ async function UniversityContent({ params }: { params: PageProps<"/universities/
   return (
     <>
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
-      <section data-header-theme="dark" className="relative isolate overflow-hidden bg-ink-950 text-white">
-        <div aria-hidden className="absolute inset-0 -z-10 bg-[radial-gradient(60%_90%_at_85%_-10%,rgb(0_152_124/0.3),transparent_65%),radial-gradient(45%_80%_at_5%_-10%,rgb(44_91_216/0.16),transparent_60%)]" />
-        <div aria-hidden className="bg-lines-dark mask-radial-right absolute inset-0 -z-10" />
-        <div aria-hidden className="bg-noise absolute inset-0 -z-10 opacity-[0.18] mix-blend-soft-light" />
+      <section data-header-theme="dark" className="relative isolate overflow-hidden rounded-b-[28px] bg-ink-950 text-white sm:rounded-b-[40px]">
+        <SilkBackdrop eager position="35% 55%" />
         <div className="mx-auto max-w-[1240px] space-y-9 px-5 pt-[112px] pb-12 sm:px-7 lg:pt-[120px]">
-          <nav aria-label="Breadcrumb" className="flex flex-wrap items-center gap-2 text-[13px] text-ink-400">
-            <Link href="/" className="hover:text-white">Home</Link><span className="text-ink-600">/</span><Link href="/programs" className="hover:text-white">Universities</Link><span className="text-ink-600">/</span><span aria-current="page" className="font-semibold text-white">{u.shortName}</span>
+          <nav aria-label="Breadcrumb" className="flex flex-wrap items-center gap-2 text-[13px] text-white/70">
+            <Link href="/" className="hover:text-white">Home</Link><span className="text-white/35">/</span><Link href="/programs" className="hover:text-white">Universities</Link><span className="text-white/35">/</span><span aria-current="page" className="font-semibold text-white">{u.shortName}</span>
           </nav>
           <div className="flex flex-wrap items-end justify-between gap-6">
             <div className="flex min-w-0 flex-[1_1_560px] items-center gap-5">
               <Monogram text={u.mono} tone={u.tone} size="lg" className="ring-4 ring-white/10" />
               <div className="min-w-0 space-y-3">
-                <h1 className="text-gradient-light text-[clamp(2.1rem,4vw,3.4rem)] leading-[1.04] font-extrabold tracking-[-0.045em]">{u.name}</h1>
+                <h1 className="text-[clamp(2.2rem,4.2vw,3.6rem)] leading-[1.02] font-extrabold tracking-[-0.045em] text-white">{u.name}</h1>
                 <div className="flex flex-wrap gap-2">
                   <Tag tone="ondark"><MapPin className="size-3.5" aria-hidden />{u.city}, {u.province}</Tag>
                   <Tag tone="ondark">{u.sector}</Tag>
@@ -75,10 +74,10 @@ async function UniversityContent({ params }: { params: PageProps<"/universities/
               <ButtonLink href="#contact">Official website <ExternalLink className="size-4" aria-hidden /></ButtonLink>
             </div>
           </div>
-          <dl className="grid grid-cols-2 overflow-hidden rounded-3xl bg-white/[0.03] ring-1 ring-white/[0.08] md:grid-cols-4">
+          <dl className="grid grid-cols-2 overflow-hidden rounded-3xl bg-white/[0.06] ring-1 ring-white/[0.12] backdrop-blur-xl md:grid-cols-4">
             {[["Programs on Sccuni", `${u.programsOnSccuni} undergraduate`], ["Campuses", `${u.campuses.length} ${u.campuses.length === 1 ? "campus" : "campuses"}`], ["Admission session", `${formula.session} · open`], ["Tuition / semester", `From ${pkr(u.tuitionFrom)}`]].map(([k, v], i) => (
               <div key={k} className={cn("p-5", i > 0 && "md:border-l md:border-white/[0.08]", i % 2 === 1 && "border-l border-white/[0.08]", i > 1 && "border-t border-white/[0.08] md:border-t-0")}>
-                <dt className="text-[12.5px] text-ink-400">{k}</dt>
+                <dt className="text-[12.5px] text-ink-200">{k}</dt>
                 <dd className="mt-1.5 text-lg font-semibold tracking-[-0.01em]">{v}</dd>
               </div>
             ))}
@@ -86,10 +85,10 @@ async function UniversityContent({ params }: { params: PageProps<"/universities/
         </div>
       </section>
 
-      <div className="sticky top-[72px] z-20 border-b border-ink-200/70 bg-white/80 backdrop-blur-xl">
-        <nav aria-label="On this page" className="mx-auto flex max-w-[1240px] gap-1 overflow-x-auto px-5 py-2 sm:px-7">
+      <div className="sticky top-[76px] z-20 mt-6 px-3">
+        <nav aria-label="On this page" className="mx-auto flex w-fit max-w-full gap-0.5 overflow-x-auto rounded-full bg-white/85 p-1 shadow-[0_10px_30px_rgb(0_26_58/0.08)] ring-1 ring-ink-900/[0.07] backdrop-blur-xl">
           {[["#about", "Overview"], ["#programs", "Programs"], ["#admissions", "Admissions"], ["#campuses", "Campuses"], ["#scholarships", "Scholarships"], ["#contact", "Contact"]].map(([href, label]) => (
-            <a key={href} href={href} className="rounded-full px-4 py-2 text-[14.5px] font-medium whitespace-nowrap text-ink-500 transition-colors hover:bg-ink-50 hover:text-ink-900">{label}</a>
+            <a key={href} href={href} className="rounded-full px-4 py-2 text-[14px] font-medium whitespace-nowrap text-ink-500 transition-colors hover:bg-ink-900/[0.05] hover:text-ink-900">{label}</a>
           ))}
         </nav>
       </div>
@@ -161,7 +160,7 @@ async function UniversityContent({ params }: { params: PageProps<"/universities/
           </div>
         </div>
 
-        <aside id="contact" className="w-full space-y-4 lg:sticky lg:top-[136px] lg:w-[360px]">
+        <aside id="contact" className="w-full space-y-4 lg:sticky lg:top-[140px] lg:w-[360px]">
           <div className="space-y-3.5 rounded-[28px] bg-white p-6 shadow-xs ring-1 ring-ink-200/70">
             <p className="font-display font-bold">Contact</p>
             {[[Globe, "Website", "[official website URL]"], [Mail, "Admissions email", "[admissions email]"], [Phone, "Phone", "[admissions phone]"], [MapPin, "Address", `${u.campuses[0].address}, ${u.province}`]].map(([Icon, k, v]) => {

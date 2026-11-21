@@ -240,6 +240,35 @@ The founder said the home page and some pages still felt simple. The refresh kee
 - The four numbers in the promise block (2 people verify, 0 paid placements, 100% sourced, 1 profile) are **product standards from the plan**, not usage statistics.
 - All new text colours were checked against the palette's contrast pairs.
 
+## 8b. Silk across the site (21 Nov 2026)
+
+The founder said the lower home sections and the inner pages' top sections still felt simple. The silk from the home hero now ties the whole site together.
+
+**New building block:** `SilkBackdrop` (`frontend/src/components/site/silk-backdrop.tsx`).
+- It shows the hero's silk as a still image (no WebGL), with a very slow zoom-and-pan ("drift").
+- A shade layer keeps white text readable. The shade is strongest on the left, in the centre, or at the bottom, depending on the use.
+- The drift is off under reduced motion.
+
+| Where | What changed |
+|---|---|
+| Inner page headers (`PageHeader`) | Programs, Merit calculator, Best Fit, Compare, Calendar and Scholarships. Silk background, large white title, rounded bottom corners, white or glass buttons and chips. Each page shows a slightly different part of the silk |
+| Program and university pages | Same silk header. The "on this page" links are now a floating pill that stays under the header while you read; before, they stopped sticking after the header |
+| Best Fit tabs | Safe / Target / Reach / No data in a floating pill |
+| Calculator result card | Silk background |
+| Home · How it works | Three cards, each with a small UI preview: marks, eligibility check, and Safe/Target/Reach bars from the sample results |
+| Home · Popular this season | Cards with a silk top, the last closing merit in large type, and a three-year sparkline |
+| Home · Explore | Bento grid: Computer Science & IT as a large silk tile, Engineering as a wide navy tile, six smaller tiles. City pills with program counts |
+| Home · Closing soon | A two-week day strip with coloured dots for each event type, and a timeline of the next deadlines with countdowns |
+| Home · Our promise | Silk background, large statement, four glass cards for the standards |
+
+**Contrast on silk headers.** Measured over the whole header width, worst 2% of background pixels:
+
+| Text | Contrast |
+|---|---|
+| White | ≥ 10.2:1 |
+| `ink-200` | ≥ 7.9:1 |
+| White at 70% | ≥ 7.4:1 |
+
 ## 9. Handover to development
 
 **Done (20 Nov 2026):** the screens are Next.js routes in `frontend/src/app`, the tokens are Tailwind v4 `@theme` variables, and the components are in `frontend/src/components`.

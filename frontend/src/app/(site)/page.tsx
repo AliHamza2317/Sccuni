@@ -1,5 +1,5 @@
 import {
-  ArrowRight, ArrowUpRight, Bell, Briefcase, Calculator, Check, ChevronRight, Cpu, Pill, Scale, ShieldCheck, Sprout, Stethoscope, Target, Users, Wrench,
+  ArrowRight, Bell, Calculator, Check, ShieldCheck, Target,
 } from "lucide-react";
 import Link from "next/link";
 import type { ReactNode } from "react";
@@ -7,40 +7,14 @@ import { HeroBackground } from "@/components/home/hero-background";
 import { HeroSearch } from "@/components/home/hero-search";
 import { SourceMarquee } from "@/components/home/source-marquee";
 import { ProductWindow, type WindowRow } from "@/components/home/product-window";
-import { DateTile, GroupPill, Monogram, SourceChip, Verified } from "@/components/ui/badges";
+import { ClosingSoon, ExploreFields, HowItWorks, PopularPrograms, PromiseSection } from "@/components/home/sections";
+import { DateTile, GroupPill, SourceChip, Verified } from "@/components/ui/badges";
 import { ButtonLink } from "@/components/ui/button";
 import { Reveal } from "@/components/ui/controls";
 import { MeritMeter } from "@/components/ui/merit-meter";
-import { Eyebrow, SectionHeading } from "@/components/ui/section-heading";
-import { bestFit, events, getPrograms, getProgram, getUniversity, latestClosing, sampleStudent } from "@/lib/data";
-import { cn, formatDate, pkr, relativeDays } from "@/lib/format";
-
-const fields = [
-  { icon: Wrench, name: "Engineering", sub: "Electrical, Civil, Mechanical" },
-  { icon: Stethoscope, name: "Medicine & Dentistry", sub: "MBBS, BDS, DPT" },
-  { icon: Cpu, name: "Computer Science & IT", sub: "CS, AI, Data Science" },
-  { icon: Briefcase, name: "Business & Management", sub: "BBA, Accounting & Finance" },
-  { icon: Pill, name: "Pharmacy & Allied Health", sub: "Pharm-D, Nursing, MLT" },
-  { icon: Scale, name: "Law", sub: "LLB (5 years)" },
-  { icon: Users, name: "Social Sciences", sub: "Psychology, Economics, Media" },
-  { icon: Sprout, name: "Agriculture & Food", sub: "Agriculture, Food Science, DVM" },
-];
-
-
-const steps = [
-  { title: "Enter your marks once", text: "Matric, FSc Part-I or full, and your entry-test score — real or expected." },
-  { title: "See where you’re eligible", text: "Each program’s official rules are checked first. Ineligible programs are explained, never recommended." },
-  { title: "Shortlist with confidence", text: "Your aggregate under each formula, against verified past merits — with a reminder for every deadline." },
-];
-
-const standards = [
-  { value: "2", label: "people check every fact before it goes live" },
-  { value: "0", label: "paid placements inside your results" },
-  { value: "100%", label: "of numbers linked to an official source" },
-  { value: "1", label: "profile, checked against every formula" },
-];
-
-const featuredSlugs = ["northstar-bs-computer-science", "highland-bs-software-engineering", "greenfield-bs-artificial-intelligence"];
+import { SectionHeading } from "@/components/ui/section-heading";
+import { bestFit, events, sampleStudent } from "@/lib/data";
+import { cn, relativeDays } from "@/lib/format";
 
 /** The hero overlaps the product window by this much. */
 const OVERLAP = "clamp(150px,20vw,280px)";
@@ -72,11 +46,7 @@ export default function HomePage() {
   }));
   const focus = results.find((r) => r.program.slug === "northstar-bs-computer-science")!;
 
-  const featured = featuredSlugs.map((slug) => getProgram(slug)!).map((p) => ({ p, u: getUniversity(p.universitySlug)! }));
   const soon = events.filter((e) => e.date >= "2027-07-08").slice(0, 4);
-  const cityCounts = Object.entries(
-    getPrograms().reduce<Record<string, number>>((acc, p) => ({ ...acc, [p.city]: (acc[p.city] ?? 0) + 1 }), {}),
-  ).sort((a, b) => b[1] - a[1]);
 
   return (
     <>
@@ -258,162 +228,11 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* ───────────────── HOW IT WORKS ───────────────── */}
-      <section className="border-y border-ink-200/70 bg-white">
-        <div className="mx-auto max-w-[1240px] px-5 py-24 sm:px-7 lg:py-28">
-          <SectionHeading
-            eyebrow="How it works"
-            title="From marks to a shortlist in three steps"
-            action={<ButtonLink href="/best-fit" variant="light">Try Best Fit Finder <ArrowRight className="size-4" aria-hidden /></ButtonLink>}
-          />
-          <ol className="relative mt-16 grid gap-12 md:grid-cols-3 md:gap-10">
-            <span aria-hidden className="absolute top-5 right-[16%] left-[16%] hidden h-px bg-linear-to-r from-transparent via-ink-200 to-transparent md:block" />
-            {steps.map((st, i) => (
-              <li key={st.title} className="relative">
-                <Reveal delay={i * 90} className="space-y-4 md:text-center">
-                  <span className="relative inline-grid size-10 place-items-center rounded-full bg-white font-display text-sm font-bold text-ink-900 shadow-soft ring-1 ring-ink-200 md:mx-auto">
-                    0{i + 1}
-                  </span>
-                  <h3 className="text-xl font-bold tracking-[-0.02em]">{st.title}</h3>
-                  <p className="leading-relaxed text-ink-500 md:mx-auto md:max-w-[300px]">{st.text}</p>
-                </Reveal>
-              </li>
-            ))}
-          </ol>
-        </div>
-      </section>
-
-      {/* ───────────────── FEATURED PROGRAMS ───────────────── */}
-      <section className="mx-auto max-w-[1240px] px-5 py-28 sm:px-7">
-        <SectionHeading
-          eyebrow="Popular this season"
-          title="Programs students are checking now"
-          action={
-            <Link href="/programs" className="group inline-flex items-center gap-1.5 font-semibold text-ink-900">
-              Browse all programs <ArrowRight className="size-4 transition-transform group-hover:translate-x-0.5" aria-hidden />
-            </Link>
-          }
-        />
-        <div className="mt-12 grid gap-5 md:grid-cols-3">
-          {featured.map(({ p, u }, i) => (
-            <Reveal key={p.slug} delay={i * 90}>
-              <Link
-                href={`/programs/${p.slug}`}
-                className="group flex h-full flex-col gap-6 rounded-[26px] bg-white p-6 shadow-soft ring-1 ring-ink-200/70 transition duration-300 hover:-translate-y-1 hover:shadow-lift hover:ring-ink-300/70"
-              >
-                <div className="flex items-start justify-between gap-3">
-                  <Monogram text={u.mono} tone={u.tone} />
-                  <span className="grid size-9 place-items-center rounded-full text-ink-500 ring-1 ring-ink-200 transition group-hover:bg-ink-900 group-hover:text-white group-hover:ring-ink-900">
-                    <ArrowUpRight className="size-4" aria-hidden />
-                  </span>
-                </div>
-                <div>
-                  <p className="font-display text-xl font-bold tracking-[-0.02em]">{p.title}</p>
-                  <p className="mt-1 truncate text-[13.5px] text-ink-500">{u.shortName} · {p.city}</p>
-                </div>
-                <dl className="mt-auto grid grid-cols-2 gap-x-4 gap-y-3 border-t border-ink-100 pt-5 text-sm">
-                  <div><dt className="text-xs text-ink-500">Last closing</dt><dd className="tabular font-semibold">{latestClosing(p)?.toFixed(2)}%</dd></div>
-                  <div><dt className="text-xs text-ink-500">Tuition / semester</dt><dd className="tabular font-semibold">{pkr(p.feePerSemester)}</dd></div>
-                  <div><dt className="text-xs text-ink-500">Entry test</dt><dd className="truncate font-semibold">{p.test}</dd></div>
-                  <div><dt className="text-xs text-ink-500">Apply by</dt><dd className="font-semibold">{formatDate(p.deadline)}</dd></div>
-                </dl>
-              </Link>
-            </Reveal>
-          ))}
-        </div>
-      </section>
-
-      {/* ───────────────── EXPLORE ───────────────── */}
-      <section className="mx-auto max-w-[1240px] px-5 pb-28 sm:px-7">
-        <SectionHeading eyebrow="Explore" title="Start with a field you love" />
-        <div className="mt-12 grid gap-px overflow-hidden rounded-[26px] bg-ink-200/70 ring-1 ring-ink-200/70 sm:grid-cols-2 lg:grid-cols-4">
-          {fields.map((f) => (
-            <Link key={f.name} href="/programs" className="group flex items-center gap-4 bg-white p-5 transition-colors hover:bg-ink-50/70 lg:flex-col lg:items-start lg:p-7">
-              <span className="grid size-11 shrink-0 place-items-center rounded-full text-ink-700 ring-1 ring-ink-200 transition group-hover:bg-ink-900 group-hover:text-brand-300 group-hover:ring-ink-900">
-                <f.icon className="size-5" aria-hidden />
-              </span>
-              <span className="min-w-0 flex-1">
-                <span className="block font-semibold tracking-[-0.01em]">{f.name}</span>
-                <span className="block truncate text-[13px] text-ink-500">{f.sub}</span>
-              </span>
-              <ChevronRight className="size-4 shrink-0 text-ink-300 transition group-hover:translate-x-0.5 group-hover:text-ink-700 lg:hidden" aria-hidden />
-            </Link>
-          ))}
-        </div>
-
-        <div className="mt-10 flex flex-wrap items-center gap-2.5">
-          <span className="mr-2 text-sm font-medium text-ink-500">Browse by city</span>
-          {cityCounts.map(([city, n]) => (
-            <Link
-              key={city}
-              href="/programs"
-              className="inline-flex h-10 items-center gap-2 rounded-full bg-white pr-2 pl-4 text-[14.5px] font-medium shadow-xs ring-1 ring-ink-200/80 transition hover:shadow-soft hover:ring-ink-300"
-            >
-              {city}
-              <span className="tabular grid h-6 min-w-6 place-items-center rounded-full bg-ink-50 px-1.5 text-[12px] text-ink-500">{n}</span>
-            </Link>
-          ))}
-        </div>
-      </section>
-
-      {/* ───────────────── CLOSING SOON ───────────────── */}
-      <section className="mx-auto max-w-[1240px] px-5 pb-28 sm:px-7">
-        <div className="grid items-center gap-12 lg:grid-cols-[0.85fr_1.15fr] lg:gap-16">
-          <div className="space-y-8">
-            <SectionHeading
-              eyebrow="Admission calendar"
-              title="Closing soon"
-              description="Deadlines move fast in admission season. Track the dates that matter to you — and get a reminder before each one."
-            />
-            <div className="flex flex-wrap gap-3">
-              <ButtonLink href="/admissions-calendar" variant="dark">Open calendar</ButtonLink>
-              <ButtonLink href="/sign-in" variant="light"><Bell className="size-4" aria-hidden />Get reminders</ButtonLink>
-            </div>
-          </div>
-          <ul className="overflow-hidden rounded-[26px] bg-white shadow-soft ring-1 ring-ink-200/70">
-            {soon.map((e) => (
-              <li key={e.id} className="border-b border-ink-100 last:border-0">
-                <Link href={e.href} className="group flex items-center gap-4 px-5 py-4 transition-colors hover:bg-ink-50/70">
-                  <DateTile iso={e.date} tone={e.type === "test" ? "blue" : e.type === "scholarship" ? "brand" : "reach"} />
-                  <div className="min-w-0 flex-1">
-                    <p className="font-semibold">{e.title}</p>
-                    <p className="truncate text-sm text-ink-500">{e.where}</p>
-                  </div>
-                  <span className="hidden rounded-full bg-gold-50 px-2.5 py-1 text-[12.5px] font-semibold text-gold-700 sm:block">{relativeDays(e.date)}</span>
-                  <ChevronRight className="size-4 text-ink-300 transition group-hover:translate-x-0.5 group-hover:text-ink-600" aria-hidden />
-                </Link>
-              </li>
-            ))}
-          </ul>
-        </div>
-      </section>
-
-      {/* ───────────────── PROMISE ───────────────── */}
-      <section className="px-3 pb-28 sm:px-7">
-        <div className="relative isolate mx-auto max-w-[1240px] overflow-hidden rounded-[36px] bg-ink-950 px-6 py-20 text-center text-white sm:px-12 lg:py-28">
-          <div aria-hidden className="bg-lines-dark mask-radial absolute inset-0 -z-10" />
-          <div aria-hidden className="absolute top-[-260px] left-1/2 -z-10 h-[560px] w-[900px] -translate-x-1/2 bg-[radial-gradient(closest-side,rgb(0_152_124/0.32),transparent)]" />
-          <div aria-hidden className="bg-noise absolute inset-0 -z-10 opacity-[0.2] mix-blend-soft-light" />
-          <Eyebrow dark>Our promise</Eyebrow>
-          <h2 className="text-gradient-light mx-auto mt-6 max-w-3xl text-[clamp(2.2rem,5vw,4rem)] leading-[1.02] font-extrabold tracking-[-0.045em]">
-            Merit is a guide, not a guarantee.
-          </h2>
-          <p className="mx-auto mt-6 max-w-xl text-lg leading-relaxed text-ink-300">
-            We show how past closing merits compare with your aggregate — clearly, with sources. We never promise admission, and paid placements never change your results.
-          </p>
-          <dl className="mx-auto mt-16 grid max-w-[1000px] grid-cols-2 gap-y-10 lg:grid-cols-4">
-            {standards.map((st, i) => (
-              <div key={st.label} className={cn("px-4", i > 0 && "lg:border-l lg:border-white/[0.08]", i % 2 === 1 && "border-l border-white/[0.08] lg:border-l")}>
-                <dt className="sr-only">{st.label}</dt>
-                <dd>
-                  <span className="text-gradient-brand tabular block font-display text-[clamp(2.4rem,4vw,3.4rem)] leading-none font-extrabold tracking-[-0.04em]">{st.value}</span>
-                  <span className="mx-auto mt-3 block max-w-[180px] text-[14px] leading-snug text-ink-300">{st.label}</span>
-                </dd>
-              </div>
-            ))}
-          </dl>
-        </div>
-      </section>
+      <HowItWorks />
+      <PopularPrograms />
+      <ExploreFields />
+      <ClosingSoon />
+      <PromiseSection />
 
       {/* ───────────────── CTA ───────────────── */}
       <section className="relative isolate overflow-hidden px-5 pb-32 text-center sm:px-7">

@@ -42,7 +42,7 @@ export default function BestFitPage() {
   return (
     <>
       <PageHeader
-        dark
+        silkPosition="50% 28%"
         eyebrow="Best Fit Finder"
         title={`${cards.length} programs you’re eligible for`}
         description="Grouped by how your aggregate — under each university’s own formula — compares with verified past closing merits."

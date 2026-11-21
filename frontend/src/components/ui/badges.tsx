@@ -66,9 +66,11 @@ export function SourceChip({ title, locator, className }: { title: string; locat
   );
 }
 
-export function StatusDot({ status, children }: { status: AdmissionStatus; children: ReactNode }) {
+export function StatusDot({ status, children, onDark = false }: { status: AdmissionStatus; children: ReactNode; onDark?: boolean }) {
   const dot = status === "open" ? "bg-brand-500 shadow-[0_0_0_4px_rgb(0_152_124/0.16)]" : status === "upcoming" ? "bg-gold-500" : "bg-ink-300";
-  const text = status === "open" ? "text-brand-800" : status === "upcoming" ? "text-gold-700" : "text-ink-500";
+  const text = onDark
+    ? status === "open" ? "text-brand-200" : status === "upcoming" ? "text-gold-100" : "text-ink-200"
+    : status === "open" ? "text-brand-800" : status === "upcoming" ? "text-gold-700" : "text-ink-500";
   return (
     <span className={cn("inline-flex items-center gap-2 text-[13px] font-semibold", text)}>
       <span className={cn("size-2 rounded-full", dot)} aria-hidden />

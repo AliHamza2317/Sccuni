@@ -7,6 +7,7 @@ import { GroupPill, SourceChip, Tag, Verified } from "@/components/ui/badges";
 import { Button, ButtonLink } from "@/components/ui/button";
 import { Segmented } from "@/components/ui/controls";
 import { MeritMeter } from "@/components/ui/merit-meter";
+import { SilkBackdrop } from "@/components/site/silk-backdrop";
 import { calculateAggregate, classify, requiredTestMarks } from "@/lib/merit/engine";
 import { cn, formulaSummary, signed } from "@/lib/format";
 import type { Formula, Group } from "@/lib/types";
@@ -138,9 +139,8 @@ export function MeritCalculator({ programs }: { programs: CalcProgram[] }) {
 
       {/* Results */}
       <div className="min-w-0 flex-[999_1_560px] space-y-5">
-        <section aria-label="Your result" className="relative isolate overflow-hidden rounded-[30px] bg-ink-900 p-7 text-white shadow-lift sm:p-9">
-          <div aria-hidden className="bg-grid-dark absolute inset-0 -z-10 opacity-50" />
-          <div aria-hidden className="absolute -top-44 -right-32 -z-10 size-[460px] rounded-full bg-brand-500/30 blur-[100px]" />
+        <section aria-label="Your result" className="relative isolate overflow-hidden rounded-[30px] bg-ink-950 p-7 text-white shadow-lift sm:p-9">
+          <SilkBackdrop position="70% 40%" shade="left" sizes="(min-width: 1024px) 66vw, 100vw" />
           <div className="flex flex-wrap items-start justify-between gap-5">
             <div className="space-y-2">
               <p className="text-sm text-ink-300">Your aggregate · {program.short}</p>

@@ -18,11 +18,11 @@ export function SaveButton({ initial = false, onDark = false }: { initial?: bool
   );
 }
 
-export function ShareButton() {
+export function ShareButton({ onDark = false }: { onDark?: boolean }) {
   const [copied, setCopied] = useState(false);
   return (
     <Button
-      variant="light"
+      variant={onDark ? "ondark" : "light"}
       size="icon"
       aria-label={copied ? "Link copied" : "Copy link to this page"}
       onClick={async () => {

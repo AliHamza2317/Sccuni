@@ -48,8 +48,8 @@ export function BestFitResults({ cards, notEligible, needsInfo }: { cards: FitCa
 
   return (
     <>
-      <div className="sticky top-[72px] z-20 border-b border-ink-200 bg-white/90 backdrop-blur-xl">
-        <div role="tablist" aria-label="Result groups" className="mx-auto flex max-w-[1240px] gap-1 overflow-x-auto px-5 sm:px-7">
+      <div className="sticky top-[76px] z-20 mt-6 px-3">
+        <div role="tablist" aria-label="Result groups" className="mx-auto flex w-fit max-w-full gap-1 overflow-x-auto rounded-full bg-white/85 p-1 shadow-[0_10px_30px_rgb(0_26_58/0.08)] ring-1 ring-ink-900/[0.07] backdrop-blur-xl">
           {(["safe", "target", "reach", "none"] as const).map((g) => (
             <button
               key={g}
@@ -57,10 +57,10 @@ export function BestFitResults({ cards, notEligible, needsInfo }: { cards: FitCa
               type="button"
               aria-selected={g === group}
               onClick={() => setGroup(g)}
-              className={cn("flex items-center gap-2.5 border-b-2 px-3 py-3.5 font-semibold whitespace-nowrap transition-colors", g === group ? "border-ink-900 text-ink-900" : "border-transparent text-ink-500 hover:text-ink-900")}
+              className={cn("flex items-center gap-2 rounded-full py-1.5 pr-2 pl-1.5 font-semibold whitespace-nowrap transition-colors", g === group ? "bg-ink-900/[0.06] text-ink-900 ring-1 ring-ink-900/10" : "text-ink-500 hover:bg-ink-900/[0.04] hover:text-ink-900")}
             >
               <GroupPill group={g} size="sm" />
-              <span className="rounded-full bg-ink-100 px-2 py-0.5 text-xs font-bold text-ink-700">{counts[g]}</span>
+              <span className={cn("tabular grid h-6 min-w-6 place-items-center rounded-full px-1.5 text-xs font-bold", g === group ? "bg-ink-950 text-white" : "bg-ink-100 text-ink-700")}>{counts[g]}</span>
             </button>
           ))}
         </div>
