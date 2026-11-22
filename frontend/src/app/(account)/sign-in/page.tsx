@@ -32,17 +32,18 @@ export default function SignInPage() {
             fills the space around the sharp photo below. */}
         <Image src={signInBackground} alt="" fill preload unoptimized placeholder="blur" className="object-cover object-[28%_50%] xl:scale-110 xl:object-left xl:blur-2xl" />
 
-        {/* Wide screens: the sharp photo at 78% of the page height, anchored to the bottom-left corner,
-            so the cap and books sit low and small (as in the mockup) and never under the feature bar.
-            Its top and right edges feather into the blurred copy. */}
-        <div className="absolute bottom-0 left-0 hidden h-[78%] aspect-[1672/941] [mask-image:linear-gradient(180deg,transparent_0%,#000_16%)] xl:block">
-          <div className="absolute inset-0 [mask-image:linear-gradient(270deg,transparent_0%,#000_14%)]">
-            <Image src={signInBackground} alt="" fill unoptimized className="object-cover" />
+        {/* Wide screens: the sharp photo, 69% of the page width, anchored to the bottom and shifted right
+            so the university building is centred at about 41% of the width — between the headline and the
+            card, as in the mockup — and the cap and books sit at the lower left.
+            Its edges feather into the blurred copy. */}
+        <div className="absolute bottom-0 left-[15.6%] hidden aspect-[1672/941] w-[69%] [mask-image:linear-gradient(180deg,transparent_0%,#000_18%)] xl:block">
+          <div className="absolute inset-0 [mask-image:linear-gradient(90deg,transparent_0%,#000_12%,#000_86%,transparent_100%)]">
+            <Image src={signInBackground} alt="" fill unoptimized loading="eager" className="object-cover" />
           </div>
         </div>
 
-        {/* Wide screens: light mist on the right half, as in the mockup */}
-        <div className="absolute inset-0 hidden xl:block xl:bg-[radial-gradient(42%_85%_at_86%_42%,rgb(241_245_244/0.97)_0%,rgb(236_242_241/0.90)_45%,rgb(236_242_241/0.55)_66%,rgb(236_242_241/0)_84%),radial-gradient(34%_24%_at_46%_100%,rgb(241_245_244/0.8),transparent_75%)]" />
+        {/* Wide screens: a light mist on the far right, soft enough that the scene still shows behind the card */}
+        <div className="absolute inset-0 hidden xl:block xl:bg-[radial-gradient(36%_80%_at_88%_42%,rgb(241_245_244/0.62)_0%,rgb(236_242_241/0.45)_45%,rgb(236_242_241/0.2)_68%,rgb(236_242_241/0)_86%)]" />
 
         {/* Wide screens: deep teal shade from the left edge, fading out before the building;
             lighter at the bottom so the cap and books stay bright */}

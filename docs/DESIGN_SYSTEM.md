@@ -307,8 +307,8 @@ Built to match the founder's mockup as closely as the supplied artwork allows. C
 
 | Layer | What it is |
 |---|---|
-| 1. Artwork | `sign-in-bg.webp`, the founder's campus artwork. The logo and tagline painted into the original were removed with `frontend/scripts/clean-sign-in-background.py` |
-| 2. Mist | A light mist over the right side, behind the card. It starts right of the building, so the building stays crisp, as in the mockup |
+| 1. Artwork | `sign-in-bg.webp`, the founder's campus artwork. The logo and tagline painted into the original were removed with `frontend/scripts/clean-sign-in-background.py`. From 1280 px up, a blurred copy fills the page. On top of it sits the sharp photo at 69% of the page width, anchored to the bottom, with the university building centred at about 41% of the width (between the headline and the card) and the cap and books at the lower left. The photo's edges feather into the blur |
+| 2. Mist | A soft mist on the far right only, so the scene still shows behind the card instead of a white wash (changed 22 Nov 2026 at the founder's request) |
 | 3. Left shade | A deep-teal shade from the left edge, fading before the building, plus a soft local shade behind the headline. Both get lighter at the bottom so the cap and books stay bright |
 | 4. Arc | A large glowing emerald arc. It enters at the top centre and sweeps down behind the card, clear of the headline |
 

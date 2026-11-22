@@ -295,6 +295,18 @@ Checked again: no console errors; no sideways scrolling at 1586 px, 1440 px or o
 
 **Dropdown polish (22 Nov 2026).** In search bars (hero, Programs) the dropdown's chevron now sits right after the text ("Any city ⌄") instead of at the far edge. Bordered dropdowns are unchanged.
 
+**Sign-in background (22 Nov 2026).** The founder reported that the university building was hardly visible and the area behind the card was too white.
+
+What changed:
+- The sharp photo is now sized by page width and positioned so the building sits between the headline and the card.
+- The mist is much lighter.
+- The photo now loads eagerly.
+
+| Check | Result |
+|---|---|
+| 1918, 1586, 1440 and 1280 px | Building visible. Left-side contrast: white text ≥ 5.3:1; teal "saved" ≥ 3.7:1 (large text) |
+| Sideways scrolling, console errors | None, none |
+
 **Still open:** unknown program/university URLs still return HTTP 200 with the 404 page (see limitation 3 above).
 
 ### Next phase
