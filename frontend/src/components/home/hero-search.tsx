@@ -107,7 +107,7 @@ export function HeroSearch() {
             )}
           </label>
           <span aria-hidden className="hidden h-7 w-px bg-ink-200 sm:block" />
-          <div className="flex h-12 min-w-0 flex-1 items-center rounded-full bg-ink-50 px-4 sm:w-[168px] sm:flex-none sm:bg-transparent">
+          <div className="flex h-12 min-w-0 flex-1 items-center rounded-full bg-ink-50 px-4 sm:w-[160px] sm:flex-none sm:bg-transparent">
             <Select
               label="City"
               hideLabel

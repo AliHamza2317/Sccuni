@@ -116,6 +116,9 @@ void main() {
 }
 `;
 
+/** Classes for the live canvas, which is created in the effect (see HeroBackground). */
+const CANVAS_CLASS = "absolute inset-0 size-full opacity-0 transition-opacity duration-500 data-[on=1]:opacity-100";
+
 /** Maximum pixels the shader paints per frame (about 700×640). */
 const PIXEL_BUDGET = 450_000;
 
@@ -136,15 +139,24 @@ function compile(gl: WebGLRenderingContext, type: number, source: string) {
  * - WebGL satin folds that drift slowly; the light leans towards the cursor and the cloth dips under it.
  * - Shows a pre-rendered poster of the first frame straight away; falls back to it when WebGL is unavailable.
  * - Static under prefers-reduced-motion; paused when off screen or the tab is hidden.
+ *
+ * Each mount creates its own <canvas> and removes it on cleanup. A WebGL context that has been
+ * released cannot be used again, and React may unmount and remount this effect while keeping the DOM
+ * (Strict Mode in development; Next.js keeping a page alive in the background after you navigate
+ * away). Reusing one canvas there left a dead, blank canvas over the hero.
  */
 export function HeroBackground() {
   const wrapRef = useRef<HTMLDivElement>(null);
-  const canvasRef = useRef<HTMLCanvasElement>(null);
+  const hostRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const wrap = wrapRef.current;
-    const canvas = canvasRef.current;
-    if (!wrap || !canvas) return;
+    const host = hostRef.current;
+    if (!wrap || !host) return;
+    const canvas = document.createElement("canvas");
+    canvas.className = CANVAS_CLASS;
+    host.appendChild(canvas);
+    const dispose = () => canvas.remove();
 
     const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     const pointer = { x: -1, y: -1, seen: false };
@@ -152,15 +164,23 @@ export function HeroBackground() {
     const current = { x: 0.62, y: 0.35, s: 0 };
 
     const gl = canvas.getContext("webgl", { antialias: false, alpha: false, depth: false, stencil: false, powerPreference: "low-power" });
-    if (!gl) return;
+    if (!gl) return dispose;
     const vs = compile(gl, gl.VERTEX_SHADER, VERTEX);
     const fs = compile(gl, gl.FRAGMENT_SHADER, FRAGMENT);
     const program = vs && fs ? gl.createProgram() : null;
-    if (!program || !vs || !fs) return;
+    if (!program || !vs || !fs) return dispose;
     gl.attachShader(program, vs);
     gl.attachShader(program, fs);
     gl.linkProgram(program);
-    if (!gl.getProgramParameter(program, gl.LINK_STATUS)) return;
+    if (!gl.getProgramParameter(program, gl.LINK_STATUS)) return dispose;
+
+    // If the browser drops the context (GPU reset, too many contexts), hide the canvas: the poster shows.
+    const onContextLost = () => {
+      if (frameId) cancelAnimationFrame(frameId);
+      frameId = 0;
+      delete canvas.dataset.on;
+    };
+    canvas.addEventListener("webglcontextlost", onContextLost);
 
     gl.useProgram(program);
     gl.bindBuffer(gl.ARRAY_BUFFER, gl.createBuffer());
@@ -206,6 +226,7 @@ export function HeroBackground() {
 
     const draw = (now: number) => {
       frameId = 0;
+      if (gl.isContextLost()) return;
       if (pointer.seen) {
         const rect = wrap.getBoundingClientRect();
         const x = (pointer.x - rect.left) / rect.width;
@@ -248,7 +269,9 @@ export function HeroBackground() {
       document.documentElement.removeEventListener("pointerleave", onPointerLeave);
       resizeObserver.disconnect();
       intersection.disconnect();
+      canvas.removeEventListener("webglcontextlost", onContextLost);
       gl.getExtension("WEBGL_lose_context")?.loseContext();
+      dispose();
     };
   }, []);
 
@@ -262,7 +285,7 @@ export function HeroBackground() {
       {/* Served as-is (unoptimized): re-encoding would shift its colours away from the canvas's first frame. */}
       <Image src={silkPoster} alt="" fill unoptimized loading="eager" fetchPriority="high" placeholder="blur" className="object-cover object-center" />
       {/* The live canvas starts on exactly the same frame, so fading it in is invisible. */}
-      <canvas ref={canvasRef} className="absolute inset-0 size-full opacity-0 transition-opacity duration-500 data-[on=1]:opacity-100" />
+      <div ref={hostRef} className="absolute inset-0" />
     </div>
   );
 }

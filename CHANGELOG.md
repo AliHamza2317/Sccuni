@@ -27,6 +27,11 @@ All notable changes to Sccuni are documented here. The format follows [Keep a Ch
 - High-fidelity, clickable MVP design on a Design canvas: 12 desktop screens (home, search, program, calculator, Best Fit, compare, university, calendar, scholarships, sign-in, student dashboard, admin verification queue), a design-system page and 2 mobile screens. Sample data is fictional and labelled.
 - `docs/DESIGN_SYSTEM.md`: direction ("Ink & Emerald"), tokens, components, screen inventory with requirement mapping, accessibility and content rules, open design decisions.
 
+### Fixed — 2026-11-22 (blank hero after navigating back)
+
+- The hero silk creates a fresh canvas on each mount and removes it on cleanup. Reusing one canvas after releasing its WebGL context left a blank canvas over the hero when you came back from another page (and in React Strict Mode). A lost context also falls back to the poster.
+- In search bars, the dropdown chevron sits right after the text ("Any city ⌄"). The city boxes are slightly narrower.
+
 ### Changed — 2026-11-22 (sign-in page, closer to the mockup)
 
 - Background: a light mist on the right behind the card, a deep-teal shade on the left that fades before the building, a soft shade behind the headline, and a large glowing emerald arc. The cap and books stay bright.

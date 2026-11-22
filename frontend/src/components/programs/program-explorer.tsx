@@ -108,7 +108,7 @@ export function ProgramExplorer({ items }: { items: ExplorerItem[] }) {
               <input value={query} onChange={(e) => setQuery(e.target.value)} placeholder="Search a program, university or city" className="h-full w-full min-w-0 bg-transparent text-[15.5px] outline-none placeholder:text-ink-400" />
             </label>
             <span aria-hidden className="hidden h-7 w-px bg-ink-200 sm:block" />
-            <div className="flex h-12 min-w-0 flex-1 items-center rounded-full bg-ink-50 px-4 sm:w-[200px] sm:flex-none sm:bg-transparent">
+            <div className="flex h-12 min-w-0 flex-1 items-center rounded-full bg-ink-50 px-4 sm:w-[180px] sm:flex-none sm:bg-transparent">
               <Select
                 label="City"
                 hideLabel

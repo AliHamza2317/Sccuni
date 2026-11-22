@@ -242,8 +242,9 @@ export function Select<T extends string>({
         )}
       >
         {icon}
-        <span className="min-w-0 flex-1 truncate text-left">{selected?.label}</span>
-        <ChevronDown className={cn("size-4 shrink-0 text-ink-400 transition-transform duration-200", open && "rotate-180 text-ink-700")} aria-hidden />
+        {/* Inside search bars the chevron sits right after the text; in bordered fields it sits at the far end. */}
+        <span className={cn("min-w-0 truncate text-left", variant === "field" && "flex-1")}>{selected?.label}</span>
+        <ChevronDown className={cn("size-4 shrink-0 text-ink-400 transition-transform duration-200", variant === "inline" && "-ml-0.5", open && "rotate-180 text-ink-700")} aria-hidden />
       </div>
 
       {open &&

@@ -280,6 +280,21 @@ Checked again: no console errors; no sideways scrolling at 1586 px, 1440 px or o
 1. Keep "Continue with Apple"? Apple sign-in is not in the plan (ADR-009).
 2. "Get Expert Guidance" needs a real service, or a different label, before launch.
 
+**Bug fix: blank hero after coming back (22 Nov 2026).**
+
+*Symptom:* going Home → Sign in → "Back to home" showed a white hero with invisible text; a refresh fixed it.
+
+*Cause:* Next.js keeps a page alive in the background after you navigate away, and React Strict Mode does the same in development. In both cases the hero's effect is cleaned up and then run again while the DOM is kept. The cleanup released the WebGL context; the re-run reused the same canvas, whose context was dead. That left an opaque blank canvas over the hero.
+
+*Fix:* each run now creates its own canvas and removes it on cleanup. A lost context also hides the canvas, so the poster image shows.
+
+| Check | Result |
+|---|---|
+| Home → Sign in → Back to home, production and dev | Canvas live (context not lost); hero correct |
+| Console errors, sideways scrolling, unit tests | None, none, 11/11 |
+
+**Dropdown polish (22 Nov 2026).** In search bars (hero, Programs) the dropdown's chevron now sits right after the text ("Any city ⌄") instead of at the far edge. Bordered dropdowns are unchanged.
+
 **Still open:** unknown program/university URLs still return HTTP 200 with the 404 page (see limitation 3 above).
 
 ### Next phase
