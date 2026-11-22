@@ -307,9 +307,9 @@ Built to match the founder's mockup as closely as the supplied artwork allows. C
 
 | Layer | What it is |
 |---|---|
-| 1. Artwork | `sign-in-bg.webp`, the founder's campus artwork. The logo and tagline painted into the original were removed with `frontend/scripts/clean-sign-in-background.py`. From 1280 px up, a blurred copy fills the page. On top of it sits the sharp photo at 69% of the page width, anchored to the bottom, with the university building centred at about 41% of the width (between the headline and the card) and the cap and books at the lower left. The photo's edges feather into the blur |
+| 1. Artwork | `sign-in-bg.webp`, the founder's campus photo. The logo and tagline painted into the original were removed with `frontend/scripts/clean-sign-in-background.py`. It is shown **sharp and full-bleed at every size**: no blurred copies, at the founder's request on 22 Nov 2026 |
 | 2. Mist | A soft mist on the far right only, so the scene still shows behind the card instead of a white wash (changed 22 Nov 2026 at the founder's request) |
-| 3. Left shade | A deep-teal shade from the left edge, fading before the building, plus a soft local shade behind the headline. Both get lighter at the bottom so the cap and books stay bright |
+| 3. Left shade | A deep-teal shade behind the text column only, fading out just after the text so the university shows clearly between the text and the card. A soft shade also follows the headline and subtitle, so they stay readable at any width. The tagline is aligned to the right edge of the text column, so it never runs under the card |
 | 4. Arc | A large glowing emerald arc. It enters at the top centre and sweeps down behind the card, clear of the headline |
 
 **Content:**

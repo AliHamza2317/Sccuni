@@ -307,6 +307,21 @@ What changed:
 | 1918, 1586, 1440 and 1280 px | Building visible. Left-side contrast: white text ≥ 5.3:1; teal "saved" ≥ 3.7:1 (large text) |
 | Sideways scrolling, console errors | None, none |
 
+**Sign-in background, no blur (22 Nov 2026).** The founder disliked the blurred area at the lower left.
+
+What changed:
+- The original campus photo is now one sharp, full-bleed image.
+- The left shade only covers the text column, and a soft shade follows the headline and subtitle.
+- Two layout fixes:
+  - the tagline used to run under the card at 1440 px and below;
+  - the feature bar touched the card at 1280 px. It is now compact below 1536 px.
+
+| Check | Result |
+|---|---|
+| Left-side text contrast at 1918, 1586, 1440, 1366 and 1280 px, measured over the real backgrounds (shade and glass bar) | White ≥ 5.3:1; teal "saved" ≥ 4.2:1 (large text) |
+| Tagline and feature bar vs. the card | No overlap; at least 65 px gap |
+| Sideways scrolling, console errors, sign-in form | None, none, works |
+
 **Still open:** unknown program/university URLs still return HTTP 200 with the 404 page (see limitation 3 above).
 
 ### Next phase

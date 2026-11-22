@@ -27,6 +27,13 @@ All notable changes to Sccuni are documented here. The format follows [Keep a Ch
 - High-fidelity, clickable MVP design on a Design canvas: 12 desktop screens (home, search, program, calculator, Best Fit, compare, university, calendar, scholarships, sign-in, student dashboard, admin verification queue), a design-system page and 2 mobile screens. Sample data is fictional and labelled.
 - `docs/DESIGN_SYSTEM.md`: direction ("Ink & Emerald"), tokens, components, screen inventory with requirement mapping, accessibility and content rules, open design decisions.
 
+### Changed — 2026-11-22 (sign-in background: sharp photo, no blur)
+
+- The founder's campus photo is one sharp, full-bleed image at every size. The blurred fill and the separately placed photo were removed.
+- The left shade now only covers the text column. A soft shade follows the headline and subtitle, and the subtitle is now full white. White text measures ≥ 5.3:1 and the teal "saved" ≥ 4.2:1 at 1280–1918 px.
+- The tagline is aligned to the text column's right edge; it used to run under the card at 1440 px and below.
+- The feature bar is compact below 1536 px; it used to touch the card at 1280 px.
+
 ### Changed — 2026-11-22 (sign-in background: building visible, less white)
 
 - From 1280 px up, the sharp campus photo is 69% of the page width, anchored to the bottom and shifted right. The university building now sits between the headline and the card at every wide size; the cap and books stay at the lower left.
