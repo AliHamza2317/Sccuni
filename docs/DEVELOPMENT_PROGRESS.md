@@ -246,7 +246,7 @@ What changed:
 | Footer | Shows the note |
 | Console errors | None |
 
-**Sign-in page redesign (22 Nov 2026).** A premium, minimal layout (see DESIGN_SYSTEM §8d).
+**Sign-in page redesign (22 Nov 2026).** Second version, after founder feedback: a floating card on full-page silk (see DESIGN_SYSTEM §8d). The same browser checks were run again and all pass.
 
 | Check (browser test) | Result |
 |---|---|

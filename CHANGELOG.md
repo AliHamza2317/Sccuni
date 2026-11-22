@@ -27,6 +27,12 @@ All notable changes to Sccuni are documented here. The format follows [Keep a Ch
 - High-fidelity, clickable MVP design on a Design canvas: 12 desktop screens (home, search, program, calculator, Best Fit, compare, university, calendar, scholarships, sign-in, student dashboard, admin verification queue), a design-system page and 2 mobile screens. Sample data is fictional and labelled.
 - `docs/DESIGN_SYSTEM.md`: direction ("Ink & Emerald"), tokens, components, screen inventory with requirement mapping, accessibility and content rules, open design decisions.
 
+### Changed — 2026-11-22 (sign-in page, second version)
+
+- The live green silk now fills the whole sign-in page, and the form sits on a floating white card with a glass layer behind it.
+- Sliding mode switch; gentle fade when switching modes; green gradient submit button.
+- Glass trust pills below the card.
+
 ### Changed — 2026-11-22 (sign-in page redesign)
 
 - The sign-in / create-account page has a live green silk panel, with small glass previews of the Best Fit list and a reminder.

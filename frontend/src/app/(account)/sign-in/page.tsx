@@ -1,76 +1,64 @@
-import { ArrowLeft, Bell, Lock, Target } from "lucide-react";
+import { ArrowLeft, BadgeCheck, Lock, Sparkles } from "lucide-react";
 import type { Metadata } from "next";
 import Link from "next/link";
 import { AuthForm } from "@/components/account/auth-form";
 import { HeroBackground } from "@/components/home/hero-background";
 import { Logo } from "@/components/site/logo";
-import { GroupPill } from "@/components/ui/badges";
 
 export const metadata: Metadata = {
   title: "Sign in or create an account",
   robots: { index: false },
 };
 
+const TRUST = [
+  { icon: Sparkles, text: "Free for students" },
+  { icon: BadgeCheck, text: "Official sources only" },
+  { icon: Lock, text: "We never sell your data" },
+];
+
+/**
+ * The home hero's live green silk fills the page; the form sits on a floating white card with a
+ * second glass layer behind it.
+ */
 export default function SignInPage() {
   return (
-    <main id="main" className="flex min-h-dvh flex-col bg-white lg:flex-row">
-      {/* Brand panel: the home hero's live silk, inset as a rounded card on wide screens */}
-      <section className="relative isolate overflow-hidden bg-ink-950 text-white lg:m-3 lg:w-[52%] lg:rounded-[32px]">
-        <HeroBackground />
-        <div className="flex h-full flex-col justify-between gap-10 px-6 pt-6 pb-10 sm:px-10 lg:p-12">
-          <Logo onDark preload />
+    <main id="main" data-header-theme="dark" className="relative isolate flex min-h-dvh flex-col overflow-hidden bg-ink-950 text-white">
+      <HeroBackground />
 
-          <div className="max-w-lg space-y-8">
-            <h2 className="text-[clamp(2rem,3.6vw,3.25rem)] leading-[1.04] font-extrabold tracking-[-0.045em]">
-              <span className="text-white">Your admission plan,</span>
-              <br />
-              <span className="text-gradient-emerald">saved in one place.</span>
-            </h2>
-
-            {/* What you get, shown as small product previews */}
-            <div className="hidden space-y-3 lg:block">
-              <div className="w-fit rounded-3xl bg-ink-950/45 p-5 ring-1 ring-white/15 backdrop-blur-xl">
-                <p className="flex items-center gap-2 text-[13px] font-semibold text-white"><Target className="size-4 text-brand-300" aria-hidden />Your Best Fit list</p>
-                <div className="mt-3 flex gap-2">
-                  {([["safe", 5], ["target", 4], ["reach", 3]] as const).map(([g, n]) => (
-                    <span key={g} className="flex items-center gap-2 rounded-2xl bg-white/[0.08] py-1.5 pr-3 pl-1.5 ring-1 ring-white/10">
-                      <GroupPill group={g} size="sm" />
-                      <b className="tabular text-[14px]">{n}</b>
-                    </span>
-                  ))}
-                </div>
-              </div>
-              <div className="ml-10 flex w-fit items-center gap-3 rounded-3xl bg-ink-950/45 py-3.5 pr-5 pl-3.5 ring-1 ring-white/15 backdrop-blur-xl">
-                <span className="grid size-10 place-items-center rounded-2xl bg-brand-500/20 text-brand-200 ring-1 ring-brand-300/30"><Bell className="size-[18px]" aria-hidden /></span>
-                <span>
-                  <span className="block text-[14px] font-semibold text-white">Reminder set</span>
-                  <span className="block text-[13px] text-ink-100">Applications close in 6 days</span>
-                </span>
-              </div>
-            </div>
-          </div>
-
-          <p className="hidden w-fit max-w-md items-start gap-2.5 rounded-2xl bg-ink-950/45 px-4 py-3 text-[13.5px] leading-relaxed text-ink-100 ring-1 ring-white/10 backdrop-blur-xl lg:flex">
-            <Lock className="mt-0.5 size-4 shrink-0 text-brand-300" aria-hidden />
-            We never sell your data. A university sees your details only when you choose to contact it.
-          </p>
-        </div>
-      </section>
-
-      {/* Form */}
-      <section className="flex flex-1 flex-col px-6 pt-6 pb-12 sm:px-10">
-        <Link href="/" className="group inline-flex w-fit items-center gap-2 text-[14px] font-medium text-ink-600 transition-colors hover:text-ink-900">
+      <header className="flex items-center justify-between gap-4 px-5 pt-5 sm:px-8 sm:pt-7">
+        <Logo onDark preload imageClassName="h-9 w-auto sm:h-10" />
+        <Link
+          href="/"
+          className="group inline-flex h-10 items-center gap-2 rounded-full bg-ink-950/35 px-4 text-[14px] font-medium text-white ring-1 ring-white/15 backdrop-blur-xl transition hover:bg-ink-950/55"
+        >
           <ArrowLeft className="size-4 transition-transform group-hover:-translate-x-0.5" aria-hidden />
-          Back to home
+          <span className="hidden sm:inline">Back to home</span>
+          <span className="sm:hidden">Home</span>
         </Link>
-        <div className="flex flex-1 items-center justify-center py-10">
-          <AuthForm />
+      </header>
+
+      <div className="flex flex-1 flex-col items-center justify-center px-4 py-10 sm:py-14">
+        <div className="relative w-full max-w-[460px]">
+          {/* Second glass layer, peeking out below the card */}
+          <div aria-hidden className="absolute inset-x-6 -bottom-4 top-6 rounded-[36px] bg-white/15 ring-1 ring-white/25 backdrop-blur-xl" />
+          <div className="animate-rise relative rounded-[32px] bg-white/[0.97] p-6 text-ink-900 shadow-[0_40px_100px_-20px_rgb(0_10_26/0.6),0_0_0_1px_rgb(255_255_255/0.6)] backdrop-blur-xl sm:p-9">
+            {/* A thin mint light along the card's top edge */}
+            <span aria-hidden className="absolute inset-x-12 -top-px h-px bg-linear-to-r from-transparent via-brand-300 to-transparent" />
+            <AuthForm />
+          </div>
         </div>
-        <p className="mx-auto flex max-w-[400px] items-start gap-2 text-[12.5px] leading-relaxed text-ink-500 lg:hidden">
-          <Lock className="mt-0.5 size-3.5 shrink-0 text-brand-600" aria-hidden />
-          We never sell your data. A university sees your details only when you choose to contact it.
-        </p>
-      </section>
+
+        <ul className="mt-12 flex flex-wrap justify-center gap-2.5">
+          {TRUST.map(({ icon: Icon, text }) => (
+            <li key={text} className="inline-flex h-9 items-center gap-2 rounded-full bg-ink-950/35 px-3.5 text-[13px] font-medium text-white ring-1 ring-white/15 backdrop-blur-xl">
+              <Icon className="size-4 text-brand-200" aria-hidden />
+              {text}
+            </li>
+          ))}
+        </ul>
+      </div>
+
+      <p className="px-5 pb-6 text-center text-[12.5px] text-white">A university sees your details only when you choose to contact it.</p>
     </main>
   );
 }
