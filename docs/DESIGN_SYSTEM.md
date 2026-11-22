@@ -299,30 +299,43 @@ All six browser dropdowns (`<select>`) were replaced by one styled **Select** co
 
 The hero search opens the program list searched by the typed text, or else by the chosen city.
 
-## 8d. Sign in / create account (22 Nov 2026, founder's mockup)
+## 8d. Sign in / create account (22 Nov 2026, founder's mockup, second pass)
 
-Built to match the founder's mockup, using the founder's campus artwork as the background. Code: `frontend/src/app/(account)/sign-in/page.tsx` and `frontend/src/components/account/auth-form.tsx`.
+Built to match the founder's mockup as closely as the supplied artwork allows. Code: `frontend/src/app/(account)/sign-in/page.tsx` and `frontend/src/components/account/auth-form.tsx`.
+
+**Layers, back to front (wide screens):**
+
+| Layer | What it is |
+|---|---|
+| 1. Artwork | `sign-in-bg.webp`, the founder's campus artwork. The logo and tagline painted into the original were removed with `frontend/scripts/clean-sign-in-background.py` |
+| 2. Mist | A light mist over the right side, behind the card. It starts right of the building, so the building stays crisp, as in the mockup |
+| 3. Left shade | A deep-teal shade from the left edge, fading before the building, plus a soft local shade behind the headline. Both get lighter at the bottom so the cap and books stay bright |
+| 4. Arc | A large glowing emerald arc. It enters at the top centre and sweeps down behind the card, clear of the headline |
+
+**Content:**
 
 | Part | Design |
 |---|---|
-| Background | `sign-in-bg.webp`: the founder's artwork (campus building, graduation cap and books, emerald arcs). The original had the logo and the "Build a brighter future" tagline painted in. Those were removed (`frontend/scripts/clean-sign-in-background.py` refills them from the surrounding gradient) and are rendered as live text instead, so they stay sharp and in place on every screen size. The image is served as-is (134 KB), so it shows at once |
-| Left | White logo. Headline "Your admission plan, **saved** in one place." in semibold, with "saved" in green. Subtitle. A glass bar with three links: Search Universities, Calculate Merit, Find Your Best Fit. The tagline "Build a brighter future" in a script font (Sacramento, self-hosted) with an emerald swash |
-| Left, behind the text | A dark curved panel with a soft emerald edge keeps the white text readable. It fades out at the bottom so the cap and books stay bright |
-| Right | "Back to home" glass pill. A frosted white card holding: a Sign in / Create account switch with a sliding dark-green pill and icons; "Welcome back 👋" (or "Create your account ✨") with a subtitle; pill inputs with icons; "Forgot password?"; an under-18 switch; Terms and Privacy; a dark-green gradient "Sign in →" / "Create account →" button; "or continue with" Google and Apple |
-| Phones | The background stays, with an even dark wash. The headline and subtitle sit above the card. The feature bar and tagline are hidden |
+| Logo | The mockup's style: an all-teal mark (`public/brand/sccuni-mark-teal.png`, made from the real mark) and "Sccuni" in Plus Jakarta Sans medium |
+| Left | Semibold headline with "saved" in teal (#3FD3B2). Subtitle. A teal glass bar: Search Universities, Calculate Merit, Get Expert Guidance. Tagline "Build a brighter future" in Sacramento with a teal swash and a soft dark halo |
+| Right | "Back to home" in dark text. A 562 px frosted card with:<br>• icon toggle with a sliding dark-green pill;<br>• "Welcome back 👋";<br>• 56 px pill inputs with icons;<br>• under-18 switch and Terms (sign-up);<br>• dark-green gradient button;<br>• "or continue with" Google and Apple |
+| Phones | Artwork with an even dark wash; headline above the card; feature bar and tagline hidden; compact toggle |
 
-**Two choices that differ from the mockup:**
-1. The third feature reads **"Find Your Best Fit"** instead of "Get Expert Guidance". Sccuni has no expert-guidance service; the AI advisor is planned for Release 2.
-2. **"Continue with Apple"** is shown as in the mockup. The plan (ADR-009) only covers email + Google, so Apple sign-in must be added to the backend plan before launch, or the button removed.
+**Where it still differs from the mockup, and why:**
+1. **Composition of the artwork.** The supplied image puts the graduation cap right next to the building and larger than in the mockup, so the bottom-left differs. A version of the artwork with the cap further left and smaller would match exactly.
+2. **Fields per mode.** The mockup shows "Sign in" selected but sign-up fields (full name, under 18, terms, "Create account"). The page shows email and password for Sign in, and the full sign-up form under Create account, so each mode works.
+3. **"Get Expert Guidance"** is shown as in the mockup (founder's choice) and links to Best Fit. Sccuni has no expert-guidance service yet; the AI advisor is planned for Release 2. The label should match a real service at launch.
+4. **"Continue with Apple"** is shown as in the mockup. Apple sign-in is not in the plan (ADR-009); decide before launch.
 
-**Measured contrast on the left** (worst 2% of the background):
+**Measured contrast on the left** (each text line separately, worst 2% of the background):
 
 | Text | Contrast |
 |---|---|
-| Headline (white) | ≥ 10.8:1 |
-| "saved" (green) | ≥ 4.5:1 |
-| Subtitle (white at 90%) | ≥ 7.9:1 |
-| Feature labels (white) | ≥ 5.4:1, before counting their glass background |
+| Headline line 1 (white) | ≥ 5.1:1 |
+| Headline line 2 (white) | ≥ 8.0:1 |
+| "saved" (teal) | ≥ 4.2:1 (large text) |
+| Subtitle | ≥ 8.3:1 |
+| Feature labels | ≥ 7.9:1 |
 
 ## 9. Handover to development
 

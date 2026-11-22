@@ -27,6 +27,12 @@ All notable changes to Sccuni are documented here. The format follows [Keep a Ch
 - High-fidelity, clickable MVP design on a Design canvas: 12 desktop screens (home, search, program, calculator, Best Fit, compare, university, calendar, scholarships, sign-in, student dashboard, admin verification queue), a design-system page and 2 mobile screens. Sample data is fictional and labelled.
 - `docs/DESIGN_SYSTEM.md`: direction ("Ink & Emerald"), tokens, components, screen inventory with requirement mapping, accessibility and content rules, open design decisions.
 
+### Changed — 2026-11-22 (sign-in page, closer to the mockup)
+
+- Background: a light mist on the right behind the card, a deep-teal shade on the left that fades before the building, a soft shade behind the headline, and a large glowing emerald arc. The cap and books stay bright.
+- Mockup-style logo: an all-teal mark (`public/brand/sccuni-mark-teal.png`) with "Sccuni" in medium weight. Semibold headline; teal glass feature bar with "Get Expert Guidance"; dark "Back to home".
+- Larger card (562 px) with 56 px pill inputs, a 44 px heading and a bigger gradient button; compact toggle on phones.
+
 ### Changed — 2026-11-22 (sign-in page to the founder's mockup)
 
 - New design to the founder's mockup, on the founder's campus artwork. The logo and tagline baked into the artwork were removed with `frontend/scripts/clean-sign-in-background.py` and are now live text.

@@ -40,15 +40,15 @@ function Field({
   return (
     <div className="space-y-2">
       <div className="flex items-baseline justify-between gap-3 px-1">
-        <label htmlFor={id} className="text-[14px] font-semibold text-ink-900">{label}</label>
+        <label htmlFor={id} className="text-[16px] font-semibold text-ink-900">{label}</label>
         {aside}
       </div>
       <div className="group relative">
-        <span className="pointer-events-none absolute inset-y-0 left-5 flex items-center text-ink-500 transition-colors group-focus-within:text-brand-700">{icon}</span>
+        <span className="pointer-events-none absolute inset-y-0 left-6 flex items-center text-ink-600 transition-colors group-focus-within:text-brand-700">{icon}</span>
         <input
           id={id}
           className={cn(
-            "h-[54px] w-full rounded-full bg-white/80 pr-5 pl-[52px] text-[15px] text-ink-900 ring-1 ring-ink-200 transition outline-none placeholder:text-ink-400 hover:ring-ink-300 focus:bg-white focus:ring-2 focus:ring-brand-600/60 focus:shadow-[0_0_0_6px_rgb(0_152_124/0.10)]",
+            "h-[56px] w-full rounded-full bg-[rgb(246_249_248)] pr-5 pl-[60px] text-[16px] text-ink-900 ring-1 ring-ink-200/90 transition outline-none placeholder:text-ink-400 hover:ring-ink-300 focus:bg-white focus:ring-2 focus:ring-brand-600/60 focus:shadow-[0_0_0_6px_rgb(0_152_124/0.10)]",
             trailing && "pr-14",
             className,
           )}
@@ -95,11 +95,11 @@ export function AuthForm({ initialMode = "signin" }: { initialMode?: "signin" | 
   return (
     <div>
       {/* Mode switch: a dark-green pill slides under the active option */}
-      <div role="group" aria-label="Account" className="relative mx-auto grid max-w-[420px] grid-cols-2 rounded-full bg-white p-1.5 shadow-xs ring-1 ring-ink-200/80">
+      <div role="group" aria-label="Account" className="relative mx-auto grid max-w-[416px] grid-cols-2 rounded-full bg-white/90 p-1.5 shadow-[0_2px_10px_rgb(4_40_38/0.06)] ring-1 ring-ink-200/80">
         <span
           aria-hidden
           className={cn(
-            "absolute inset-y-1.5 left-1.5 w-[calc(50%-6px)] rounded-full bg-linear-to-b from-[#0b6b58] to-[#004a3d] shadow-[inset_0_1px_0_rgb(255_255_255/0.18),0_8px_20px_rgb(0_74_61/0.35)] transition-transform duration-500 ease-[cubic-bezier(0.2,0.8,0.2,1)]",
+            "absolute inset-y-1.5 left-1.5 w-[calc(50%-6px)] rounded-full bg-linear-to-br from-[#0c5a4f] via-[#08463f] to-[#063530] shadow-[inset_0_1px_0_rgb(255_255_255/0.16),0_10px_22px_rgb(6_53_48/0.38)] transition-transform duration-500 ease-[cubic-bezier(0.2,0.8,0.2,1)]",
             signup && "translate-x-full",
           )}
         />
@@ -110,11 +110,11 @@ export function AuthForm({ initialMode = "signin" }: { initialMode?: "signin" | 
             aria-pressed={mode === id}
             onClick={() => setMode(id)}
             className={cn(
-              "relative z-10 flex h-12 items-center justify-center gap-2.5 rounded-full text-[15px] font-semibold transition-colors duration-300",
+              "relative z-10 flex h-12 items-center justify-center gap-2 rounded-full text-[14px] font-semibold whitespace-nowrap transition-colors duration-300 sm:h-[52px] sm:gap-3 sm:text-[16px]",
               mode === id ? "text-white" : "text-ink-800 hover:text-ink-950",
             )}
           >
-            <Icon className={cn("size-[18px] transition-colors", mode === id ? "text-brand-200" : "text-brand-700")} aria-hidden />
+            <Icon className={cn("size-4 shrink-0 transition-colors sm:size-5", mode === id ? "text-[#3fd3b2]" : "text-[#0c5a4f]")} strokeWidth={2} aria-hidden />
             {label}
           </button>
         ))}
@@ -122,16 +122,16 @@ export function AuthForm({ initialMode = "signin" }: { initialMode?: "signin" | 
 
       {/* Everything below re-enters gently when the mode changes */}
       <div key={mode} className="animate-swap">
-        <div className="mt-8 space-y-2.5 text-center">
-          <h1 className="text-[1.8rem] leading-[1.1] font-extrabold tracking-[-0.04em] text-ink-950 sm:text-[2rem]">
+        <div className="mt-9 space-y-3 text-center">
+          <h1 className="text-[1.9rem] leading-[1.15] font-bold tracking-[-0.03em] text-[#0b2230] sm:text-[2.6rem]">
             {signup ? "Create your account" : "Welcome back"} <span aria-hidden>{signup ? "✨" : "👋"}</span>
           </h1>
-          <p className="text-[15.5px] leading-relaxed text-ink-600">
+          <p className="text-[16px] leading-relaxed text-ink-600 sm:text-[18px]">
             {signup ? "Join free — save your marks once and use them for every program" : "Sign in to continue your journey with Sccuni"}
           </p>
         </div>
 
-        <form className="mt-8 space-y-5" onSubmit={(e) => { e.preventDefault(); router.push("/dashboard"); }}>
+        <form className="mt-8 space-y-6" onSubmit={(e) => { e.preventDefault(); router.push("/dashboard"); }}>
           {signup && (
             <Field id="name" label="Full name" autoComplete="name" placeholder="As on your CNIC or B-Form" icon={<UserRound className="size-5" aria-hidden />} />
           )}
@@ -174,7 +174,7 @@ export function AuthForm({ initialMode = "signin" }: { initialMode?: "signin" | 
           {signup ? (
             <div className="space-y-4 px-1 pt-1">
               <Switch checked={minor} onChange={setMinor}>
-                <span className="text-[14.5px] font-semibold text-ink-900">I am under 18</span>
+                <span className="text-[16px] font-semibold text-ink-900">I am under 18</span>
               </Switch>
               {minor && (
                 <div className="animate-swap space-y-3 rounded-3xl bg-ink-50/80 p-4 ring-1 ring-ink-200/70">
@@ -182,7 +182,7 @@ export function AuthForm({ initialMode = "signin" }: { initialMode?: "signin" | 
                   <Field id="guardian" label="Parent or guardian’s email" type="email" placeholder="guardian@example.com" icon={<Mail className="size-5" aria-hidden />} />
                 </div>
               )}
-              <label className="flex cursor-pointer items-start gap-3 text-[14px] leading-relaxed text-ink-700">
+              <label className="flex cursor-pointer items-start gap-3 text-[15px] leading-relaxed text-ink-700">
                 <input type="checkbox" required className="mt-0.5 size-[18px] shrink-0 accent-brand-600" />
                 <span>
                   I agree to the <a href="#" className="font-semibold text-brand-700 hover:underline">Terms of Use</a> and{" "}
@@ -198,21 +198,21 @@ export function AuthForm({ initialMode = "signin" }: { initialMode?: "signin" | 
 
           <button
             type="submit"
-            className="group flex h-[56px] w-full items-center justify-center gap-2.5 rounded-full bg-linear-to-r from-[#003d33] via-[#005c4b] to-[#0a7a64] text-[16px] font-semibold text-white shadow-[inset_0_1px_0_rgb(255_255_255/0.18),0_14px_32px_rgb(0_92_75/0.38)] transition hover:-translate-y-px hover:shadow-[inset_0_1px_0_rgb(255_255_255/0.18),0_18px_38px_rgb(0_92_75/0.48)]"
+            className="group flex h-[58px] w-full items-center justify-center gap-3 rounded-full bg-linear-to-r from-[#063530] via-[#0a4c44] to-[#11806a] text-[17px] font-semibold text-white shadow-[inset_0_1px_0_rgb(255_255_255/0.16),0_14px_34px_rgb(10_90_78/0.42)] transition hover:-translate-y-px hover:shadow-[inset_0_1px_0_rgb(255_255_255/0.16),0_18px_40px_rgb(10_90_78/0.52)]"
           >
             {signup ? "Create account" : "Sign in"}
             <ArrowRight className="size-5 transition-transform group-hover:translate-x-0.5" aria-hidden />
           </button>
         </form>
 
-        <div className="mt-6 flex items-center gap-4 text-[14px] text-ink-600 before:h-px before:flex-1 before:bg-ink-200 after:h-px after:flex-1 after:bg-ink-200">or continue with</div>
+        <div className="mt-7 flex items-center gap-4 text-[15px] text-ink-600 before:h-px before:flex-1 before:bg-ink-200 after:h-px after:flex-1 after:bg-ink-200">or continue with</div>
 
-        <div className="mt-5 grid grid-cols-1 gap-3 sm:grid-cols-2">
-          <button type="button" className="flex h-12 items-center justify-center gap-2.5 rounded-full bg-white text-[14.5px] font-semibold text-ink-900 shadow-xs ring-1 ring-ink-200 transition hover:-translate-y-px hover:shadow-soft">
+        <div className="mt-6 grid grid-cols-1 gap-4 sm:grid-cols-2">
+          <button type="button" className="flex h-[52px] items-center justify-center gap-3 rounded-full bg-white text-[15px] font-semibold text-ink-900 shadow-[0_2px_8px_rgb(4_40_38/0.05)] ring-1 ring-ink-200 transition hover:-translate-y-px hover:shadow-soft">
             <GoogleMark />
             Continue with Google
           </button>
-          <button type="button" className="flex h-12 items-center justify-center gap-2.5 rounded-full bg-white text-[14.5px] font-semibold text-ink-900 shadow-xs ring-1 ring-ink-200 transition hover:-translate-y-px hover:shadow-soft">
+          <button type="button" className="flex h-[52px] items-center justify-center gap-3 rounded-full bg-white text-[15px] font-semibold text-ink-900 shadow-[0_2px_8px_rgb(4_40_38/0.05)] ring-1 ring-ink-200 transition hover:-translate-y-px hover:shadow-soft">
             <AppleMark />
             Continue with Apple
           </button>

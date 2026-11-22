@@ -265,7 +265,20 @@ What changed:
 | Phone | No sideways scrolling |
 | Console errors, lint, build | None, clean, passes |
 
-**Decision needed:** keep "Continue with Apple"? It is shown as in the mockup, but Apple sign-in is not in the plan (ADR-009).
+**Second pass (22 Nov 2026), closer to the mockup:**
+- light mist on the right;
+- a sweeping emerald arc;
+- left shade that keeps the building and cap bright;
+- teal logo mark;
+- mockup typography;
+- a 562 px card;
+- "Get Expert Guidance" as in the mockup.
+
+Checked again: no console errors; no sideways scrolling at 1586 px, 1440 px or on a phone; 11/11 tests pass. Left-side contrast was measured per text line (see DESIGN_SYSTEM §8d).
+
+**Decisions needed:**
+1. Keep "Continue with Apple"? Apple sign-in is not in the plan (ADR-009).
+2. "Get Expert Guidance" needs a real service, or a different label, before launch.
 
 **Still open:** unknown program/university URLs still return HTTP 200 with the 404 page (see limitation 3 above).
 
