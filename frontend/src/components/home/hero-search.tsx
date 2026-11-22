@@ -4,6 +4,7 @@ import { ArrowRight, MapPin, Search } from "lucide-react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
+import { Select } from "@/components/ui/select";
 
 const POPULAR = ["Computer Science", "MBBS", "Electrical Engineering", "Software Engineering", "Artificial Intelligence"];
 const CITIES = ["Any city", "Lahore", "Islamabad", "Karachi", "Peshawar", "Rawalpindi", "Faisalabad"];
@@ -69,6 +70,7 @@ export function HeroSearch() {
   const router = useRouter();
   const [value, setValue] = useState("");
   const [focused, setFocused] = useState(false);
+  const [city, setCity] = useState<string>(CITIES[0]);
   const showHint = !focused && value === "";
   const typed = useTypewriter(showHint);
 
@@ -78,7 +80,9 @@ export function HeroSearch() {
         role="search"
         onSubmit={(e) => {
           e.preventDefault();
-          router.push("/programs");
+          // Open the program list already searched: the typed text, or else the chosen city.
+          const q = value.trim() || (city !== CITIES[0] ? city : "");
+          router.push(q ? `/programs?q=${encodeURIComponent(q)}` : "/programs");
         }}
         className="mx-auto max-w-[760px] rounded-[30px] bg-white/[0.1] p-1.5 shadow-[0_24px_70px_rgb(0_10_40/0.45)] ring-1 ring-white/20 backdrop-blur-xl transition focus-within:ring-white/40 sm:rounded-full"
       >
@@ -103,15 +107,18 @@ export function HeroSearch() {
             )}
           </label>
           <span aria-hidden className="hidden h-7 w-px bg-ink-200 sm:block" />
-          <label className="flex h-12 min-w-0 flex-1 items-center gap-2 rounded-full bg-ink-50 px-4 sm:w-[168px] sm:flex-none sm:bg-transparent">
-            <MapPin className="size-[18px] shrink-0 text-ink-400" aria-hidden />
-            <span className="sr-only">City</span>
-            <select className="h-full w-full min-w-0 cursor-pointer bg-transparent text-[15px] text-ink-700 outline-none">
-              {CITIES.map((c) => (
-                <option key={c}>{c}</option>
-              ))}
-            </select>
-          </label>
+          <div className="flex h-12 min-w-0 flex-1 items-center rounded-full bg-ink-50 px-4 sm:w-[168px] sm:flex-none sm:bg-transparent">
+            <Select
+              label="City"
+              hideLabel
+              variant="inline"
+              value={city}
+              onChange={setCity}
+              options={CITIES.map((c) => ({ value: c, label: c }))}
+              icon={<MapPin className="size-[18px] shrink-0 text-ink-400" aria-hidden />}
+              className="h-full w-full"
+            />
+          </div>
           <button
             type="submit"
             className="inline-flex h-12 shrink-0 items-center justify-center gap-2 rounded-full bg-brand-600 px-6 text-[15px] font-semibold text-white shadow-[inset_0_1px_0_rgb(255_255_255/0.2),0_8px_22px_rgb(0_126_103/0.35)] transition hover:bg-brand-700"

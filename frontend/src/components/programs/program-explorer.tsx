@@ -8,6 +8,7 @@ import { Monogram, StatusDot, Tag } from "@/components/ui/badges";
 import { PageHeader } from "@/components/site/page-header";
 import { Button, ButtonLink } from "@/components/ui/button";
 import { Chip, Segmented, Switch } from "@/components/ui/controls";
+import { Select } from "@/components/ui/select";
 import { cn, formatDate, pkr } from "@/lib/format";
 import type { FieldId, Program, University } from "@/lib/types";
 
@@ -51,11 +52,13 @@ export function ProgramExplorer({ items }: { items: ExplorerItem[] }) {
   const [openOnly, setOpenOnly] = useState(false);
   const [province, setProvince] = useState<string[]>([]);
   const [query, setQuery] = useState("");
+  const [city, setCity] = useState("all");
   const [sort, setSort] = useState<Sort>("match");
   const [compare, setCompare] = useState<string[]>(["northstar-bs-computer-science", "highland-bs-software-engineering"]);
   const [saved, setSaved] = useState<string[]>(["northstar-bs-computer-science"]);
 
   const provinces = useMemo(() => Array.from(new Set(items.map((i) => i.program.province))), [items]);
+  const cities = useMemo(() => Array.from(new Set(items.map((i) => i.program.city))).sort(), [items]);
 
   const results = useMemo(() => {
     const q = query.trim().toLowerCase();
@@ -65,16 +68,17 @@ export function ProgramExplorer({ items }: { items: ExplorerItem[] }) {
       p.feePerSemester * 2 <= feeMax &&
       (!openOnly || p.status === "open") &&
       (province.length === 0 || province.includes(p.province)) &&
+      (city === "all" || p.city === city) &&
       (!q || `${p.title} ${u.name} ${u.shortName} ${p.city}`.toLowerCase().includes(q)),
     );
     if (sort === "fee") list = [...list].sort((a, b) => a.program.feePerSemester - b.program.feePerSemester);
     if (sort === "deadline") list = [...list].sort((a, b) => a.program.deadline.localeCompare(b.program.deadline));
     if (sort === "merit") list = [...list].sort((a, b) => (b.closing ?? 0) - (a.closing ?? 0));
     return list;
-  }, [items, field, sector, feeMax, openOnly, province, query, sort]);
+  }, [items, field, sector, feeMax, openOnly, province, city, query, sort]);
 
   const toggle = (arr: string[], id: string, max: number) => (arr.includes(id) ? arr.filter((x) => x !== id) : arr.length >= max ? arr : [...arr, id]);
-  const reset = () => { setField("all"); setSector("all"); setFeeMax(500000); setOpenOnly(false); setProvince([]); setQuery(""); };
+  const reset = () => { setField("all"); setSector("all"); setFeeMax(500000); setOpenOnly(false); setProvince([]); setCity("all"); setQuery(""); };
   const compared = items.filter((i) => compare.includes(i.program.slug));
 
   return (
@@ -104,11 +108,18 @@ export function ProgramExplorer({ items }: { items: ExplorerItem[] }) {
               <input value={query} onChange={(e) => setQuery(e.target.value)} placeholder="Search a program, university or city" className="h-full w-full min-w-0 bg-transparent text-[15.5px] outline-none placeholder:text-ink-400" />
             </label>
             <span aria-hidden className="hidden h-7 w-px bg-ink-200 sm:block" />
-            <label className="flex h-12 min-w-0 flex-1 items-center gap-2 rounded-full bg-ink-50 px-4 sm:w-[200px] sm:flex-none sm:bg-transparent">
-              <MapPin className="size-[18px] shrink-0 text-ink-400" aria-hidden />
-              <span className="sr-only">City</span>
-              <select className="h-full w-full cursor-pointer bg-transparent text-[15px] text-ink-700 outline-none"><option>Any city</option><option>Lahore</option><option>Islamabad</option><option>Karachi</option><option>Peshawar</option><option>Rawalpindi</option></select>
-            </label>
+            <div className="flex h-12 min-w-0 flex-1 items-center rounded-full bg-ink-50 px-4 sm:w-[200px] sm:flex-none sm:bg-transparent">
+              <Select
+                label="City"
+                hideLabel
+                variant="inline"
+                value={city}
+                onChange={setCity}
+                options={[{ value: "all", label: "Any city" }, ...cities.map((c) => ({ value: c, label: c, hint: String(items.filter((i) => i.program.city === c).length) }))]}
+                icon={<MapPin className="size-[18px] shrink-0 text-ink-400" aria-hidden />}
+                className="h-full w-full"
+              />
+            </div>
           </div>
           </div>
           <div className="flex flex-wrap gap-2">
@@ -155,15 +166,24 @@ export function ProgramExplorer({ items }: { items: ExplorerItem[] }) {
               <p className="font-display text-lg font-bold" aria-live="polite">{results.length} {results.length === 1 ? "program" : "programs"}</p>
               <p className="text-xs text-ink-500">Sample data · only verified records are shown</p>
             </div>
-            <label className="flex items-center gap-2 text-sm">
-              <span className="text-ink-500">Sort by</span>
-              <select value={sort} onChange={(e) => setSort(e.target.value as Sort)} className="h-10 rounded-xl border border-ink-200 bg-white px-3 font-medium outline-none focus:border-brand-500">
-                <option value="match">Best match</option>
-                <option value="fee">Lowest fee</option>
-                <option value="deadline">Nearest deadline</option>
-                <option value="merit">Closing merit (high to low)</option>
-              </select>
-            </label>
+            <div className="flex items-center gap-2 text-sm">
+              <span className="text-ink-500" aria-hidden>Sort by</span>
+              <Select
+                label="Sort by"
+                hideLabel
+                value={sort}
+                onChange={setSort}
+                align="end"
+                menuMinWidth={240}
+                triggerClassName="h-10 min-w-[190px] text-sm font-medium"
+                options={[
+                  { value: "match", label: "Best match" },
+                  { value: "fee", label: "Lowest fee" },
+                  { value: "deadline", label: "Nearest deadline" },
+                  { value: "merit", label: "Closing merit (high to low)" },
+                ]}
+              />
+            </div>
           </div>
 
           {results.map(({ program: p, university: u, closing }) => {

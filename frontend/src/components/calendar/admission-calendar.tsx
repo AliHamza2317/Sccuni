@@ -6,8 +6,16 @@ import { useState } from "react";
 import { DateTile } from "@/components/ui/badges";
 import { Button, ButtonLink } from "@/components/ui/button";
 import { Chip, Segmented, Switch } from "@/components/ui/controls";
+import { Select } from "@/components/ui/select";
 import { cn, formatDate, relativeDays } from "@/lib/format";
-import type { AdmissionEvent } from "@/lib/types";
+import type { AdmissionEvent, FieldId } from "@/lib/types";
+
+const FIELD_OPTIONS: { value: FieldId | "all"; label: string }[] = [
+  { value: "all", label: "All fields" },
+  { value: "computing", label: "Computer Science & IT" },
+  { value: "engineering", label: "Engineering" },
+  { value: "medicine", label: "Medicine" },
+];
 
 type Kind = AdmissionEvent["type"];
 const TYPES: { id: Kind | "all"; label: string; dot: string }[] = [
@@ -25,11 +33,26 @@ const PILL: Record<Kind, string> = {
 };
 const TILE: Record<Kind, "reach" | "blue" | "gold" | "brand"> = { application: "reach", test: "blue", merit: "gold", scholarship: "brand" };
 
-export function AdmissionCalendar({ events, today }: { events: AdmissionEvent[]; today: string }) {
+export function AdmissionCalendar({
+  events,
+  today,
+  meta,
+}: {
+  events: AdmissionEvent[];
+  today: string;
+  /** City and field per event id; events without them apply everywhere. */
+  meta: Record<string, { city?: string; field?: FieldId }>;
+}) {
   const [type, setType] = useState<Kind | "all">("all");
+  const [city, setCity] = useState("all");
+  const [field, setField] = useState<FieldId | "all">("all");
+  const cities = Array.from(new Set(Object.values(meta).map((m) => m.city).filter((c): c is string => Boolean(c)))).sort();
   const [view, setView] = useState<"month" | "list">("month");
   const [reminders, setReminders] = useState<string[]>(["nu-close", "nu-test"]);
-  const shown = events.filter((e) => type === "all" || e.type === type);
+  const shown = events.filter((e) => {
+    const m = meta[e.id] ?? {};
+    return (type === "all" || e.type === type) && (city === "all" || !m.city || m.city === city) && (field === "all" || !m.field || m.field === field);
+  });
 
   // Month grid (weeks start on Monday) for the month containing `today`.
   const [ty, tm] = today.split("-").map(Number);
@@ -56,9 +79,26 @@ export function AdmissionCalendar({ events, today }: { events: AdmissionEvent[];
             </Chip>
           ))}
         </div>
-        <div className="flex gap-2">
-          <select aria-label="City" className="h-10 rounded-xl border border-ink-200 bg-white px-3 text-sm font-medium"><option>All cities</option><option>Lahore</option><option>Islamabad</option><option>Karachi</option><option>Peshawar</option></select>
-          <select aria-label="Field" className="h-10 rounded-xl border border-ink-200 bg-white px-3 text-sm font-medium"><option>All fields</option><option>Computer Science &amp; IT</option><option>Engineering</option><option>Medicine</option></select>
+        <div className="flex flex-wrap gap-2">
+          <Select
+            label="City"
+            hideLabel
+            value={city}
+            onChange={setCity}
+            align="end"
+            triggerClassName="h-10 min-w-[150px] text-sm font-medium"
+            options={[{ value: "all", label: "All cities" }, ...cities.map((c) => ({ value: c, label: c }))]}
+          />
+          <Select
+            label="Field"
+            hideLabel
+            value={field}
+            onChange={setField}
+            align="end"
+            menuMinWidth={230}
+            triggerClassName="h-10 min-w-[170px] text-sm font-medium"
+            options={FIELD_OPTIONS}
+          />
         </div>
       </div>
 

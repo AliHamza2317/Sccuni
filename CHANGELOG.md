@@ -27,6 +27,11 @@ All notable changes to Sccuni are documented here. The format follows [Keep a Ch
 - High-fidelity, clickable MVP design on a Design canvas: 12 desktop screens (home, search, program, calculator, Best Fit, compare, university, calendar, scholarships, sign-in, student dashboard, admin verification queue), a design-system page and 2 mobile screens. Sample data is fictional and labelled.
 - `docs/DESIGN_SYSTEM.md`: direction ("Ink & Emerald"), tokens, components, screen inventory with requirement mapping, accessibility and content rules, open design decisions.
 
+### Added — 2026-11-22 (styled dropdowns)
+
+- `Select`: an accessible, styled dropdown (WAI-ARIA select-only combobox, type-ahead, portal menu that never gets clipped and flips upwards). It replaces all six native `<select>` elements: hero city, Programs city and sort, calculator program, and calendar city and field.
+- The Programs city filter and the calendar city and field filters now filter. The hero search opens the program list searched by the typed text or the chosen city.
+
 ### Changed — 2026-11-21 (greener hero)
 
 - Hero silk is now mostly emerald green; deep navy appears only at the far edges. The poster was regenerated; inner headers use it too.

@@ -53,7 +53,7 @@ src/
     admin/         admin console (noindex)
     globals.css    design tokens (Tailwind @theme) derived from the Sccuni logo
   components/
-    ui/            Button, badges (Tag, GroupPill, Verified, SourceChip, Monogram, DateTile), controls, MeritMeter
+    ui/            Button, badges (Tag, GroupPill, Verified, SourceChip, Monogram, DateTile), controls, Select (styled dropdown), MeritMeter
     site/          Header, footer, logo
     home/ programs/ merit/ calendar/ account/   feature components
   lib/

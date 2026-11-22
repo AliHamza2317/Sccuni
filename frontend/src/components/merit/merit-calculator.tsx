@@ -7,6 +7,7 @@ import { GroupPill, SourceChip, Tag, Verified } from "@/components/ui/badges";
 import { Button, ButtonLink } from "@/components/ui/button";
 import { Segmented } from "@/components/ui/controls";
 import { MeritMeter } from "@/components/ui/merit-meter";
+import { Select } from "@/components/ui/select";
 import { SilkBackdrop } from "@/components/site/silk-backdrop";
 import { calculateAggregate, classify, requiredTestMarks } from "@/lib/merit/engine";
 import { cn, formulaSummary, signed } from "@/lib/format";
@@ -70,10 +71,14 @@ export function MeritCalculator({ programs }: { programs: CalcProgram[] }) {
       {/* Inputs */}
       <form className="min-w-0 flex-[1_1_400px] space-y-6 rounded-[28px] bg-white ring-1 ring-ink-200/70 p-6 shadow-soft sm:p-8" onSubmit={(e) => e.preventDefault()}>
         <div className="space-y-2">
-          <label htmlFor="program" className="text-sm font-semibold">Program</label>
-          <select id="program" value={slug} onChange={(e) => changeProgram(e.target.value)} className="h-12 w-full rounded-xl border border-ink-300 bg-white px-3.5 text-[15px] outline-none focus:border-brand-500 focus:ring-4 focus:ring-brand-500/15">
-            {programs.map((p) => <option key={p.slug} value={p.slug}>{p.label}</option>)}
-          </select>
+          <Select
+            label="Program"
+            value={slug}
+            onChange={changeProgram}
+            triggerClassName="h-12"
+            menuMinWidth={380}
+            options={programs.map((p) => ({ value: p.slug, label: p.label }))}
+          />
           <div className="flex flex-wrap gap-2 pt-1">
             <Tag tone="brand">{formulaSummary(f.components, true)}</Tag>
             <Tag>{f.session} · v{f.version}</Tag>

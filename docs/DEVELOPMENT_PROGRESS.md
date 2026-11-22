@@ -226,6 +226,18 @@ What changed:
 | Inner headers | White ≥ 8.2:1 |
 | Console errors | None |
 
+**Styled dropdowns (22 Nov 2026).** All six native dropdowns were replaced by an accessible, styled Select (see DESIGN_SYSTEM §8c). The Programs city filter and the calendar city and field filters now actually filter.
+
+| Check (browser test) | Result |
+|---|---|
+| Mouse: open, choose | Works; the menu closes and keeps the value |
+| Keyboard | Arrow Down twice + Enter → Rawalpindi. Typing "l" → Lahore. Escape closes without changing the value |
+| Programs header | Menu extends past the header (not clipped). City Lahore → 15 to 6 programs. Sort works |
+| Calculator | Switching program changes the aggregate (86.8636% → 88.1445%) |
+| Calendar | 12 events → Lahore 8 → Lahore + Medicine 7 |
+| Phone (390 px) | Tap to open and choose works; the menu opens upwards when needed |
+| Console errors, sideways scrolling, unit tests | None, none, 11/11 |
+
 **Still open:** unknown program/university URLs still return HTTP 200 with the 404 page (see limitation 3 above).
 
 ### Next phase

@@ -110,7 +110,7 @@ Tailwind names in brackets (for example `bg-brand-600`, `text-ink-500`).
 | Navigation | Glass header (light and dark), mobile menu, breadcrumb, sticky in-page tabs, app sidebar (light for students, dark for admin), phone tab bar |
 | Actions | Buttons: primary, dark, light, ghost, on-dark, danger; sizes 54 / 44 / 36 px |
 | Labels | Chip (default, active, on-dark), tag (neutral, emerald, gold, blue, danger), group pills (Safe, Target, Reach, No data), Verified badge, Outdated badge, admission status dots |
-| Forms | Input, select, "obtained out of total" pair, segmented control, checkbox, switch, range slider, inline validation notice |
+| Forms | Input, select, "obtained out of total" pair, segmented control, checkbox, switch, range slider, inline validation notice, **Select** (styled dropdown, `frontend/src/components/ui/select.tsx`) |
 | Data | Result card, key-fact grid, grid-based tables (horizontal scroll on phones), compare grid, calendar month grid, timeline, KPI tile, progress bar |
 | Signature | **Merit Meter**, **Source chip**, date tile, university monogram (used until logo permission exists), weight bar (formula split) |
 | Page structure (v0.3) | `PageHeader` (light or dark top section for inner pages), `SectionHeading` + `Eyebrow` (pill label with a dot), `ProductWindow` (framed app preview on the home page), `DetailSkeleton` (loading state) |
@@ -271,6 +271,33 @@ The founder said the home page and some pages still felt simple. The refresh kee
 | | Header links (white at 70%) | ≥ 5.7:1 |
 | Inner silk headers (same poster) | White | ≥ 8.2:1 |
 | | `ink-200` | ≥ 6.3:1 |
+
+## 8c. Dropdowns (22 Nov 2026)
+
+All six browser dropdowns (`<select>`) were replaced by one styled **Select** component.
+
+| Where | Dropdown |
+|---|---|
+| Hero search | City |
+| Programs | City, Sort by |
+| Merit calculator | Program |
+| Admission calendar | City, Field |
+
+**Look.**
+- Closed: a white field with a soft ring, or borderless inside search bars, with a chevron that turns when open.
+- Open: a white card with rounded corners and a soft shadow.
+- Options: a pale highlight on hover or keyboard focus, a green ✓ on the chosen option, and optional counts on the right ("Lahore 6").
+- Long names wrap instead of being cut off.
+
+**Behaviour.**
+- The WAI-ARIA "select-only combobox" pattern. Keys: Arrow keys, Home/End, Page Up/Down, Enter/Space, Escape, Tab, and type-ahead (type "l" for Lahore).
+- The menu renders in a portal with fixed positioning, so headers with `overflow: hidden` never clip it. It opens upwards when there is no room below, follows the page on scroll, and is never wider than the screen.
+
+**Now connected.** Three dropdowns used to do nothing; they now filter:
+- the City filter on Programs;
+- the City and Field filters on the calendar. Each event takes its city and field from the program or university it links to; nationwide events always show.
+
+The hero search opens the program list searched by the typed text, or else by the chosen city.
 
 ## 9. Handover to development
 
