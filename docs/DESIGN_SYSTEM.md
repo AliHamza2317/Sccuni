@@ -299,6 +299,21 @@ All six browser dropdowns (`<select>`) were replaced by one styled **Select** co
 
 The hero search opens the program list searched by the typed text, or else by the chosen city.
 
+## 8d. Sign in / create account (22 Nov 2026)
+
+Code: `frontend/src/app/(account)/sign-in/page.tsx` and `frontend/src/components/account/auth-form.tsx`.
+
+| Part | Design |
+|---|---|
+| Brand panel (left; a band on top on phones) | The home hero's live green silk in a rounded card. The line "Your admission plan, saved in one place." and two small glass previews of what you get: the Best Fit counts and a reminder. A privacy note at the bottom |
+| Mode switch | A pill toggle: Sign in / Create account |
+| Google | A white pill button with the real Google "G" mark |
+| Fields | Rounded inputs with a leading icon that turns green on focus, a soft fill that turns white on focus, and a green focus ring |
+| Password | Show/hide button. When creating an account, a four-step strength meter (Too short, Weak, Fair, Good, Strong), announced to screen readers. It is only a hint: the server will enforce the real rules |
+| Under 18 | A switch. When on, the guardian-email field slides in below |
+| Submit | A navy pill with an arrow |
+| Navigation | "Back to home" link at the top |
+
 ## 9. Handover to development
 
 **Done (20 Nov 2026):** the screens are Next.js routes in `frontend/src/app`, the tokens are Tailwind v4 `@theme` variables, and the components are in `frontend/src/components`.

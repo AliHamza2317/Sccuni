@@ -246,6 +246,16 @@ What changed:
 | Footer | Shows the note |
 | Console errors | None |
 
+**Sign-in page redesign (22 Nov 2026).** A premium, minimal layout (see DESIGN_SYSTEM §8d).
+
+| Check (browser test) | Result |
+|---|---|
+| Password "Admission2027" | Strength shows "Good" |
+| Under-18 switch | Shows the guardian email field |
+| Switching to Sign in | Heading changes to "Welcome back"; "Forgot password?" and "Keep me signed in" show |
+| Phone (390 px) | Silk band on top, form below; no sideways scrolling |
+| Console errors, lint, typecheck, build | None, clean, clean, passes |
+
 **Still open:** unknown program/university URLs still return HTTP 200 with the 404 page (see limitation 3 above).
 
 ### Next phase
