@@ -27,6 +27,22 @@ All notable changes to Sccuni are documented here. The format follows [Keep a Ch
 - High-fidelity, clickable MVP design on a Design canvas: 12 desktop screens (home, search, program, calculator, Best Fit, compare, university, calendar, scholarships, sign-in, student dashboard, admin verification queue), a design-system page and 2 mobile screens. Sample data is fictional and labelled.
 - `docs/DESIGN_SYSTEM.md`: direction ("Ink & Emerald"), tokens, components, screen inventory with requirement mapping, accessibility and content rules, open design decisions.
 
+### Changed — 2026-11-22 (sign-in page to the founder's mockup)
+
+- New design to the founder's mockup, on the founder's campus artwork. The logo and tagline baked into the artwork were removed with `frontend/scripts/clean-sign-in-background.py` and are now live text.
+- Left side:
+  - headline with "saved" in green;
+  - subtitle;
+  - glass feature bar linking to Programs, Merit calculator and Best Fit;
+  - the tagline "Build a brighter future" in Sacramento (`@fontsource/sacramento`).
+- Right side, on a frosted card:
+  - icon switch with a sliding dark-green pill;
+  - "Welcome back 👋";
+  - pill inputs;
+  - dark-green gradient button;
+  - Google and Apple buttons.
+- "Get Expert Guidance" from the mockup reads "Find Your Best Fit" (no expert-guidance service exists). The Apple button needs a plan decision.
+
 ### Changed — 2026-11-22 (sign-in page, second version)
 
 - The live green silk now fills the whole sign-in page, and the form sits on a floating white card with a glass layer behind it.

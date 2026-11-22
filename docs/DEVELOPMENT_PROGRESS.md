@@ -256,6 +256,17 @@ What changed:
 | Phone (390 px) | Silk band on top, form below; no sideways scrolling |
 | Console errors, lint, typecheck, build | None, clean, clean, passes |
 
+**Sign-in page to the founder's mockup (22 Nov 2026).** See DESIGN_SYSTEM §8d. The founder's background art was cleaned of its baked-in logo and tagline, which are now live text.
+
+| Check (browser test) | Result |
+|---|---|
+| 1586×992 (mockup size) and 1440×900 | Everything fits; no sideways scrolling |
+| Create account | Heading "Create your account ✨"; strength "Good" for "Admission2027"; under-18 reveals the guardian email |
+| Phone | No sideways scrolling |
+| Console errors, lint, build | None, clean, passes |
+
+**Decision needed:** keep "Continue with Apple"? It is shown as in the mockup, but Apple sign-in is not in the plan (ADR-009).
+
 **Still open:** unknown program/university URLs still return HTTP 200 with the 404 page (see limitation 3 above).
 
 ### Next phase

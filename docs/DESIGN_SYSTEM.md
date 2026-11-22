@@ -299,21 +299,30 @@ All six browser dropdowns (`<select>`) were replaced by one styled **Select** co
 
 The hero search opens the program list searched by the typed text, or else by the chosen city.
 
-## 8d. Sign in / create account (22 Nov 2026, second version)
+## 8d. Sign in / create account (22 Nov 2026, founder's mockup)
 
-Code: `frontend/src/app/(account)/sign-in/page.tsx` and `frontend/src/components/account/auth-form.tsx`.
-
-The first version (silk panel on the left, white form on the right) looked like a common template, so the founder asked for a more aesthetic page.
+Built to match the founder's mockup, using the founder's campus artwork as the background. Code: `frontend/src/app/(account)/sign-in/page.tsx` and `frontend/src/components/account/auth-form.tsx`.
 
 | Part | Design |
 |---|---|
-| Background | The home hero's live green silk fills the whole page |
-| Top | White logo on the left; a glass "Back to home" pill on the right |
-| Card | A floating white card in the centre with a deep soft shadow, a thin mint light along its top edge, and a second glass layer peeking out below it |
-| Mode switch | Sign in / Create account, with a white indicator that slides between them. The form fades and rises gently when the mode changes |
-| Form | Google button with the real "G" mark; 52 px inputs with leading icons and a green focus glow; show/hide password; a strength hint on sign-up; an under-18 switch that reveals the guardian email; a green gradient pill submit ("Create my free account") |
-| Below the card | Glass pills: Free for students, Official sources only, We never sell your data. A privacy line at the bottom |
-| Phones | Same design: the card fills the width and the pills wrap |
+| Background | `sign-in-bg.webp`: the founder's artwork (campus building, graduation cap and books, emerald arcs). The original had the logo and the "Build a brighter future" tagline painted in. Those were removed (`frontend/scripts/clean-sign-in-background.py` refills them from the surrounding gradient) and are rendered as live text instead, so they stay sharp and in place on every screen size. The image is served as-is (134 KB), so it shows at once |
+| Left | White logo. Headline "Your admission plan, **saved** in one place." in semibold, with "saved" in green. Subtitle. A glass bar with three links: Search Universities, Calculate Merit, Find Your Best Fit. The tagline "Build a brighter future" in a script font (Sacramento, self-hosted) with an emerald swash |
+| Left, behind the text | A dark curved panel with a soft emerald edge keeps the white text readable. It fades out at the bottom so the cap and books stay bright |
+| Right | "Back to home" glass pill. A frosted white card holding: a Sign in / Create account switch with a sliding dark-green pill and icons; "Welcome back 👋" (or "Create your account ✨") with a subtitle; pill inputs with icons; "Forgot password?"; an under-18 switch; Terms and Privacy; a dark-green gradient "Sign in →" / "Create account →" button; "or continue with" Google and Apple |
+| Phones | The background stays, with an even dark wash. The headline and subtitle sit above the card. The feature bar and tagline are hidden |
+
+**Two choices that differ from the mockup:**
+1. The third feature reads **"Find Your Best Fit"** instead of "Get Expert Guidance". Sccuni has no expert-guidance service; the AI advisor is planned for Release 2.
+2. **"Continue with Apple"** is shown as in the mockup. The plan (ADR-009) only covers email + Google, so Apple sign-in must be added to the backend plan before launch, or the button removed.
+
+**Measured contrast on the left** (worst 2% of the background):
+
+| Text | Contrast |
+|---|---|
+| Headline (white) | ≥ 10.8:1 |
+| "saved" (green) | ≥ 4.5:1 |
+| Subtitle (white at 90%) | ≥ 7.9:1 |
+| Feature labels (white) | ≥ 5.4:1, before counting their glass background |
 
 ## 9. Handover to development
 

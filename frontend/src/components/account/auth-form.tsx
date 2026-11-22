@@ -1,6 +1,6 @@
 "use client";
 
-import { ArrowRight, Eye, EyeOff, Lock, Mail, UserRound } from "lucide-react";
+import { ArrowRight, CirclePlus, Eye, EyeOff, Lock, Mail, UserRound } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useState, type InputHTMLAttributes, type ReactNode } from "react";
 import { Switch } from "@/components/ui/controls";
@@ -18,7 +18,16 @@ function GoogleMark() {
   );
 }
 
-/** A labelled input with a leading icon and an optional trailing control. */
+/** Apple logo, as shown on standard "Continue with Apple" buttons. */
+function AppleMark() {
+  return (
+    <svg viewBox="0 0 24 24" className="size-5" fill="currentColor" aria-hidden>
+      <path d="M16.37 12.7c-.02-2.2 1.8-3.26 1.88-3.31-1.03-1.5-2.62-1.71-3.18-1.73-1.35-.14-2.64.8-3.33.8-.69 0-1.74-.78-2.87-.76-1.47.02-2.83.86-3.59 2.18-1.54 2.66-.39 6.6 1.1 8.76.73 1.06 1.6 2.24 2.73 2.2 1.1-.04 1.51-.71 2.84-.71 1.32 0 1.7.71 2.86.69 1.18-.02 1.93-1.07 2.65-2.13.84-1.22 1.18-2.41 1.2-2.47-.03-.01-2.29-.88-2.31-3.49zM14.2 6.23c.6-.73 1.01-1.75.9-2.76-.87.04-1.92.58-2.54 1.31-.56.64-1.05 1.67-.92 2.66.97.08 1.96-.49 2.56-1.21z" />
+    </svg>
+  );
+}
+
+/** A labelled, pill-shaped input with a leading icon and an optional trailing control. */
 function Field({
   id,
   label,
@@ -30,22 +39,22 @@ function Field({
 }: { id: string; label: string; icon: ReactNode; trailing?: ReactNode; aside?: ReactNode } & InputHTMLAttributes<HTMLInputElement>) {
   return (
     <div className="space-y-2">
-      <div className="flex items-baseline justify-between gap-3">
-        <label htmlFor={id} className="text-[13px] font-semibold text-ink-800">{label}</label>
+      <div className="flex items-baseline justify-between gap-3 px-1">
+        <label htmlFor={id} className="text-[14px] font-semibold text-ink-900">{label}</label>
         {aside}
       </div>
       <div className="group relative">
-        <span className="pointer-events-none absolute inset-y-0 left-4 flex items-center text-ink-400 transition-colors group-focus-within:text-brand-600">{icon}</span>
+        <span className="pointer-events-none absolute inset-y-0 left-5 flex items-center text-ink-500 transition-colors group-focus-within:text-brand-700">{icon}</span>
         <input
           id={id}
           className={cn(
-            "h-[52px] w-full rounded-2xl bg-ink-50 pr-4 pl-11 text-[15px] text-ink-900 ring-1 ring-ink-200/80 transition outline-none placeholder:text-ink-400 hover:ring-ink-300 focus:bg-white focus:ring-2 focus:ring-brand-500/70 focus:shadow-[0_0_0_6px_rgb(0_152_124/0.10)]",
-            trailing && "pr-12",
+            "h-[54px] w-full rounded-full bg-white/80 pr-5 pl-[52px] text-[15px] text-ink-900 ring-1 ring-ink-200 transition outline-none placeholder:text-ink-400 hover:ring-ink-300 focus:bg-white focus:ring-2 focus:ring-brand-600/60 focus:shadow-[0_0_0_6px_rgb(0_152_124/0.10)]",
+            trailing && "pr-14",
             className,
           )}
           {...input}
         />
-        {trailing ? <span className="absolute inset-y-0 right-1.5 flex items-center">{trailing}</span> : null}
+        {trailing ? <span className="absolute inset-y-0 right-2 flex items-center">{trailing}</span> : null}
       </div>
     </div>
   );
@@ -68,10 +77,15 @@ const STRENGTH = [
   { label: "Strong", bar: "bg-brand-700" },
 ];
 
-/** The sign-in / create-account form, laid out for the centred card on the sign-in page. */
-export function AuthForm() {
+const MODES = [
+  { id: "signin" as const, label: "Sign in", icon: UserRound },
+  { id: "signup" as const, label: "Create account", icon: CirclePlus },
+];
+
+/** The sign-in / create-account form, for the glass card on the sign-in page. */
+export function AuthForm({ initialMode = "signin" }: { initialMode?: "signin" | "signup" }) {
   const router = useRouter();
-  const [mode, setMode] = useState<"signin" | "signup">("signup");
+  const [mode, setMode] = useState<"signin" | "signup">(initialMode);
   const [show, setShow] = useState(false);
   const [minor, setMinor] = useState(false);
   const [password, setPassword] = useState("");
@@ -80,23 +94,27 @@ export function AuthForm() {
 
   return (
     <div>
-      {/* Mode switch with a sliding indicator */}
-      <div role="group" aria-label="Account" className="relative grid grid-cols-2 rounded-full bg-ink-100 p-1">
+      {/* Mode switch: a dark-green pill slides under the active option */}
+      <div role="group" aria-label="Account" className="relative mx-auto grid max-w-[420px] grid-cols-2 rounded-full bg-white p-1.5 shadow-xs ring-1 ring-ink-200/80">
         <span
           aria-hidden
           className={cn(
-            "absolute inset-y-1 left-1 w-[calc(50%-4px)] rounded-full bg-white shadow-[0_2px_12px_rgb(0_26_58/0.12)] ring-1 ring-ink-900/[0.05] transition-transform duration-500 ease-[cubic-bezier(0.2,0.8,0.2,1)]",
+            "absolute inset-y-1.5 left-1.5 w-[calc(50%-6px)] rounded-full bg-linear-to-b from-[#0b6b58] to-[#004a3d] shadow-[inset_0_1px_0_rgb(255_255_255/0.18),0_8px_20px_rgb(0_74_61/0.35)] transition-transform duration-500 ease-[cubic-bezier(0.2,0.8,0.2,1)]",
             signup && "translate-x-full",
           )}
         />
-        {([["signin", "Sign in"], ["signup", "Create account"]] as const).map(([m, label]) => (
+        {MODES.map(({ id, label, icon: Icon }) => (
           <button
-            key={m}
+            key={id}
             type="button"
-            aria-pressed={mode === m}
-            onClick={() => setMode(m)}
-            className={cn("relative z-10 h-10 rounded-full text-[14px] font-semibold transition-colors duration-300", mode === m ? "text-ink-950" : "text-ink-500 hover:text-ink-800")}
+            aria-pressed={mode === id}
+            onClick={() => setMode(id)}
+            className={cn(
+              "relative z-10 flex h-12 items-center justify-center gap-2.5 rounded-full text-[15px] font-semibold transition-colors duration-300",
+              mode === id ? "text-white" : "text-ink-800 hover:text-ink-950",
+            )}
           >
+            <Icon className={cn("size-[18px] transition-colors", mode === id ? "text-brand-200" : "text-brand-700")} aria-hidden />
             {label}
           </button>
         ))}
@@ -104,32 +122,20 @@ export function AuthForm() {
 
       {/* Everything below re-enters gently when the mode changes */}
       <div key={mode} className="animate-swap">
-        <div className="mt-8 space-y-2 text-center">
-          <h1 className="text-[clamp(1.9rem,3vw,2.3rem)] leading-[1.1] font-extrabold tracking-[-0.04em] text-ink-950">
-            {signup ? "Create your account" : "Welcome back"}
+        <div className="mt-8 space-y-2.5 text-center">
+          <h1 className="text-[1.8rem] leading-[1.1] font-extrabold tracking-[-0.04em] text-ink-950 sm:text-[2rem]">
+            {signup ? "Create your account" : "Welcome back"} <span aria-hidden>{signup ? "✨" : "👋"}</span>
           </h1>
-          <p className="mx-auto max-w-[320px] text-[15px] leading-relaxed text-ink-600">
-            {signup ? "Free for students. Save your marks once and use them for every program." : "Sign in to see your saved programs, results and reminders."}
+          <p className="text-[15.5px] leading-relaxed text-ink-600">
+            {signup ? "Join free — save your marks once and use them for every program" : "Sign in to continue your journey with Sccuni"}
           </p>
         </div>
 
-        <button
-          type="button"
-          className="mt-7 flex h-[52px] w-full items-center justify-center gap-3 rounded-full bg-white text-[15px] font-semibold text-ink-900 shadow-xs ring-1 ring-ink-200 transition hover:-translate-y-px hover:shadow-soft hover:ring-ink-300"
-        >
-          <GoogleMark />
-          Continue with Google
-        </button>
-
-        <div className="my-6 flex items-center gap-4 text-[12px] font-medium tracking-[0.08em] text-ink-500 uppercase before:h-px before:flex-1 before:bg-linear-to-r before:from-transparent before:to-ink-200 after:h-px after:flex-1 after:bg-linear-to-l after:from-transparent after:to-ink-200">
-          or with email
-        </div>
-
-        <form className="space-y-4" onSubmit={(e) => { e.preventDefault(); router.push("/dashboard"); }}>
+        <form className="mt-8 space-y-5" onSubmit={(e) => { e.preventDefault(); router.push("/dashboard"); }}>
           {signup && (
-            <Field id="name" label="Full name" autoComplete="name" placeholder="As on your CNIC or B-Form" icon={<UserRound className="size-[18px]" aria-hidden />} />
+            <Field id="name" label="Full name" autoComplete="name" placeholder="As on your CNIC or B-Form" icon={<UserRound className="size-5" aria-hidden />} />
           )}
-          <Field id="email" label="Email" type="email" autoComplete="email" placeholder="you@example.com" icon={<Mail className="size-[18px]" aria-hidden />} />
+          <Field id="email" label="Email" type="email" autoComplete="email" placeholder="you@example.com" icon={<Mail className="size-5" aria-hidden />} />
           <div className="space-y-2.5">
             <Field
               id="password"
@@ -140,21 +146,21 @@ export function AuthForm() {
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               aria-describedby={signup ? "password-strength" : undefined}
-              icon={<Lock className="size-[18px]" aria-hidden />}
-              aside={!signup ? <a href="#" className="text-[13px] font-semibold text-brand-700 hover:underline">Forgot password?</a> : undefined}
+              icon={<Lock className="size-5" aria-hidden />}
+              aside={!signup ? <a href="#" className="text-[13.5px] font-semibold text-brand-700 hover:underline">Forgot password?</a> : undefined}
               trailing={
                 <button
                   type="button"
                   onClick={() => setShow((v) => !v)}
                   aria-label={show ? "Hide password" : "Show password"}
-                  className="grid size-10 place-items-center rounded-xl text-ink-500 transition hover:bg-ink-100 hover:text-ink-900"
+                  className="grid size-10 place-items-center rounded-full text-ink-600 transition hover:bg-ink-100 hover:text-ink-900"
                 >
-                  {show ? <EyeOff className="size-[18px]" aria-hidden /> : <Eye className="size-[18px]" aria-hidden />}
+                  {show ? <EyeOff className="size-5" aria-hidden /> : <Eye className="size-5" aria-hidden />}
                 </button>
               }
             />
             {signup && password.length > 0 && (
-              <div id="password-strength" aria-live="polite" className="flex items-center gap-3 px-1">
+              <div id="password-strength" aria-live="polite" className="flex items-center gap-3 px-2">
                 <div className="grid flex-1 grid-cols-4 gap-1.5" aria-hidden>
                   {[1, 2, 3, 4].map((i) => (
                     <span key={i} className={cn("h-1 rounded-full transition-colors duration-300", i <= score ? STRENGTH[score].bar : "bg-ink-200")} />
@@ -166,47 +172,51 @@ export function AuthForm() {
           </div>
 
           {signup ? (
-            <div className="space-y-4 pt-1">
-              <div className="rounded-2xl bg-ink-50 px-4 py-3 ring-1 ring-ink-200/70">
-                <Switch checked={minor} onChange={setMinor}>
-                  <span className="text-[14px] font-medium text-ink-800">I am under 18</span>
-                </Switch>
-                {minor && (
-                  <div className="animate-swap mt-3 space-y-3 border-t border-ink-200/70 pt-3">
-                    <p className="text-[13.5px] leading-relaxed text-ink-600">A parent or guardian will approve your account before you can save personal details.</p>
-                    <Field id="guardian" label="Parent or guardian’s email" type="email" placeholder="guardian@example.com" icon={<Mail className="size-[18px]" aria-hidden />} />
-                  </div>
-                )}
-              </div>
-              <label className="flex cursor-pointer items-start gap-3 px-1 text-[13.5px] leading-relaxed text-ink-600">
+            <div className="space-y-4 px-1 pt-1">
+              <Switch checked={minor} onChange={setMinor}>
+                <span className="text-[14.5px] font-semibold text-ink-900">I am under 18</span>
+              </Switch>
+              {minor && (
+                <div className="animate-swap space-y-3 rounded-3xl bg-ink-50/80 p-4 ring-1 ring-ink-200/70">
+                  <p className="text-[13.5px] leading-relaxed text-ink-600">A parent or guardian will approve your account before you can save personal details.</p>
+                  <Field id="guardian" label="Parent or guardian’s email" type="email" placeholder="guardian@example.com" icon={<Mail className="size-5" aria-hidden />} />
+                </div>
+              )}
+              <label className="flex cursor-pointer items-start gap-3 text-[14px] leading-relaxed text-ink-700">
                 <input type="checkbox" required className="mt-0.5 size-[18px] shrink-0 accent-brand-600" />
                 <span>
-                  I agree to the <a href="#" className="font-semibold text-ink-900 underline-offset-4 hover:underline">Terms of Use</a> and{" "}
-                  <a href="#" className="font-semibold text-ink-900 underline-offset-4 hover:underline">Privacy Policy</a>.
+                  I agree to the <a href="#" className="font-semibold text-brand-700 hover:underline">Terms of Use</a> and{" "}
+                  <a href="#" className="font-semibold text-brand-700 hover:underline">Privacy Policy</a>.
                 </span>
               </label>
             </div>
           ) : (
-            <label className="flex cursor-pointer items-center gap-3 px-1 pt-1 text-[13.5px] text-ink-600">
+            <label className="flex cursor-pointer items-center gap-3 px-1 pt-1 text-[14px] text-ink-700">
               <input type="checkbox" defaultChecked className="size-[18px] shrink-0 accent-brand-600" />Keep me signed in on this device
             </label>
           )}
 
           <button
             type="submit"
-            className="group mt-2 flex h-[52px] w-full items-center justify-center gap-2 rounded-full bg-linear-to-b from-brand-600 to-brand-700 text-[15px] font-semibold text-white shadow-[inset_0_1px_0_rgb(255_255_255/0.22),0_12px_28px_rgb(0_126_103/0.35)] transition hover:-translate-y-px hover:shadow-[inset_0_1px_0_rgb(255_255_255/0.22),0_16px_34px_rgb(0_126_103/0.45)]"
+            className="group flex h-[56px] w-full items-center justify-center gap-2.5 rounded-full bg-linear-to-r from-[#003d33] via-[#005c4b] to-[#0a7a64] text-[16px] font-semibold text-white shadow-[inset_0_1px_0_rgb(255_255_255/0.18),0_14px_32px_rgb(0_92_75/0.38)] transition hover:-translate-y-px hover:shadow-[inset_0_1px_0_rgb(255_255_255/0.18),0_18px_38px_rgb(0_92_75/0.48)]"
           >
-            {signup ? "Create my free account" : "Sign in"}
-            <ArrowRight className="size-[18px] transition-transform group-hover:translate-x-0.5" aria-hidden />
+            {signup ? "Create account" : "Sign in"}
+            <ArrowRight className="size-5 transition-transform group-hover:translate-x-0.5" aria-hidden />
           </button>
         </form>
 
-        <p className="mt-6 text-center text-[14px] text-ink-600">
-          {signup ? "Already have an account?" : "New to Sccuni?"}{" "}
-          <button type="button" onClick={() => setMode(signup ? "signin" : "signup")} className="font-semibold text-brand-700 hover:underline">
-            {signup ? "Sign in" : "Create an account"}
+        <div className="mt-6 flex items-center gap-4 text-[14px] text-ink-600 before:h-px before:flex-1 before:bg-ink-200 after:h-px after:flex-1 after:bg-ink-200">or continue with</div>
+
+        <div className="mt-5 grid grid-cols-1 gap-3 sm:grid-cols-2">
+          <button type="button" className="flex h-12 items-center justify-center gap-2.5 rounded-full bg-white text-[14.5px] font-semibold text-ink-900 shadow-xs ring-1 ring-ink-200 transition hover:-translate-y-px hover:shadow-soft">
+            <GoogleMark />
+            Continue with Google
           </button>
-        </p>
+          <button type="button" className="flex h-12 items-center justify-center gap-2.5 rounded-full bg-white text-[14.5px] font-semibold text-ink-900 shadow-xs ring-1 ring-ink-200 transition hover:-translate-y-px hover:shadow-soft">
+            <AppleMark />
+            Continue with Apple
+          </button>
+        </div>
       </div>
     </div>
   );
