@@ -35,16 +35,10 @@ export function SiteFooter() {
         <div className="mt-14 flex flex-wrap justify-between gap-4 border-t border-white/[0.08] pt-6 text-[13px] text-ink-400">
           <span>© 2026 Sccuni</span>
           <span>Not affiliated with any university. Always confirm details on the official website before applying.</span>
+          {/* Sample-data notice (moved here from the top bar at the founder's request). Remove once real, verified data is connected. */}
+          <span className="w-full text-ink-400">Prototype: universities, fees and merit figures on this site are sample data, not real.</span>
         </div>
       </div>
     </footer>
-  );
-}
-
-export function PrototypeBanner() {
-  return (
-    <div className="bg-ink-950 px-4 py-2 text-center text-[12.5px] leading-snug text-ink-300">
-      <b className="font-semibold text-white">Design prototype</b> · Universities, fees and merit figures shown are fictional samples, not real data.
-    </div>
   );
 }

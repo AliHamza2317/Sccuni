@@ -27,6 +27,11 @@ All notable changes to Sccuni are documented here. The format follows [Keep a Ch
 - High-fidelity, clickable MVP design on a Design canvas: 12 desktop screens (home, search, program, calculator, Best Fit, compare, university, calendar, scholarships, sign-in, student dashboard, admin verification queue), a design-system page and 2 mobile screens. Sample data is fictional and labelled.
 - `docs/DESIGN_SYSTEM.md`: direction ("Ink & Emerald"), tokens, components, screen inventory with requirement mapping, accessibility and content rules, open design decisions.
 
+### Changed — 2026-11-22 (top banner removed)
+
+- Removed the "Design prototype…" top bar from all pages (founder's request).
+- The sample-data notice now sits in the site footer: "Prototype: universities, fees and merit figures on this site are sample data, not real."
+
 ### Added — 2026-11-22 (styled dropdowns)
 
 - `Select`: an accessible, styled dropdown (WAI-ARIA select-only combobox, type-ahead, portal menu that never gets clipped and flips upwards). It replaces all six native `<select>` elements: hero city, Programs city and sort, calculator program, and calendar city and field.

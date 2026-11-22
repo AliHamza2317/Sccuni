@@ -1,5 +1,4 @@
 import type { Metadata } from "next";
-import { PrototypeBanner } from "@/components/site/footer";
 
 export const metadata: Metadata = {
   title: { default: "Admin", template: "%s · Sccuni Admin" },
@@ -7,10 +6,5 @@ export const metadata: Metadata = {
 };
 
 export default function AdminLayout({ children }: { children: React.ReactNode }) {
-  return (
-    <>
-      <PrototypeBanner />
-      {children}
-    </>
-  );
+  return children;
 }

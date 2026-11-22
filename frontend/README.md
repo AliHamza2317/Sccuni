@@ -2,7 +2,7 @@
 
 The public website, student dashboard and admin console for Sccuni, built with **Next.js 16 (App Router) + React 19 + TypeScript + Tailwind CSS 4**, as planned in [`docs/SYSTEM_ARCHITECTURE.md`](../docs/SYSTEM_ARCHITECTURE.md).
 
-> **Status: design-quality prototype.** Every page reads from a typed data layer (`src/lib/data`) that currently returns **fictional SAMPLE data**. A banner on every page says so. When the backend API exists, only `src/lib/data/index.ts` changes; pages and components stay the same.
+> **Status: design-quality prototype.** Every page reads from a typed data layer (`src/lib/data`) that currently returns **fictional SAMPLE data**. A note in the footer says so. When the backend API exists, only `src/lib/data/index.ts` changes; pages and components stay the same.
 
 ## Run it
 
@@ -66,7 +66,7 @@ public/brand/       logo variants (full, white-on-navy, mark)
 ## Rules for contributors
 
 - **Never hard-code a university formula.** Formulas are data (`Formula` in `src/lib/types.ts`) evaluated by `src/lib/merit/engine.ts`.
-- **Never present sample data as real.** Keep the prototype banner until real, verified data is connected.
+- **Never present sample data as real.** Keep the sample-data note in the footer (`src/components/site/footer.tsx`) until real, verified data is connected. The top banner was removed at the founder's request.
 - Keep each page responsive down to 360 px; check with `pnpm build && pnpm start`.
 - **Header colours:** if a page's top section is navy, add `data-header-theme="dark"` to it. The header then switches to its light-on-dark style using CSS alone (the `on-dark:` variant in `globals.css`), so it is right on the first paint.
 - **Hero silk poster:** `src/components/home/silk-poster.webp` is the first frame of the WebGL silk. It shows before JavaScript loads, and the page headers use it as a still background (`SilkBackdrop`). If you change the shader, `POSTER_ASPECT` or `POSTER_TIME` in `src/components/home/hero-background.tsx`, regenerate it. Run this from `frontend/`; it needs Playwright with Chromium:

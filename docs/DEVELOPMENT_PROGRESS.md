@@ -93,7 +93,7 @@ See the Phase 0 summary in chat and REQUIREMENTS §9.2:
 | Colour contrast of the palette | All text pairs ≥ 4.5:1 (see DESIGN_SYSTEM §2.1) |
 
 **Known limitations:**
-1. **All data is fictional sample data** (6 made-up universities, 15 programs). A banner on every page says so.
+1. **All data is fictional sample data** (6 made-up universities, 15 programs). A note in the footer says so. A top banner said so until 22 Nov 2026; it was removed at the founder's request.
 2. Sign-in, saving, reminders, inquiries, compare and admin approval work only in the browser (no backend). Nothing is stored.
 3. Unknown program or university URLs show the 404 page with `noindex`, but the HTTP status is 200, because Cache Components streams the page before `notFound()` runs. To fix with the API phase (for example, with a proxy check or a different rendering mode for those routes).
 4. Not yet tested: keyboard-only and screen-reader passes, Lighthouse budgets, real phones, end-to-end tests. These belong to Phase 18.
@@ -237,6 +237,14 @@ What changed:
 | Calendar | 12 events → Lahore 8 → Lahore + Medicine 7 |
 | Phone (390 px) | Tap to open and choose works; the menu opens upwards when needed |
 | Console errors, sideways scrolling, unit tests | None, none, 11/11 |
+
+**Top banner removed (22 Nov 2026).** At the founder's request, the "Design prototype…" bar was removed from all pages (site, account, admin). The sample-data notice now sits in the footer, in line with the rule "never present sample data as real".
+
+| Check | Result |
+|---|---|
+| Home, Programs, Sign-in, Dashboard, Admin | No banner; the pages start at the top |
+| Footer | Shows the note |
+| Console errors | None |
 
 **Still open:** unknown program/university URLs still return HTTP 200 with the 404 page (see limitation 3 above).
 

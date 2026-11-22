@@ -6,7 +6,7 @@
 - **Earlier design canvas (v0.1, superseded):** https://claude.ai/artifact/WfsSxNW1nMwyKLkPw5xdR1 — it still uses the older "Ink & Emerald" colours and the placeholder logo.
 - **Related:** [REQUIREMENTS.md](./REQUIREMENTS.md) (MVP scope) · [SYSTEM_ARCHITECTURE.md](./SYSTEM_ARCHITECTURE.md) §5.5 (rendering)
 
-> **All universities, fees, merits and dates in the prototype are fictional samples.** Every screen carries a banner saying so. Real data enters only through the verification workflow.
+> **All universities, fees, merits and dates in the prototype are fictional samples.** A note in the site footer says so. The top banner was removed at the founder's request on 22 Nov 2026. Real data enters only through the verification workflow.
 
 ---
 
@@ -192,7 +192,7 @@ The founder said the home page and some pages still felt simple. The refresh kee
 
 | Part | Behaviour | Code |
 |---|---|---|
-| Hero | Full width, starting right under the prototype banner. The header floats on top of it (no gap). Rounded bottom corners | `frontend/src/app/(site)/page.tsx` |
+| Hero | Full width, starting at the very top of the page. The header floats on top of it (no gap). Rounded bottom corners | `frontend/src/app/(site)/page.tsx` |
 | Silk background (WebGL) | Smooth satin folds in the logo colours: deep navy shadows and emerald-teal on the lit folds, with a faint mint sheen. They drift and change shape slowly. The light leans towards the cursor, and the cloth dips gently under it. (A royal-blue version was tried first; the founder chose the original navy and green) | `frontend/src/components/home/hero-background.tsx` |
 | Typing search | The empty search box types example searches ("BS Computer Science in Lahore", "MBBS merit lists in Punjab"…), pauses, deletes, and moves on. It stops when the box is focused or has text | `frontend/src/components/home/hero-search.tsx` |
 | Sources strip | An endless, slow strip of official source types (prospectuses, merit lists, HEC lists, fee schedules, IBCC rules…). It pauses on hover. These are source *types*, not partner logos, so we make no false claims | `frontend/src/components/home/source-marquee.tsx` |
